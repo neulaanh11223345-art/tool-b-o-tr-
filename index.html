@@ -21,6 +21,7 @@
   --red:#C8372D; --red-bg:#FBE8E5; --orange:#D96A12; --orange-bg:#FDEEDF; --blue:#2F62B8; --blue-bg:#E4ECF9;
   --green:#2F8A3B; --green-bg:#E3F2E3; --wkend:#FBEFEF; --today:#FFF6CC; --focus:#2F62B8;
   --shadow:0 1px 2px rgba(22,33,31,.06),0 4px 14px rgba(22,33,31,.06);
+  --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
   --r:12px; --tab-h:64px;
   --f-ui:'Be Vietnam Pro','Noto Sans SC',system-ui,-apple-system,'Segoe UI',sans-serif;
   --f-zh:'Noto Sans SC','PingFang SC','Microsoft YaHei',sans-serif;
@@ -33,6 +34,7 @@
     --navy:#0A100F; --navy2:#1A2422; --onnavy2:#93A6A0;
     --red:#F2685C; --red-bg:#3B1D1A; --orange:#F39A4B; --orange-bg:#3A2715; --blue:#78A3EE; --blue-bg:#1A2842;
     --green:#6CC074; --green-bg:#18321C; --wkend:#241B1D; --today:#3A3413; --focus:#78A3EE;
+    --s1:#3987e5; --s2:#d95926; --s3:#199e70;
     --shadow:0 1px 2px rgba(0,0,0,.3);
   }
 }
@@ -42,6 +44,7 @@
   --navy:#0A100F; --navy2:#1A2422; --onnavy2:#93A6A0;
   --red:#F2685C; --red-bg:#3B1D1A; --orange:#F39A4B; --orange-bg:#3A2715; --blue:#78A3EE; --blue-bg:#1A2842;
   --green:#6CC074; --green-bg:#18321C; --wkend:#241B1D; --today:#3A3413; --focus:#78A3EE;
+  --s1:#3987e5; --s2:#d95926; --s3:#199e70;
   --shadow:0 1px 2px rgba(0,0,0,.3);
 }
 html,body{touch-action:manipulation;-webkit-text-size-adjust:100%}
@@ -333,6 +336,96 @@ table.cal tr.grp th.nmc{background:var(--bg);font-size:12px;color:var(--ink2);fo
   .s8 .pl .ck{font-size:10pt}
   .s8 .pl .hn{font-size:8.5pt}
 }
+
+/* ---------- số điện ---------- */
+.ecard{margin-top:12px;width:100%;display:flex;align-items:center;gap:12px;border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:12px 14px;text-align:left}
+.ecard .eic{width:42px;height:42px;border-radius:11px;background:var(--blue-bg);color:var(--blue);display:grid;place-items:center;flex:none}
+.ecard .main{flex:1;min-width:0;display:flex;flex-direction:column;gap:2px}
+.ecard .nm{font-weight:600;font-size:15px;line-height:1.3}
+.ecard .sub{font-size:12.5px;color:var(--ink2)}
+.ecard .nm .zi{display:inline}
+.ecard .sub .zi{display:block;margin:0}
+.kyhead .kyrow{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.kyhead .lbl{font-size:12.5px;color:var(--ink2)}
+.kyhead .big{font-size:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.prog{height:8px;border-radius:4px;background:var(--soft);border:1px solid var(--line);overflow:hidden;margin-top:12px}
+.prog i{display:block;height:100%;background:var(--green);border-radius:0 4px 4px 0}
+.seg.wide3{display:flex;width:100%}
+.seg.wide3 button{flex:1;display:flex;flex-direction:column;align-items:center;line-height:1.2;padding:7px 4px}
+.seg.wide3 small{font-family:var(--f-zh);font-weight:500;font-size:11px;color:var(--ink3)}
+.stepper button[disabled]{opacity:.35}
+table.dtab th.pc{padding:6px 8px;text-align:center;min-width:128px;vertical-align:top}
+table.dtab th.pc b{display:block;font-size:12.5px;color:var(--ink)}
+table.dtab th.pc small{display:block;font-weight:500;font-size:10.5px;color:var(--ink3);white-space:normal}
+table.dtab th.sub2{font-size:11px;padding:4px 6px;font-weight:600}
+table.dtab td{padding:7px 8px;white-space:nowrap;font-size:12.5px}
+table.dtab td.num{text-align:right;font-variant-numeric:tabular-nums}
+table.dtab td.bad{color:var(--red);font-weight:700}
+table.dtab td.who{font-size:12px;color:var(--ink2);min-width:120px;white-space:normal}
+table.dtab tr.mt th,table.dtab tr.mt td{background:var(--soft)}
+table.dtab tr.mt th.nmc{background:var(--soft);font-size:12px}
+table.dtab tr.mt th small{display:block;font-weight:500;color:var(--ink3);font-size:10.5px}
+table.dtab tr.miss td{color:var(--ink3)}
+table.dtab .nmc button{font-family:var(--f-mono);font-size:12.5px;font-weight:700}
+table.dtab .nmc{min-width:112px}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:12px}
+.kpi{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.kpi .kl{font-size:12.5px;color:var(--ink2);font-weight:600}
+.kpi .kl .zi{display:block;margin:0;font-weight:500}
+.kpi .kv{font-size:24px;font-weight:700;margin-top:2px;font-variant-numeric:tabular-nums}
+.kpi .kv small{font-size:12px;color:var(--ink2);font-weight:600}
+.kpi .kd{font-size:12px;color:var(--ink2);margin-top:4px;line-height:1.35}
+.kpi .kd .zi{display:block;margin:0}
+.kd.up span[aria-hidden]{color:var(--red)} .kd.down span[aria-hidden]{color:var(--green)}
+.kd.good span[aria-hidden]{color:var(--green)} .kd.warn span[aria-hidden]{color:var(--orange)}
+.chartcard{margin-bottom:12px}
+.chartcard h3.ch{margin:0 0 8px;font-size:14.5px;line-height:1.3}
+.chartcard h3.ch .zi{font-weight:500}
+.unit{font-size:11.5px;color:var(--ink3);font-weight:500;margin-left:6px}
+.chart{position:relative;width:100%;min-height:40px}
+.viz{display:block;overflow:visible;touch-action:pan-y}
+.viz .grid{stroke:var(--line);stroke-width:1}
+.viz .base{stroke:var(--ink3);stroke-width:1}
+.viz .tick{fill:var(--ink2);font-size:11px;font-family:var(--f-mono)}
+.viz .curx{fill:var(--ink);font-weight:700}
+.viz .vlab{fill:var(--ink);font-size:11.5px;font-weight:700;font-family:var(--f-mono)}
+.viz .s1{fill:var(--s1)} .viz .s2{fill:var(--s2)} .viz .s3{fill:var(--s3)}
+.viz .ln{fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round;stroke-linecap:round}
+.viz .area{fill:var(--s1);fill-opacity:.1}
+.viz .dot,.viz .hdot{fill:var(--s1);stroke:var(--card);stroke-width:2}
+.viz .xh{stroke:var(--ink3);stroke-width:1}
+.viz .hit{fill:transparent;cursor:pointer;outline:none}
+.viz .hit.on{fill:var(--ink);fill-opacity:.06}
+.viz .hit.band.on{fill-opacity:0}
+.viz .hit:focus-visible{stroke:var(--focus);stroke-width:2}
+.tip{position:absolute;z-index:5;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:8px 10px;box-shadow:0 6px 20px rgba(0,0,0,.15);font-size:12.5px;pointer-events:none;min-width:150px}
+.tip .tt{font-weight:600;color:var(--ink2);margin-bottom:4px;font-size:12px}
+.tip .tr{display:flex;align-items:center;gap:6px;white-space:nowrap;line-height:1.5}
+.tip .tr b{font-variant-numeric:tabular-nums;color:var(--ink)}
+.tip .tr span{color:var(--ink2)}
+.tip .key{width:10px;height:2px;border-radius:1px;flex:none}
+.key.s1,.sw.s1{background:var(--s1)} .key.s2,.sw.s2{background:var(--s2)} .key.s3,.sw.s3{background:var(--s3)} .key.none{background:transparent}
+.chartcard .legend{margin:0 0 8px}
+.chartcard .legend .sw{width:12px;height:12px;border-radius:3px;margin-right:6px}
+.hbars{display:flex;flex-direction:column;gap:10px}
+.hb{display:grid;grid-template-columns:minmax(96px,36%) 1fr auto;gap:10px;align-items:center;font-size:13px}
+.hb .hn{overflow-wrap:anywhere;line-height:1.3}
+.hb .track{height:16px;display:block}
+.hb .track i{display:block;height:100%;background:var(--s1);border-radius:0 4px 4px 0}
+.hb.me .hn{font-weight:700}
+.hb b{font-variant-numeric:tabular-nums;min-width:62px;text-align:right}
+.note{background:var(--orange-bg);border-radius:10px;padding:10px 12px;font-size:13.5px;margin-bottom:14px}
+.note .zi{display:block;margin:0}
+.warn{color:var(--orange);font-weight:600;margin-top:4px}
+.warn.bad{color:var(--red)}
+.warn .zi{display:block;margin:0;color:inherit;opacity:.85}
+.fld.rd>span b{font-size:14px}
+.inrow{display:flex;align-items:center;gap:8px}
+.inrow .u{color:var(--ink2);font-size:13px;min-width:46px}
+.inp.mono{font-family:var(--f-mono)}
+.tsgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.tsrow{margin-bottom:10px}
+.tsfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
 </style>
 </head>
 <body>
@@ -508,7 +601,7 @@ const XW = (() => {
 'use strict';
 const API_URL = "";
 const MODE = "live";
-const APP_VER = "1.0.1";
+const APP_VER = "1.1.0";
 const DemoBackend = null;
 
 const IS_DEMO = MODE === 'demo';
@@ -715,6 +808,7 @@ const IC = {
   key: `<svg ${ICP}><circle cx="8" cy="15" r="4"/><path d="M11 12l8.5-8.5M16 7l2.5 2.5"/></svg>`,
   out: `<svg ${ICP}><path d="M14 4h4.5A1.5 1.5 0 0 1 20 5.5v13a1.5 1.5 0 0 1-1.5 1.5H14"/><path d="M10 8l-4 4 4 4M6 12h10"/></svg>`,
   refresh: `<svg ${ICP}><path d="M20 11a8 8 0 0 0-14.5-4.5M4 13a8 8 0 0 0 14.5 4.5"/><path d="M5 3v4h4M19 21v-4h-4"/></svg>`,
+  bolt: `<svg ${ICP}><path d="M13 2.5 5 13.5h6l-1 8 8-11h-6z"/></svg>`,
   link: `<svg ${ICP}><path d="M10 14a4.5 4.5 0 0 0 6.4 0l3-3a4.5 4.5 0 0 0-6.4-6.4l-1 1"/><path d="M14 10a4.5 4.5 0 0 0-6.4 0l-3 3a4.5 4.5 0 0 0 6.4 6.4l1-1"/></svg>`
 };
 const LOGO = '<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="14" fill="#16211F"/><circle cx="32" cy="32" r="18" fill="none" stroke="#F5C400" stroke-width="6.5" stroke-dasharray="7.2 6.937" stroke-dashoffset="3.6"/><circle cx="32" cy="32" r="16" fill="#F5C400"/><circle cx="32" cy="32" r="10.8" fill="#16211F"/><path d="M26.6 32.4l3.9 3.9 7.2-7.6" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
@@ -723,7 +817,7 @@ const LOGO = '<svg viewBox="0 0 64 64" aria-hidden="true"><rect width="64" heigh
 const S = {
   tk: null, me: null, base: null, V: null, Q: [], stack: [], offline: false, simOff: false,
   f: { grp: '', calGrp: '', q: '', calMode: 'year', calYear: +localToday().slice(0, 4), calMonth: +localToday().slice(5, 7), histMonth: localToday().slice(0, 7), histGrp: '', histQ: '', lblSize: 's24' },
-  oldHist: {}, scanner: null, lastLoad: 0
+  oldHist: {}, oldCS: {}, scanner: null, lastLoad: 0
 };
 let DEV = store.get('bd_dev', '');
 if (!DEV) { DEV = 'd' + uid(); store.set('bd_dev', DEV); }
@@ -785,6 +879,7 @@ async function refresh(silent) {
     S.base = d; S.lastLoad = Date.now(); saveSnap(); rebuild();
     if (d.me) { S.me = d.me; store.set('bd_me', d.me); }
     softRender();
+    openDeep(true);
     if (S.Q.some((q) => q.st === 'cho')) flush();
     if (!silent) toast(t('refreshed'));
     return true;
@@ -843,6 +938,16 @@ function mergeResult(d) {
     const i = S.base.may.findIndex((x) => x.ma === d.may.ma);
     if (i >= 0) S.base.may[i] = d.may; else S.base.may.push(d.may);
   }
+  if (d.chiSo) {
+    const L = S.base.chiSo = S.base.chiSo || [];
+    const i = L.findIndex((x) => x.id === d.chiSo.id);
+    if (d.chiSo.trangThai === 'HUY') { if (i >= 0) L.splice(i, 1); } else if (i >= 0) L[i] = d.chiSo; else L.push(d.chiSo);
+  }
+  if (d.congTo) {
+    const L = S.base.congTo = S.base.congTo || [];
+    const i = L.findIndex((x) => x.ma === d.congTo.ma);
+    if (i >= 0) L[i] = d.congTo; else L.push(d.congTo);
+  }
   saveSnap(); rebuild();
 }
 
@@ -868,6 +973,7 @@ function rebuild() {
   const groups = [];
   may.forEach((m) => { const g = m.nhom || ''; if (groups.indexOf(g) < 0) groups.push(g); });
   S.V = { may, byMa, ls, lsMa, groups };
+  rebuildDien();
 }
 const activeMay = () => S.V.may.filter((m) => m.hoatDong);
 const nhacTruoc = () => (S.base && S.base.caiDat && S.base.caiDat.nhacTruoc !== undefined ? S.base.caiDat.nhacTruoc : 3);
@@ -955,12 +1061,12 @@ function shell() {
     <button class="tab" data-act="tab" data-v="cal"><span class="tabic">${IC.cal}</span>${tv('cal')}<small>${tz('cal')}</small></button>
     <button class="tab" data-act="tab" data-v="scan" aria-label="${tp('scan')}"><span class="sc">${IC.scan}</span></button>
     <button class="tab" data-act="tab" data-v="list"><span class="tabic">${IC.gear}</span>${tv('machines')}<small>${tz('machines')}</small></button>
-    <button class="tab" data-act="tab" data-v="hist"><span class="tabic">${IC.hist}</span>${tv('history')}<small>${tz('history')}</small></button>
+    <button class="tab" data-act="tab" data-v="dien"><span class="tabic">${IC.bolt}<span class="badge" id="bdgE" hidden></span></span>${tv('dien')}<small>${tz('dien')}</small></button>
   </div></nav>`;
 }
-const TITLES = { home: 't_home', cal: 't_cal', scan: 't_scan', list: 't_list', hist: 't_hist', may: 't_may', mayEdit: 't_mayEdit',
+const TITLES = { dien: 't_dien', dienNhap: 't_dienNhap', ctEdit: 't_ctEdit', thongSo: 't_thongSo', home: 't_home', cal: 't_cal', scan: 't_scan', list: 't_list', hist: 't_hist', may: 't_may', mayEdit: 't_mayEdit',
   labels: 't_labels', admin: 't_admin', users: 't_users', notify: 't_notify', queue: 't_queue' };
-const ROOTS = ['home', 'cal', 'scan', 'list', 'hist'];
+const ROOTS = ['home', 'cal', 'scan', 'list', 'hist', 'dien'];
 const topV = () => S.stack[S.stack.length - 1];
 
 function render() {
@@ -974,16 +1080,18 @@ function render() {
   $('#barLead').innerHTML = S.stack.length > 1
     ? `<button class="back" data-act="back" aria-label="${tp('back')}">${IC.left}</button>`
     : `<button class="logo" data-act="tab" data-v="home" aria-label="${tp('home')}">${LOGO}</button>`;
-  const root = S.stack[0].v;
+  const root = S.stack[0].v === 'hist' ? 'list' : S.stack[0].v;
   $$('.tab').forEach((b) => b.classList.toggle('on', b.dataset.v === root));
   $('#meBtn').innerHTML = `<span class="nm">${esc(S.me ? S.me.ten : '?')}</span>`;
   const n = S.V ? activeMay().filter((m) => { const k = stOf(m).k; return k === 'qua' || k === 'nay'; }).length : 0;
   const bd = $('#bdg'); bd.hidden = !n; bd.textContent = n;
+  const ne = S.V ? dienThieu().thieu.length : 0, be = $('#bdgE');
+  if (be) { be.hidden = !ne; be.textContent = ne; }
   renderNetbar();
 }
 // Vẽ lại nhưng không phá ô đang gõ
 // Chỉ vẽ lại các màn hiển thị dữ liệu; màn đang nhập liệu (sửa máy, báo tin…) giữ nguyên
-const LIVE_VIEWS = ['home', 'cal', 'list', 'hist', 'may', 'queue'];
+const LIVE_VIEWS = ['home', 'cal', 'list', 'hist', 'may', 'queue', 'dien'];
 function softRender() {
   const a = document.activeElement, cur = topV();
   if (!cur || LIVE_VIEWS.indexOf(cur.v) < 0) return;
@@ -1051,6 +1159,7 @@ VIEWS.home = {
     let h = `<div class="today"><div><div class="d">${fmtD(today)}</div><div class="w">${WD_VI_F[w]} <span class="zi">${WD_ZH_F[w]}</span></div></div></div>
       <div class="tiles">${tile('qua', g.qua.length, t('st_qua'))}${tile('nay', g.nay.length, t('st_nay'))}${tile('sap', g.sap.length, t('sapN', { n: nhacTruoc() }))}${tile('xong', doneM, t('doneMonth', { m: mo }))}</div>`;
     if (can('confirm')) h += `<button class="cta" data-act="tab" data-v="scan"><span class="ic">${IC.scan}</span><span>${tv('scanCta')}<span class="zi">${tz('scanCta')}</span></span></button>`;
+    h += dienHomeCard();
     const block = (k, arr) => arr.length ? `<div id="sec-${k}">${sec('st_' + k, arr.length)}<div class="list">${arr.map((o) => mRow(o.m, o.st, true)).join('')}</div></div>` : '';
     if (!g.qua.length && !g.nay.length) {
       const nx = activeMay().filter((m) => m.hanKeTiep > today).sort((a, b) => (a.hanKeTiep > b.hanKeTiep ? 1 : -1))[0];
@@ -1066,8 +1175,9 @@ VIEWS.home = {
 // ---------- Quét QR ----------
 function pickList(q) {
   const list = findMay(q, activeMay()).slice(0, q ? 60 : 12);
-  if (!list.length) return `<div class="empty">${t('notFound')}</div>`;
-  return list.map((m) => mRow(m, stOf(m), false, can('confirm'))).join('');
+  const cts = findCT(q);
+  if (!list.length && !cts.length) return `<div class="empty">${t('notFound')}</div>`;
+  return cts.map(ctRow).join('') + list.map((m) => mRow(m, stOf(m), false, can('confirm'))).join('');
 }
 VIEWS.scan = {
   html() {
@@ -1107,7 +1217,7 @@ function parseCode(text) {
   let s = String(text || '').trim();
   try { const u = new URL(s); const m = u.searchParams.get('m'); if (m) s = m; } catch (e) { /* không phải link */ }
   s = s.replace(/^BD[:\-]/i, '').trim().toUpperCase();
-  return S.V.byMa[s] ? s : null;
+  return S.V.byMa[s] || S.V.ctByMa[s] ? s : null;
 }
 function onScan(text) {
   if (S.scanBusy) return;
@@ -1116,7 +1226,7 @@ function onScan(text) {
   if (!ma) { toast(t('qrUnknown') + '<br><span class="mono">' + esc(String(text).slice(0, 60)) + '</span>', true); return; }
   try { navigator.vibrate && navigator.vibrate(60); } catch (e) { /* bỏ qua */ }
   stopScan();
-  go('may', { ma, xn: true });
+  if (S.V.ctByMa[ma]) go('dienNhap', { ma }); else go('may', { ma, xn: true });
 }
 async function scanFromFile(e) {
   const f = e.target.files && e.target.files[0]; e.target.value = '';
@@ -1344,11 +1454,12 @@ VIEWS.cal = {
 };
 
 // ---------- Danh sách máy ----------
+const listSeg = (cur) => `<div class="seg" style="margin-bottom:12px"><button class="${cur === 'list' ? 'on' : ''}" data-act="tab" data-v="list">${tv('viewList')} ${tz('viewList')}</button><button class="${cur === 'hist' ? 'on' : ''}" data-act="tab" data-v="hist">${tv('history')} ${tz('history')}</button></div>`;
 VIEWS.list = {
   html() {
     const f = S.f;
     const stopped = S.V.may.filter((m) => !m.hoatDong);
-    let o = `<div class="searchbox">${IC.search}<input class="inp" id="listQ" type="search" value="${esc(f.q)}" placeholder="${esc(tp('search'))}" autocomplete="off"></div>
+    let o = listSeg('list') + `<div class="searchbox">${IC.search}<input class="inp" id="listQ" type="search" value="${esc(f.q)}" placeholder="${esc(tp('search'))}" autocomplete="off"></div>
       <div style="margin-top:12px">${grpChips(f.grp, 'listGrp').replace('</div>', stopped.length ? `<button class="chip${f.grp === '__stop' ? ' on' : ''}" data-act="listGrp" data-g="__stop">${t('stopped')} (${stopped.length})</button></div>` : '</div>')}</div>`;
     if (can('may')) o += `<div class="btns" style="margin-bottom:14px"><button class="btn sm" data-act="newMay">${IC.plus} ${t('addMachine')}</button><button class="btn ghost sm" data-act="labels">${IC.qr} ${t('printQR')}</button></div>`;
     o += '<div id="listBody">' + listBody() + '</div>';
@@ -1424,16 +1535,21 @@ function qrSvg(text) {
   return `<svg viewBox="0 0 ${n + qz * 2} ${n + qz * 2}" shape-rendering="crispEdges" role="img" aria-label="QR ${esc(text)}"><rect width="100%" height="100%" fill="#fff"/><path d="${d}" fill="#000"/></svg>`;
 }
 function labelInner(m, big) {
+  const ct = S.V.ctByMa[m.ma] === m;
+  const info = ct ? `${esc(tv('heSo'))} ×${fmtNum(m.heSo, 'raw')}${m.soCongTo ? ' · ' + esc(m.soCongTo) : ''}`
+    : `${esc(tv('cycle'))} ${m.chuKy} ${esc(tv('days', { n: '' }).trim())} · ${esc(tz('cycle'))}${m.chuKy}${esc(tz('days', { n: '' }))}`;
+  const hint = ct ? 'lblDien' : 'lblScan';
   const body = `${qrSvg(qrText(m.ma))}<div class="ti"><div class="cd">${esc(m.ma)}</div><div class="nm">${esc(m.ten)}</div>
-    <div class="ck">${esc(tv('cycle'))} ${m.chuKy} ${esc(tv('days', { n: '' }).trim())} · ${esc(tz('cycle'))}${m.chuKy}${esc(tz('days', { n: '' }))}</div>
-    <div class="hn">${esc(tv('lblScan'))}<br>${esc(tz('lblScan'))}</div></div>`;
+    <div class="ck">${info}</div>
+    <div class="hn">${esc(tv(hint))}<br>${esc(tz(hint))}</div></div>`;
   return big ? `<div class="hz"></div><div class="bd">${body}</div>` : body;
 }
 VIEWS.labels = {
   html(p) {
-    if (!p.sel) p.sel = p.only ? [p.only] : activeMay().map((m) => m.ma);
+    if (!p.sel) p.sel = p.only ? [p.only] : p.meters ? activeCT().map((m) => m.ma) : activeMay().map((m) => m.ma);
     const sel = new Set(p.sel), f = S.f;
     const list = S.V.may.filter((m) => m.hoatDong || sel.has(m.ma));
+    const cts = S.V.ct.filter((m) => m.hoatDong || sel.has(m.ma));
     let o = `<div class="card pad"><div class="fld" style="margin:0"><span>${t('lblSize')}</span>
       <div class="seg"><button class="${f.lblSize === 's24' ? 'on' : ''}" data-act="lblSize" data-s="s24">${esc(tp('s24'))}</button><button class="${f.lblSize === 's8' ? 'on' : ''}" data-act="lblSize" data-s="s8">${esc(tp('s8'))}</button></div></div></div>
       <div class="btns" style="margin:14px 0"><button class="btn y" data-act="doPrint" ${sel.size ? '' : 'disabled'}>${IC.print}<span class="stk">${tv('print')} (${sel.size})<span class="zi">${tz('print')}</span></span></button></div>
@@ -1444,16 +1560,20 @@ VIEWS.labels = {
       o += `<div class="sec"><h2 style="font-size:13px;color:var(--ink2)">${esc(g || '—')}</h2></div><div class="list">${arr.map((m) =>
         `<label class="checkrow"><input type="checkbox" data-ma="${esc(m.ma)}" ${sel.has(m.ma) ? 'checked' : ''}><span class="main"><span class="nm" style="font-weight:600">${esc(m.ten)}</span><br><span class="code">${esc(m.ma)}</span></span></label>`).join('')}</div>`;
     });
+    if (cts.length) {
+      o += `<div class="sec"><h2 style="font-size:13px;color:var(--ink2)">${t('meterSec')}</h2></div><div class="list">${cts.map((m) =>
+        `<label class="checkrow"><input type="checkbox" data-ma="${esc(m.ma)}" ${sel.has(m.ma) ? 'checked' : ''}><span class="main"><span class="nm" style="font-weight:600">${esc(m.ten)}</span><br><span class="code">${esc(m.ma)}</span></span></label>`).join('')}</div>`;
+    }
     return o;
   },
   after(p) {
     $$('.checkrow input').forEach((c) => c.addEventListener('change', () => {
       const s = new Set(p.sel); if (c.checked) s.add(c.dataset.ma); else s.delete(c.dataset.ma);
-      p.sel = S.V.may.map((m) => m.ma).filter((ma) => s.has(ma)); render();
+      p.sel = S.V.may.map((m) => m.ma).concat(S.V.ct.map((m) => m.ma)).filter((ma) => s.has(ma)); render();
     }));
     loadScript(LIB.qr).then(() => {
       const el = $('#lblPrev'); if (!el) return;
-      const ms = p.sel.slice(0, 6).map((ma) => S.V.byMa[ma]).filter(Boolean);
+      const ms = p.sel.slice(0, 6).map((ma) => S.V.byMa[ma] || S.V.ctByMa[ma]).filter(Boolean);
       el.innerHTML = ms.length ? ms.map((m) => `<div class="qlabel">${labelInner(m, false)}</div>`).join('') : `<div class="empty">${t('noSel')}</div>`;
     }).catch(() => { const el = $('#lblPrev'); if (el) el.innerHTML = `<div class="empty">${t('MANG')}</div>`; });
   }
@@ -1462,7 +1582,7 @@ async function doPrint() {
   const p = topV().p;
   if (IS_DEMO) { toast(t('printDemo'), true); return; }
   try { await loadScript(LIB.qr); } catch (e) { toast(t('MANG'), true); return; }
-  const size = S.f.lblSize, per = size === 's8' ? 8 : 24, ms = p.sel.map((ma) => S.V.byMa[ma]).filter(Boolean);
+  const size = S.f.lblSize, per = size === 's8' ? 8 : 24, ms = p.sel.map((ma) => S.V.byMa[ma] || S.V.ctByMa[ma]).filter(Boolean);
   let h = '';
   for (let i = 0; i < ms.length; i += per) {
     h += `<div class="psheet ${size}">${ms.slice(i, i + per).map((m) => `<div class="pl">${labelInner(m, size === 's8')}</div>`).join('')}</div>`;
@@ -1476,7 +1596,7 @@ VIEWS.hist = {
   html() {
     const f = S.f, ym = f.histMonth, y = +ym.slice(0, 4), mo = +ym.slice(5, 7);
     const need = !S.base.lichSu.some((x) => x.ngay.slice(0, 4) === String(y)) && y < +TODAY().slice(0, 4) - 1 && !S.oldHist[y];
-    let o = `<div class="caltools"><div class="stepper"><button data-act="histStep" data-d="-1" aria-label="-">${IC.left}</button><b>${t('monthN', { m: mo })} / ${y}</b><button data-act="histStep" data-d="1" aria-label="+">${IC.right}</button></div>
+    let o = listSeg('hist') + `<div class="caltools"><div class="stepper"><button data-act="histStep" data-d="-1" aria-label="-">${IC.left}</button><b>${t('monthN', { m: mo })} / ${y}</b><button data-act="histStep" data-d="1" aria-label="+">${IC.right}</button></div>
       <button class="btn ghost sm" data-act="export" data-y="${y}">${IC.dl} ${t('exportXls')}</button></div>
       <div class="searchbox">${IC.search}<input class="inp" id="histQ" type="search" value="${esc(f.histQ)}" placeholder="${esc(tp('search'))}" autocomplete="off"></div>
       <div style="margin-top:12px">${grpChips(f.histGrp, 'histGrp')}</div>
@@ -1498,7 +1618,7 @@ function histBody() {
   return sec('history', t('times', { n: ok })) + (rows.length ? `<div class="list">${rows.map((x) => hRow(x, true)).join('')}</div>` : `<div class="card empty">${t('histEmpty')}</div>`);
 }
 async function loadOldYear(y) {
-  try { const d = await api('history', { nam: y }); S.oldHist[y] = d.lichSu; rebuild(); render(); }
+  try { const d = await api('history', { nam: y }); S.oldHist[y] = d.lichSu; S.oldCS[y] = d.chiSo || []; rebuild(); render(); }
   catch (e) { const el = $('#oldLoad'); if (el) el.innerHTML = e.code === 'MANG' ? t('needNet') : errMsg(e); }
 }
 
@@ -1507,8 +1627,8 @@ VIEWS.queue = {
   html() {
     if (!S.Q.length) return `<div class="card empty">${t('queueEmpty')}</div>`;
     return `<div class="btns" style="margin-bottom:14px"><button class="btn" data-act="flushNow">${IC.refresh} ${t('resend')}</button></div><div class="list">${S.Q.map((q) => {
-      const m = S.V.byMa[q.p.ma];
-      return `<div class="row"><div class="main"><div class="nm">${esc(m ? m.ten : q.p.ma)}</div><div class="sub">${fmtD(q.p.ngay)} · ${esc(q.p.nguoi)}</div>
+      const m = S.V.byMa[q.p.ma] || S.V.ctByMa[q.p.ma];
+      return `<div class="row"><div class="main"><div class="nm">${q.action === 'saveReading' ? IC.bolt + ' ' : ''}${esc(m ? m.ten : q.p.ma)}</div><div class="sub">${fmtD(q.p.ngay || q.p.ky)} · ${esc(q.p.nguoi)}</div>
         ${q.st === 'loi' ? `<div class="err" style="margin:6px 0 0">${errMsg(q.err || {})}</div>` : ''}</div>
         <div class="end"><span class="pill ${q.st === 'loi' ? 'p-qua' : 'p-cho'}">${t(q.st === 'loi' ? 'sendErr' : 'pending')}</span>
         <button class="btn ghost sm" data-act="dropQ" data-op="${esc(q.opId)}">${t('del')}</button></div></div>`;
@@ -1524,6 +1644,8 @@ VIEWS.admin = {
       <button class="row" data-act="go" data-v="users">${IC.users}<div class="main"><div class="nm">${t('users')}</div></div>${IC.chev}</button>
       <button class="row" data-act="go" data-v="notify">${IC.bell}<div class="main"><div class="nm">${t('t_notify')}</div><div class="sub">${t('notifyHead')}</div></div>${IC.chev}</button>
       <button class="row" data-act="labels">${IC.qr}<div class="main"><div class="nm">${t('printQR')}</div></div>${IC.chev}</button>
+      <button class="row" data-act="tab" data-v="dien">${IC.bolt}<div class="main"><div class="nm">${t('meterSec')}</div><div class="sub">${t('addCT')} · ${t('editCT')}</div></div>${IC.chev}</button>
+      <button class="row" data-act="go" data-v="thongSo">${IC.edit}<div class="main"><div class="nm">${t('t_thongSo')}</div><div class="sub">1.8.0 · 1.8.1 · 1.8.2 · 1.8.3 · 2.8.0 …</div></div>${IC.chev}</button>
       </div>${sec('appInfo')}<div class="card pad"><dl class="kv">
       <dt>${t('appVer')}</dt><dd class="mono">${esc(APP_VER)}${IS_DEMO ? ' · demo' : ''}</dd>
       <dt>${t('srvVer')}</dt><dd class="mono">${esc(b.phienBan || '?')}</dd>
@@ -1800,6 +1922,7 @@ async function doPin(el) {
 function logout(expired) {
   closeSheet(); stopScan();
   S.tk = null; S.me = null; S.base = null; S.V = null; S.stack = [];
+  Object.assign(S.f, { dTab: 'ghi', dKy: '', dCT: '', dYear: 0, q: '', histQ: '' });
   store.del('bd_tk'); store.del('bd_me'); store.del('bd_snap');
   renderLogin(expired ? t('HET_PHIEN') : '');
 }
@@ -1862,13 +1985,19 @@ function renderSetup(msg) {
     catch (x) { b.disabled = false; $('#sErr').innerHTML = x.code === 'MANG' ? t('setupCheck') : errMsg(x); }
   });
 }
+// Mở máy / công tơ từ link tem QR (?m=...). Chưa có trong dữ liệu lưu thì chờ tải xong mới báo.
+function openDeep(final) {
+  const dm = S.deepMa; if (!dm || !S.V || !$('#main')) return;
+  if (S.V.byMa[dm]) { S.deepMa = null; go('may', { ma: dm, xn: true }); }
+  else if (S.V.ctByMa[dm]) { S.deepMa = null; go('dienNhap', { ma: dm }); }
+  else if (final) { S.deepMa = null; toast(t('qrUnknown') + '<br><span class="mono">' + esc(dm) + '</span>', true); }
+}
 function startApp() {
   shell();
   S.stack = [{ v: 'home', p: {} }];
   if (!IS_DEMO) { try { history.replaceState({ d: 1 }, ''); } catch (e) { /* bỏ qua */ } }
   render();
-  const dm = S.deepMa; S.deepMa = null;
-  if (dm && S.V.byMa[dm]) go('may', { ma: dm, xn: true });
+  openDeep(false);
   if (S.Q.some((q) => q.st === 'cho')) flush();
 }
 function boot() {
@@ -1931,7 +2060,7 @@ const ACT = {
   labels: () => go('labels', {}),
   labelsOne: (el) => go('labels', { only: el.dataset.ma }),
   lblSize: (el) => { S.f.lblSize = el.dataset.s; render(); },
-  lblAll: () => { topV().p.sel = activeMay().map((m) => m.ma); render(); },
+  lblAll: () => { topV().p.sel = activeMay().map((m) => m.ma).concat(activeCT().map((m) => m.ma)); render(); },
   lblNone: () => { topV().p.sel = []; render(); },
   doPrint: () => doPrint(),
   userEdit: (el) => openUser(el.dataset.id),
@@ -1966,6 +2095,763 @@ document.addEventListener('visibilitychange', () => {
 });
 setInterval(() => { if (S.tk && S.Q.some((q) => q.st === 'cho')) flush(); }, 30000);
 window.addEventListener('afterprint', () => { const p = $('#printArea'); if (p) p.innerHTML = ''; });
+
+
+// ===================== SỐ ĐIỆN · 电表读数 =====================
+// Kỳ ghi cố định ngày 10, 20 và ngày cuối tháng. Tiêu thụ = (chỉ số kỳ này − kỳ trước) × hệ số nhân.
+Object.assign(TX, {
+  dien: ['Điện', '电表'], t_dien: ['Ghi số điện', '抄电表'], t_dienNhap: ['Nhập chỉ số', '录入读数'],
+  t_ctEdit: ['Công tơ', '电表'], t_thongSo: ['Thông số công tơ', '电表参数'],
+  dTabGhi: ['Ghi số', '抄表'], dTabBang: ['Bảng số', '读数表'], dTabBieu: ['Biểu đồ', '图表'],
+  kyGhi: ['Kỳ ghi', '抄表期'], kyTruoc: ['Kỳ trước', '上期'], kyNay: ['Kỳ ghi hiện tại', '本期抄表'], kyToi: ['Kỳ tới {d} (còn {n} ngày)', '下期{d}（还有{n}天）'],
+  kyHomNay: ['Hôm nay là ngày ghi số điện', '今天是抄表日'], kyN: ['Kỳ {d}', '{d}期'],
+  daGhiN: ['Đã ghi {a}/{b} công tơ', '已抄{a}/{b}块电表'], thieuN: ['Còn thiếu {n}', '还差{n}块'], duSo: ['Đã ghi đủ', '已抄完'],
+  daGhi: ['Đã ghi', '已抄'], chuaGhi: ['Chưa ghi', '未抄'], homeDien: ['Ghi số điện', '抄电表'],
+  congTo: ['Công tơ', '电表'], addCT: ['Thêm công tơ', '添加电表'], editCT: ['Sửa công tơ', '编辑电表'],
+  soCT: ['Số công tơ (số seri)', '电表编号'], heSo: ['Hệ số nhân', '倍率'],
+  heSoHelp: ['= tỉ số TI × TU. Ví dụ TI 200/5 → 40. Công tơ đấu trực tiếp → 1.', '=电流互感器×电压互感器变比，例如200/5 → 40；直接接入 → 1。'],
+  thongSoAD: ['Thông số cần ghi', '需抄读的参数'], params: ['Thông số', '参数'],
+  chiSo: ['Chỉ số', '读数'], tieuThu: ['Tiêu thụ', '用电量'], kyTruocV: ['Kỳ trước {d}: {v}', '上期{d}：{v}'],
+  chuaCoKyTruoc: ['Chưa có kỳ trước để tính tiêu thụ', '无上期读数，无法计算用量'],
+  wLower: ['Nhỏ hơn kỳ trước. Kiểm tra lại số, hoặc ghi chú nếu đã thay công tơ.', '小于上期读数，请核对；如已换表请备注。'],
+  wHigh: ['Cao bất thường: gấp {n} lần bình quân 3 kỳ trước', '异常偏高：为前3期日均的{n}倍'],
+  wSum: ['1.8.1 + 1.8.2 + 1.8.3 = {s}, lệch với 1.8.0', '1.8.1+1.8.2+1.8.3={s}，与1.8.0不一致'],
+  nguoiGhi: ['Người ghi', '抄表人'], suaBanGhi: ['Kỳ này đã ghi: {n} lúc {t}. Lưu sẽ sửa bản ghi này.', '本期已由{n}于{t}抄表，保存将修改该记录。'],
+  saveReading: ['Lưu chỉ số', '保存读数'], readingSaved: ['Đã lưu chỉ số', '读数已保存'],
+  delReading: ['Xoá bản ghi', '删除记录'], readingDeleted: ['Đã xoá bản ghi', '记录已删除'],
+  needOneNum: ['Nhập ít nhất một chỉ số', '请至少填写一个读数'], badNum: ['Số không hợp lệ ở {m}', '{m}的数字无效'],
+  noCT: ['Chưa có công tơ nào.', '还没有电表。'], noCTadd: ['Bấm "Thêm công tơ" để bắt đầu.', '请点“添加电表”开始。'],
+  noCTask: ['Nhờ Quản lý thêm công tơ.', '请主管添加电表。'],
+  kMonthSoFar: ['Tháng {m} đến kỳ {d}', '{m}月截至{d}'], kMonth: ['Tháng {m}', '{m}月'], vsMonth: ['so với tháng {m}', '较{m}月'],
+  kCos: ['cosφ tháng {m}', '{m}月功率因数'], cosOk: ['Đạt, từ 0,9 trở lên', '合格，≥0.9'],
+  cosLow: ['Dưới 0,9: có thể bị tính tiền công suất phản kháng', '低于0.9：可能被收无功电费'],
+  chartMonth: ['Điện tiêu thụ theo tháng', '每月用电量'], chartKy: ['Bình quân mỗi ngày theo kỳ ghi', '各抄表期日均用电量'],
+  chartCT: ['So sánh công tơ tháng {m}', '{m}月各电表对比'], chartTap: ['Chạm vào cột để xem số', '点击柱子查看数值'],
+  total: ['Tổng', '合计'], noData: ['Chưa đủ số liệu để vẽ biểu đồ', '数据不足，无法绘图'], perDay: ['Bình quân/ngày', '日均'],
+  wholeKy: ['Cả kỳ', '本期'], daysN: ['{n} ngày', '{n}天'],
+  sampleNote: ['Số điện trong bản xem thử là số mẫu', '预览版的电表数据为示例'],
+  exportDien: ['Xuất Excel', '导出Excel'], monthTotal: ['Tổng tháng {m}', '{m}月合计'],
+  tsCode: ['Mã', '代码'], tsName: ['Tên tiếng Việt', '越南语名称'], tsZh: ['Tên tiếng Trung', '中文名称'], tsUnit: ['Đơn vị', '单位'],
+  tsCum: ['Chỉ số cộng dồn (tính tiêu thụ)', '累计读数（计算用量）'], addParam: ['Thêm thông số', '添加参数'], delParam: ['Bỏ', '删除'],
+  tsHelp: ['Mã OBIS in trên màn hình công tơ. Bỏ đánh dấu "cộng dồn" cho số tức thời như công suất cực đại 1.6.0.', '电表屏幕上显示的OBIS代码。最大需量1.6.0等瞬时值请取消“累计”。'],
+  lblDien: ['Quét để ghi số điện', '扫码抄电表'], meterSec: ['Công tơ điện', '电表'], viewList: ['Danh sách', '列表'],
+  gapKy: ['gộp {n} kỳ chưa ghi', '含{n}期未抄'], unitKwh: ['kWh', '千瓦时'], allMeters: ['Công tơ', '电表'],
+  printMeters: ['In tem QR công tơ', '打印电表二维码'], paramsBtn: ['Thông số', '参数']
+});
+Object.assign(ERR, {
+  KHONG_CO_CT: ['Không tìm thấy công tơ này.', '找不到该电表。'],
+  CT_NGUNG: ['Công tơ đã ngừng theo dõi.', '该电表已停用。'],
+  KY_SAI: ['Kỳ ghi phải là ngày 10, 20 hoặc ngày cuối tháng.', '抄表期必须是10日、20日或月末。'],
+  THONG_SO_SAI: ['Công tơ này không có thông số {m}.', '该电表没有参数{m}。'],
+  THIEU_SO: ['Chưa nhập chỉ số nào.', '还没有填写读数。'],
+  DA_GHI: ['Kỳ này {m} đã ghi. Nhờ Quản lý sửa nếu cần.', '本期已由{m}抄表，如需修改请找主管。'],
+  HE_SO_SAI: ['Hệ số nhân phải lớn hơn 0.', '倍率必须大于0。'],
+  MA_TS_SAI: ['Mã thông số "{m}" không hợp lệ (chỉ chữ, số, dấu chấm).', '参数代码“{m}”无效。'],
+  MA_TS_TRUNG: ['Mã thông số {m} bị trùng.', '参数代码{m}重复。']
+});
+
+// Ghép nhiều câu song ngữ: dòng tiếng Việt rồi dòng tiếng Trung
+function tj(...parts) {
+  return esc(parts.map(([k, v]) => tv(k, v)).join(' · ')) + '<span class="zi" lang="zh-CN">' + esc(parts.map(([k, v]) => tz(k, v)).join(' · ')) + '</span>';
+}
+// ---------- Kỳ ghi ----------
+const kyDate = (y, m, d) => y + '-' + pad2(m) + '-' + pad2(d);
+function laKy(d) { if (!validD(d)) return false; const y = +d.slice(0, 4), m = +d.slice(5, 7), n = +d.slice(8, 10); return n === 10 || n === 20 || n === dim(y, m); }
+function kyHienTai(today) {
+  const y = +today.slice(0, 4), m = +today.slice(5, 7), n = +today.slice(8, 10), c = dim(y, m);
+  if (n >= c) return kyDate(y, m, c);
+  if (n >= 20) return kyDate(y, m, 20);
+  if (n >= 10) return kyDate(y, m, 10);
+  const py = m === 1 ? y - 1 : y, pm = m === 1 ? 12 : m - 1;
+  return kyDate(py, pm, dim(py, pm));
+}
+function kyTruoc(k) {
+  const y = +k.slice(0, 4), m = +k.slice(5, 7), n = +k.slice(8, 10);
+  if (n === 20) return kyDate(y, m, 10);
+  if (n === 10) { const py = m === 1 ? y - 1 : y, pm = m === 1 ? 12 : m - 1; return kyDate(py, pm, dim(py, pm)); }
+  return kyDate(y, m, 20);
+}
+function kyTiep(k) {
+  const y = +k.slice(0, 4), m = +k.slice(5, 7), n = +k.slice(8, 10);
+  if (n === 10) return kyDate(y, m, 20);
+  if (n === 20) return kyDate(y, m, dim(y, m));
+  const ny = m === 12 ? y + 1 : y, nm = m === 12 ? 1 : m + 1;
+  return kyDate(ny, nm, 10);
+}
+function kysOfYear(y) { const a = []; for (let m = 1; m <= 12; m++) a.push(kyDate(y, m, 10), kyDate(y, m, 20), kyDate(y, m, dim(y, m))); return a; }
+
+// ---------- Số ----------
+function fmtNum(v, dec) {
+  if (v === null || v === undefined || v === '' || isNaN(v)) return '—';
+  const neg = v < 0; let a = Math.abs(+v), str;
+  if (dec === 'raw') str = String(Math.round(a * 1000) / 1000);
+  else str = a.toFixed(dec === undefined ? (a >= 100 ? 0 : 1) : dec);
+  let [i, f] = str.split('.');
+  i = i.replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
+  if (dec !== 'raw' && f && /^0+$/.test(f)) f = '';
+  return (neg ? '−' : '') + i + (f ? '.' + f : '');
+}
+function parseNum(s) {
+  s = String(s === null || s === undefined ? '' : s).replace(/\s/g, '');
+  if (!s) return null;
+  if (s.indexOf('.') >= 0 && s.indexOf(',') >= 0) s = s.replace(/\./g, '').replace(',', '.');
+  else s = s.replace(',', '.');
+  return /^\d+(\.\d+)?$/.test(s) ? +s : NaN;
+}
+function fmtK(v) {
+  const a = Math.abs(v);
+  if (a >= 1e6) return (v / 1e6).toFixed(a >= 1e7 ? 0 : 1).replace(/\.0$/, '') + 'M';
+  if (a >= 1e4) return Math.round(v / 1e3) + 'k';
+  if (a >= 1e3) return (v / 1e3).toFixed(1).replace(/\.0$/, '') + 'k';
+  return String(Math.round(v * 10) / 10);
+}
+
+// ---------- Dữ liệu ----------
+const activeCT = () => (S.V && S.V.ct ? S.V.ct.filter((c) => c.hoatDong) : []);
+function tsOfCT(ct) { const all = S.V.ts.map((x) => x.ma); return ct.thongSo && ct.thongSo.length ? ct.thongSo.filter((m) => all.indexOf(m) >= 0) : all; }
+function tsName(code) { const x = S.V.tsByMa[code]; return x ? x.ten : code; }
+function rebuildDien() {
+  const b = S.base, V = S.V;
+  V.ct = (b.congTo || []).slice();
+  V.ctByMa = {}; V.ct.forEach((c) => { V.ctByMa[c.ma] = c; });
+  V.ts = b.thongSo && b.thongSo.length ? b.thongSo : [];
+  V.tsByMa = {}; V.ts.forEach((x) => { V.tsByMa[x.ma] = x; });
+  const seen = {};
+  const cs = (b.chiSo || []).concat(Object.values(S.oldCS || {}).flat()).filter((x) => { if (seen[x.id]) return false; seen[x.id] = 1; return true; });
+  S.Q.forEach((q) => {
+    if (q.st !== 'cho' || q.action !== 'saveReading') return;
+    const row = { id: 'tmp-' + q.opId, ky: q.p.ky, ma: q.p.ma, giaTri: q.p.giaTri, nguoi: q.p.nguoi, thoiGian: q.t, ghiChu: q.p.ghiChu || '', uid: q.uid, cho: true };
+    const i = cs.findIndex((x) => x.ma === q.p.ma && x.ky === q.p.ky);
+    if (i >= 0) cs[i] = row; else cs.push(row);
+  });
+  V.cs = cs; V.csKey = {}; V.csMa = {};
+  cs.forEach((x) => { V.csKey[x.ma + '|' + x.ky] = x; (V.csMa[x.ma] = V.csMa[x.ma] || []).push(x); });
+  V.dl = {};
+  Object.keys(V.csMa).forEach((ma) => {
+    const arr = V.csMa[ma].sort((a, c) => (a.ky > c.ky ? 1 : -1));
+    const hs = V.ctByMa[ma] ? V.ctByMa[ma].heSo : 1, last = {};
+    arr.forEach((x) => {
+      const o = {};
+      Object.keys(x.giaTri || {}).forEach((code) => {
+        const ts = V.tsByMa[code];
+        if (ts && ts.tich === false) return;
+        const cur = +x.giaTri[code], p = last[code];
+        if (p) {
+          const ngay = diffD(x.ky, p.ky);
+          o[code] = { v: (cur - p.v) * hs, raw: cur - p.v, prev: p.v, prevKy: p.ky, ngay, gap: ngay > 12, am: cur < p.v };
+        }
+        last[code] = { v: cur, ky: x.ky };
+      });
+      V.dl[ma + '|' + x.ky] = o;
+    });
+  });
+}
+function prevReading(ma, ky, code) {
+  const arr = (S.V.csMa[ma] || []).filter((x) => x.ky < ky && x.giaTri && x.giaTri[code] !== undefined);
+  return arr.length ? arr[arr.length - 1] : null;
+}
+// Tiêu thụ của một tháng (tổng các kỳ trong tháng, bỏ kỳ có số âm)
+function monthCons(ma, y, m, code) {
+  const pre = y + '-' + pad2(m) + '-';
+  let sum = 0, has = false;
+  (S.V.csMa[ma] || []).forEach((x) => {
+    if (x.ky.slice(0, 8) !== pre) return;
+    const d = (S.V.dl[ma + '|' + x.ky] || {})[code];
+    if (d && !d.am) { sum += d.v; has = true; }
+  });
+  return has ? sum : null;
+}
+function dienThieu() {
+  const cts = activeCT(), today = TODAY(), k = kyHienTai(today);
+  return { ky: k, tong: cts.length, thieu: cts.filter((c) => !S.V.csKey[c.ma + '|' + k]) };
+}
+function findCT(q) {
+  const n = norm(q), nc = n.replace(/\s/g, '');
+  const list = activeCT();
+  if (!n) return list;
+  return list.filter((c) => { const h = norm([c.ma, c.ten, c.soCongTo, c.viTri].join(' ')); return h.indexOf(n) >= 0 || h.replace(/\s/g, '').indexOf(nc) >= 0; });
+}
+function ctRow(c) {
+  return `<div class="row" data-act="dienNhap" data-ma="${esc(c.ma)}" role="button" tabindex="0">
+    <div class="main"><div class="nm">${IC.bolt} ${esc(c.ten)}</div><div class="sub"><span class="code">${esc(c.ma)}</span> · ${t('heSo')} ×${fmtNum(c.heSo, 'raw')}</div></div>${IC.chev}</div>`;
+}
+
+// ---------- Thẻ ở trang chủ ----------
+function dienHomeCard() {
+  const cts = activeCT(); if (!cts.length) return '';
+  const today = TODAY(), st = dienThieu(), miss = st.thieu.length, next = kyTiep(st.ky);
+  let pl;
+  if (!miss) pl = `<span class="pill p-xong">${t('duSo')}</span>`;
+  else pl = `<span class="pill ${st.ky === today ? 'p-nay' : 'p-qua'}">${t('thieuN', { n: miss })}</span>`;
+  return `<button class="ecard" data-act="tab" data-v="dien"><span class="eic">${IC.bolt}</span>
+    <span class="main"><span class="nm">${st.ky === today && miss ? t('kyHomNay') : t('homeDien')}</span>
+    <span class="sub">${tj(['kyN', { d: fmtDM(st.ky) }], ['daGhiN', { a: st.tong - miss, b: st.tong }])}</span></span>${pl}</button>`;
+}
+
+// ---------- Màn Điện ----------
+VIEWS.dien = {
+  html() {
+    const f = S.f, cts = activeCT(), today = TODAY();
+    if (!f.dTab) f.dTab = 'ghi';
+    let o = '';
+    if (IS_DEMO && cts.length) o += `<p class="help" style="margin:0 0 10px">${t('sampleNote')}</p>`;
+    if (!cts.length) {
+      return o + `<div class="card empty">${t('noCT')}<div style="margin-top:6px">${t(can('may') ? 'noCTadd' : 'noCTask')}</div>
+        ${can('may') ? `<div class="btns" style="justify-content:center;margin-top:14px"><button class="btn sm" data-act="ctEdit" data-ma="">${IC.plus} ${t('addCT')}</button>${can('admin') ? `<button class="btn ghost sm" data-act="go" data-v="thongSo">${t('paramsBtn')}</button>` : ''}</div>` : ''}</div>`;
+    }
+    const st = dienThieu(), miss = st.thieu.length, next = kyTiep(st.ky);
+    const pct = Math.round(((st.tong - miss) / st.tong) * 100);
+    o += `<div class="card pad kyhead"><div class="kyrow"><div><div class="lbl">${t('kyNay')}</div><div class="big">${fmtD(st.ky)}</div></div>
+      ${miss ? `<span class="pill ${st.ky === today ? 'p-nay' : 'p-qua'}">${t('thieuN', { n: miss })}</span>` : `<span class="pill p-xong">${t('duSo')}</span>`}</div>
+      <div class="prog" role="progressbar" aria-valuenow="${pct}" aria-valuemin="0" aria-valuemax="100"><i style="width:${pct}%"></i></div>
+      <div class="help" style="margin-top:8px">${tj(['daGhiN', { a: st.tong - miss, b: st.tong }], ['kyToi', { d: fmtDM(next), n: diffD(next, today) }])}</div></div>
+      <div class="seg wide3" role="tablist" style="margin:14px 0">${['ghi', 'bang', 'bieu'].map((k) =>
+        `<button class="${f.dTab === k ? 'on' : ''}" data-act="dTab" data-t="${k}">${tv(k === 'ghi' ? 'dTabGhi' : k === 'bang' ? 'dTabBang' : 'dTabBieu')}<small>${tz(k === 'ghi' ? 'dTabGhi' : k === 'bang' ? 'dTabBang' : 'dTabBieu')}</small></button>`).join('')}</div>`;
+    if (f.dTab === 'ghi') o += dienGhi();
+    else if (f.dTab === 'bang') o += dienBang();
+    else o += dienBieu();
+    return o;
+  },
+  after() {
+    if (S.f.dTab === 'bieu') drawCharts();
+    const w = $('.dtabwrap'); if (w) w.scrollLeft = 0;
+  }
+};
+function ctChips(cur, act) {
+  return `<div class="hscroll" style="margin-bottom:12px">${activeCT().map((c) => `<button class="chip${cur === c.ma ? ' on' : ''}" data-act="${act}" data-ma="${esc(c.ma)}">${esc(c.ten)}</button>`).join('')}</div>`;
+}
+function curCT() { const f = S.f, cts = activeCT(); if (!f.dCT || !cts.some((c) => c.ma === f.dCT)) f.dCT = cts[0].ma; return S.V.ctByMa[f.dCT]; }
+
+function dienGhi() {
+  const f = S.f, today = TODAY(), cur = kyHienTai(today);
+  if (!f.dKy || f.dKy > cur) f.dKy = cur;
+  const k = f.dKy;
+  let o = `<div class="caltools"><div class="stepper"><button data-act="dKyStep" data-d="-1" aria-label="-">${IC.left}</button><b>${esc(tv('kyN', { d: fmtD(k) }))}<small style="display:block;font-family:var(--f-zh);font-weight:500;color:var(--ink2);font-size:12px">${esc(tz('kyN', { d: fmtDM(k) }))}</small></b><button data-act="dKyStep" data-d="1" aria-label="+" ${k >= cur ? 'disabled' : ''}>${IC.right}</button></div></div>`;
+  o += `<div class="list">${activeCT().map((c) => {
+    const x = S.V.csKey[c.ma + '|' + k], d = x ? (S.V.dl[c.ma + '|' + k] || {}) : {};
+    let pl, sub = '';
+    if (x) {
+      pl = x.cho ? `<span class="pill p-cho">${t('pending')}</span>` : `<span class="pill p-xong">${t('daGhi')}</span>`;
+      const main = x.giaTri['1.8.0'] !== undefined ? '1.8.0' : Object.keys(x.giaTri)[0];
+      sub = `<div class="sub"><span class="mono">${esc(main)}: ${fmtNum(x.giaTri[main], 'raw')}</span>${d[main] ? ' · ' + esc(tp('tieuThu')) + ' <b class="num">' + fmtNum(d[main].v) + '</b> ' + esc((S.V.tsByMa[main] || {}).dv || '') : ''}</div>
+        <div class="sub">${esc(x.nguoi)} · ${esc((x.thoiGian || '').slice(5, 16))}</div>`;
+    } else pl = `<span class="pill ${k === today ? 'p-nay' : k < today ? 'p-qua' : 'p-ok'}">${t('chuaGhi')}</span>`;
+    return `<div class="row" data-act="dienNhap" data-ma="${esc(c.ma)}" data-ky="${k}" role="button" tabindex="0">
+      <div class="main"><div class="nm">${esc(c.ten)}</div><div class="sub"><span class="code">${esc(c.ma)}</span> · ×${fmtNum(c.heSo, 'raw')}${c.soCongTo ? ' · ' + esc(c.soCongTo) : ''}</div>${sub}</div>
+      <div class="end">${pl}${IC.chev}</div></div>`;
+  }).join('')}</div>`;
+  if (can('may')) {
+    o += `<div class="btns" style="margin-top:14px"><button class="btn sm" data-act="ctEdit" data-ma="">${IC.plus} ${t('addCT')}</button>
+      <button class="btn ghost sm" data-act="labelsCT">${IC.qr} ${t('printQR')}</button>
+      ${can('admin') ? `<button class="btn ghost sm" data-act="go" data-v="thongSo">${t('paramsBtn')}</button>` : ''}</div>`;
+  }
+  return o;
+}
+
+function dienBang() {
+  const f = S.f, c = curCT(), y = f.dYear || +TODAY().slice(0, 4), today = TODAY(), cur = kyHienTai(today);
+  const codes = tsOfCT(c);
+  let o = ctChips(c.ma, 'dCT') + `<div class="caltools"><div class="stepper"><button data-act="dYear" data-d="-1" aria-label="-">${IC.left}</button><b>${t('yearN', { y })}</b><button data-act="dYear" data-d="1" aria-label="+">${IC.right}</button></div>
+    <button class="btn ghost sm" data-act="exportDien" data-y="${y}">${IC.dl} ${t('exportDien')}</button></div>
+    <p class="help" style="margin:-4px 0 10px">${esc(tp('tieuThu'))} = (${esc(tp('chiSo'))} − ${esc(tp('kyTruoc'))}) × ${fmtNum(c.heSo, 'raw')} ${esc(tp('heSo'))}</p>`;
+  const kys = kysOfYear(y).filter((k) => k <= cur).reverse();
+  if (!kys.length) return o + `<div class="card empty">${t('noData')}</div>`;
+  let h = `<div class="tblwrap dtabwrap"><table class="cal dtab"><thead><tr><th class="nmc" rowspan="2">${t('kyGhi')}</th>`;
+  codes.forEach((code) => { const ts = S.V.tsByMa[code] || {}; h += `<th colspan="${ts.tich === false ? 1 : 2}" class="pc"><b class="mono">${esc(code)}</b><small>${esc(ts.ten || '')}</small></th>`; });
+  h += `<th rowspan="2" class="pc">${t('nguoiGhi')}</th></tr><tr>`;
+  codes.forEach((code) => { const ts = S.V.tsByMa[code] || {}; h += `<th class="sub2">${t('chiSo')}</th>` + (ts.tich === false ? '' : `<th class="sub2">${t('tieuThu')}<br><span class="mono">${esc(ts.dv || '')}</span></th>`); });
+  h += '</tr></thead><tbody>';
+  let lastMonth = '';
+  kys.forEach((k) => {
+    const mo = k.slice(0, 7);
+    if (mo !== lastMonth) {
+      lastMonth = mo;
+      const m = +k.slice(5, 7);
+      h += `<tr class="mt"><th class="nmc">${esc(tv('monthTotal', { m }))}<small>${esc(tz('monthTotal', { m }))}</small></th>`;
+      codes.forEach((code) => { const ts = S.V.tsByMa[code] || {}; const v = ts.tich === false ? null : monthCons(c.ma, +k.slice(0, 4), m, code); h += ts.tich === false ? '<td></td>' : `<td></td><td class="num"><b>${v === null ? '' : fmtNum(v)}</b></td>`; });
+      h += '<td></td></tr>';
+    }
+    const x = S.V.csKey[c.ma + '|' + k], d = S.V.dl[c.ma + '|' + k] || {};
+    h += `<tr${x ? '' : ' class="miss"'}><th class="nmc"><button data-act="dienNhap" data-ma="${esc(c.ma)}" data-ky="${k}">${fmtD(k)}</button>${x && x.cho ? `<span class="pill p-cho" style="margin-top:3px">${t('pending')}</span>` : ''}</th>`;
+    codes.forEach((code) => {
+      const ts = S.V.tsByMa[code] || {}, v = x && x.giaTri ? x.giaTri[code] : undefined, dd = d[code];
+      h += `<td class="num mono">${v === undefined ? (x ? '' : '·') : fmtNum(v, 'raw')}</td>`;
+      if (ts.tich !== false) h += `<td class="num${dd && dd.am ? ' bad' : ''}">${dd ? fmtNum(dd.v) + (dd.gap ? '<sup>*</sup>' : '') : ''}</td>`;
+    });
+    h += `<td class="who">${x ? esc(x.nguoi) : `<span class="muted">${t('chuaGhi')}</span>`}</td></tr>`;
+  });
+  h += '</tbody></table></div>';
+  return o + h;
+}
+
+// ---------- Biểu đồ ----------
+function dienBieu() {
+  const f = S.f, c = curCT(), y = f.dYear || +TODAY().slice(0, 4);
+  return ctChips(c.ma, 'dCT') + `<div class="caltools"><div class="stepper"><button data-act="dYear" data-d="-1" aria-label="-">${IC.left}</button><b>${t('yearN', { y })}</b><button data-act="dYear" data-d="1" aria-label="+">${IC.right}</button></div></div>
+    <div class="kpis" id="kpis"></div>
+    <div class="card pad chartcard"><h3 class="ch">${t('chartMonth')} <span class="unit mono">kWh</span></h3><div class="legend" id="lg1"></div><div class="chart" id="ch1"></div><p class="help">${t('chartTap')}</p></div>
+    <div class="card pad chartcard"><h3 class="ch">${t('chartKy')} <span class="unit mono">kWh/${esc(tv('days', { n: '' }).trim())}</span></h3><div class="chart" id="ch2"></div></div>
+    <div class="card pad chartcard"><h3 class="ch" id="ch3t"></h3><div id="ch3"></div></div>`;
+}
+function drawCharts() {
+  const el1 = $('#ch1'); if (!el1) return;
+  const f = S.f, c = curCT(), y = f.dYear || +TODAY().slice(0, 4), today = TODAY();
+  const codes = tsOfCT(c);
+  const split = ['1.8.1', '1.8.2', '1.8.3'].every((k) => codes.indexOf(k) >= 0);
+  const series = split ? [
+    { key: '1.8.1', cls: 's1', name: (S.V.tsByMa['1.8.1'] || {}).ten || '1.8.1' },
+    { key: '1.8.2', cls: 's2', name: (S.V.tsByMa['1.8.2'] || {}).ten || '1.8.2' },
+    { key: '1.8.3', cls: 's3', name: (S.V.tsByMa['1.8.3'] || {}).ten || '1.8.3' }
+  ] : [{ key: '1.8.0', cls: 's1', name: (S.V.tsByMa['1.8.0'] || {}).ten || '1.8.0' }];
+  const data = [];
+  for (let m = 1; m <= 12; m++) {
+    const vals = {}; let tot = 0, has = false;
+    series.forEach((s) => { const v = monthCons(c.ma, y, m, s.key); if (v !== null) { vals[s.key] = Math.max(0, v); tot += Math.max(0, v); has = true; } });
+    if (split) { const v0 = monthCons(c.ma, y, m, '1.8.0'); if (v0 !== null && !has) { has = true; } }
+    data.push(has ? { vals, total: tot } : null);
+  }
+  // Nhãn: tháng cao nhất và tháng gần nhất có số
+  const idx = data.map((d, i) => (d ? i : -1)).filter((i) => i >= 0);
+  const lbl = [];
+  if (idx.length) {
+    let mx = idx[0]; idx.forEach((i) => { if (data[i].total > data[mx].total) mx = i; });
+    lbl.push(mx); if (idx[idx.length - 1] !== mx) lbl.push(idx[idx.length - 1]);
+  }
+  $('#lg1').innerHTML = series.length > 1 ? series.map((s) => `<span><i class="sw ${s.cls}"></i>${esc(s.key)} ${esc(s.name)}</span>`).join('') : '';
+  const tips = data.map((d, i) => d ? {
+    title: tp('kMonth', { m: i + 1 }) + ' / ' + y,
+    rows: [{ value: fmtNum(d.total) + ' kWh', name: tp('total') }].concat(series.length > 1 ? series.map((s) => ({ cls: s.cls, value: fmtNum(d.vals[s.key] || 0) + ' kWh', name: s.key + ' ' + s.name })) : [])
+  } : null);
+  if (!idx.length) el1.innerHTML = `<div class="empty">${t('noData')}</div>`;
+  else colChart(el1, { labels: Array.from({ length: 12 }, (_, i) => String(i + 1)), series, data, labelIdx: lbl, tips, cur: String(y) === today.slice(0, 4) ? +today.slice(5, 7) - 1 : -1 });
+
+  // Biểu đồ theo kỳ: kWh/ngày
+  const kys = kysOfYear(y).filter((k) => k <= kyHienTai(today));
+  const pts = kys.map((k) => { const d = (S.V.dl[c.ma + '|' + k] || {})['1.8.0']; return d && !d.am && d.ngay > 0 ? { k, v: d.v / d.ngay, tot: d.v, ngay: d.ngay } : null; });
+  const el2 = $('#ch2');
+  if (pts.filter(Boolean).length < 2) el2.innerHTML = `<div class="empty">${t('noData')}</div>`;
+  else lineChart(el2, { pts, kys });
+
+  // KPI
+  const cm = String(y) === today.slice(0, 4) ? +today.slice(5, 7) : 12;
+  const kNow = kyHienTai(today);
+  const vNow = monthCons(c.ma, y, cm, '1.8.0');
+  const pm = cm - 1;
+  const vPrev = pm >= 1 ? monthCons(c.ma, y, pm, '1.8.0') : null, vPrev2 = pm - 1 >= 1 ? monthCons(c.ma, y, pm - 1, '1.8.0') : null;
+  let kp = '';
+  kp += `<div class="kpi"><div class="kl">${String(y) === today.slice(0, 4) ? t('kMonthSoFar', { m: cm, d: fmtDM(kNow) }) : t('kMonth', { m: cm })}</div><div class="kv">${vNow === null ? '—' : fmtNum(vNow)} <small>kWh</small></div></div>`;
+  if (pm >= 1) {
+    let dl = '';
+    if (vPrev !== null && vPrev2) { const pc = (vPrev - vPrev2) / vPrev2 * 100; dl = `<div class="kd ${pc > 0 ? 'up' : 'down'}"><span aria-hidden="true">${pc > 0 ? '▲' : '▼'}</span> ${pc > 0 ? '+' : '−'}${Math.abs(pc).toFixed(1)}% ${t('vsMonth', { m: pm - 1 })}</div>`; }
+    kp += `<div class="kpi"><div class="kl">${t('kMonth', { m: pm })}</div><div class="kv">${vPrev === null ? '—' : fmtNum(vPrev)} <small>kWh</small></div>${dl}</div>`;
+  }
+  if (codes.indexOf('3.8.0') >= 0 && pm >= 1) {
+    const P = monthCons(c.ma, y, pm, '1.8.0'), Q = monthCons(c.ma, y, pm, '3.8.0');
+    if (P && Q !== null) {
+      const cos = P / Math.sqrt(P * P + Q * Q), good = cos >= 0.9;
+      kp += `<div class="kpi"><div class="kl">${t('kCos', { m: pm })}</div><div class="kv">${cos.toFixed(2)}</div>
+        <div class="kd ${good ? 'good' : 'warn'}"><span aria-hidden="true">${good ? '✓' : '⚠'}</span> ${t(good ? 'cosOk' : 'cosLow')}</div></div>`;
+    }
+  }
+  $('#kpis').innerHTML = kp;
+
+  // So sánh công tơ (tháng gần nhất có số của công tơ đang chọn)
+  let mm = cm; while (mm > 1 && monthCons(c.ma, y, mm, '1.8.0') === null) mm--;
+  const rows = activeCT().map((x) => ({ c: x, v: monthCons(x.ma, y, mm, '1.8.0') })).filter((r) => r.v !== null).sort((a, b) => b.v - a.v);
+  $('#ch3t').innerHTML = t('chartCT', { m: mm }) + ' <span class="unit mono">kWh</span>';
+  const mx = rows.length ? Math.max(...rows.map((r) => r.v)) : 0;
+  $('#ch3').innerHTML = rows.length ? `<div class="hbars">${rows.map((r) => `<div class="hb${r.c.ma === c.ma ? ' me' : ''}"><span class="hn">${esc(r.c.ten)}</span><span class="track"><i style="width:${mx ? Math.max(1, r.v / mx * 100) : 0}%"></i></span><b class="num">${fmtNum(r.v)}</b></div>`).join('')}</div>` : `<div class="empty">${t('noData')}</div>`;
+}
+function niceStep(max, n) {
+  const raw = max / n, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
+  return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 2.5 ? 2.5 : f <= 5 ? 5 : 10) * p;
+}
+function roundTop(x, y, w, h, r) {
+  r = Math.min(r, h, w / 2);
+  return `M${x},${y + h}V${y + r}Q${x},${y} ${x + r},${y}H${x + w - r}Q${x + w},${y} ${x + w},${y + r}V${y + h}Z`;
+}
+function axes(W, H, pad, top, step) {
+  let g = '';
+  for (let v = 0; v <= top + 1e-9; v += step) {
+    const yy = pad.t + (H - pad.t - pad.b) * (1 - v / top);
+    g += `<line x1="${pad.l}" x2="${W - pad.r}" y1="${yy}" y2="${yy}" class="grid"/><text x="${pad.l - 6}" y="${yy + 4}" class="tick" text-anchor="end">${fmtK(v)}</text>`;
+  }
+  return g;
+}
+function colChart(el, o) {
+  const W = Math.max(280, Math.floor(el.clientWidth)), H = 240, pad = { l: 42, r: 6, t: 22, b: 24 };
+  const pw = W - pad.l - pad.r, ph = H - pad.t - pad.b, n = o.labels.length, band = pw / n, bw = Math.min(24, band * 0.62);
+  const max = Math.max(1, ...o.data.map((d) => (d ? d.total : 0)));
+  const step = niceStep(max, 4), top = Math.ceil(max / step) * step;
+  const Y = (v) => pad.t + ph * (1 - v / top);
+  let bars = '', xl = '', lab = '', hits = '';
+  o.data.forEach((d, i) => {
+    const x = pad.l + band * i + (band - bw) / 2;
+    xl += `<text x="${pad.l + band * i + band / 2}" y="${H - 6}" class="tick${i === o.cur ? ' curx' : ''}" text-anchor="middle">${o.labels[i]}</text>`;
+    if (!d) return;
+    let cum = 0;
+    const nz = o.series.filter((s) => (d.vals[s.key] || 0) > 0);
+    nz.forEach((s, si) => {
+      const v = d.vals[s.key], y1 = Y(cum + v), y0 = Y(cum) - (si > 0 ? 2 : 0);
+      cum += v;
+      const h = y0 - y1;
+      if (h < 0.8) return;
+      bars += si === nz.length - 1 ? `<path d="${roundTop(x, y1, bw, h, 4)}" class="${s.cls}"/>` : `<rect x="${x}" y="${y1}" width="${bw}" height="${h}" class="${s.cls}"/>`;
+    });
+    if (o.labelIdx.indexOf(i) >= 0) lab += `<text x="${x + bw / 2}" y="${Y(d.total) - 6}" class="vlab" text-anchor="middle">${fmtK(d.total)}</text>`;
+    o.tips[i].y = Y(d.total);
+    hits += `<rect class="hit" x="${pad.l + band * i}" y="${pad.t}" width="${band}" height="${ph}" data-tip="${i}" tabindex="0" role="img" aria-label="${esc(o.tips[i].title + ': ' + o.tips[i].rows[0].value)}"/>`;
+  });
+  el.innerHTML = `<svg class="viz" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${axes(W, H, pad, top, step)}<line x1="${pad.l}" x2="${W - pad.r}" y1="${pad.t + ph}" y2="${pad.t + ph}" class="base"/>${bars}${lab}${xl}${hits}</svg><div class="tip" hidden></div>`;
+  bindTips(el, o.tips);
+}
+function lineChart(el, o) {
+  const W = Math.max(280, Math.floor(el.clientWidth)), H = 210, pad = { l: 42, r: 34, t: 16, b: 24 };
+  const pw = W - pad.l - pad.r, ph = H - pad.t - pad.b, n = o.pts.length, band = pw / n;
+  const max = Math.max(1, ...o.pts.filter(Boolean).map((p) => p.v));
+  const step = niceStep(max, 4), top = Math.ceil(max / step) * step;
+  const X = (i) => pad.l + band * i + band / 2, Y = (v) => pad.t + ph * (1 - v / top);
+  let segs = [], cur = [];
+  o.pts.forEach((p, i) => { if (p) cur.push([X(i), Y(p.v)]); else if (cur.length) { segs.push(cur); cur = []; } });
+  if (cur.length) segs.push(cur);
+  let path = '', area = '';
+  segs.forEach((sg) => {
+    path += 'M' + sg.map((q) => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('L');
+    if (sg.length > 1) area += `<path d="M${sg[0][0]},${pad.t + ph}L${sg.map((q) => q[0].toFixed(1) + ',' + q[1].toFixed(1)).join('L')}L${sg[sg.length - 1][0]},${pad.t + ph}Z" class="area"/>`;
+  });
+  let xl = '', hits = '';
+  const tips = [];
+  o.kys.forEach((k, i) => {
+    if (k.slice(8) === '10') xl += `<text x="${X(i)}" y="${H - 6}" class="tick" text-anchor="middle">${+k.slice(5, 7)}</text>`;
+    const p = o.pts[i];
+    tips.push(p ? { title: tp('kyN', { d: fmtDM(k) }) + ' · ' + tp('daysN', { n: p.ngay }), y: Y(p.v), x: X(i),
+      rows: [{ cls: 's1', value: fmtNum(p.v) + ' kWh', name: tp('perDay') }, { value: fmtNum(p.tot) + ' kWh', name: tp('wholeKy') }] } : null);
+    if (p) hits += `<rect class="hit band" x="${pad.l + band * i}" y="${pad.t}" width="${band}" height="${ph}" data-tip="${i}" tabindex="0" role="img" aria-label="${esc(tips[i].title + ': ' + tips[i].rows[0].value)}"/>`;
+  });
+  let li = -1; o.pts.forEach((p, i) => { if (p) li = i; });
+  const lp = o.pts[li];
+  const end = `<circle cx="${X(li)}" cy="${Y(lp.v)}" r="4" class="dot"/><text x="${Math.min(X(li) + 7, W - 2)}" y="${Y(lp.v) - 8}" class="vlab" text-anchor="${X(li) + 30 > W ? 'end' : 'start'}">${fmtK(lp.v)}</text>`;
+  el.innerHTML = `<svg class="viz" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">${axes(W, H, pad, top, step)}<line x1="${pad.l}" x2="${W - pad.r}" y1="${pad.t + ph}" y2="${pad.t + ph}" class="base"/>${area}<path d="${path}" class="ln"/>${end}
+    <line class="xh" x1="0" x2="0" y1="${pad.t}" y2="${pad.t + ph}" visibility="hidden"/><circle class="hdot" r="4" cx="0" cy="0" visibility="hidden"/>${xl}${hits}</svg><div class="tip" hidden></div>`;
+  bindTips(el, tips, (d) => {
+    const xh = el.querySelector('.xh'), hd = el.querySelector('.hdot');
+    if (!d) { xh.setAttribute('visibility', 'hidden'); hd.setAttribute('visibility', 'hidden'); return; }
+    xh.setAttribute('x1', d.x); xh.setAttribute('x2', d.x); xh.setAttribute('visibility', 'visible');
+    hd.setAttribute('cx', d.x); hd.setAttribute('cy', d.y); hd.setAttribute('visibility', 'visible');
+  });
+}
+function bindTips(el, tips, onShow) {
+  const tip = el.querySelector('.tip');
+  const hide = () => { tip.hidden = true; el.querySelectorAll('.hit.on').forEach((x) => x.classList.remove('on')); if (onShow) onShow(null); };
+  const show = (hit) => {
+    const d = tips[+hit.dataset.tip]; if (!d) { hide(); return; }
+    tip.textContent = '';
+    const h = document.createElement('div'); h.className = 'tt'; h.textContent = d.title; tip.appendChild(h);
+    d.rows.forEach((r) => {
+      const row = document.createElement('div'); row.className = 'tr';
+      const k = document.createElement('i'); k.className = 'key ' + (r.cls || 'none'); row.appendChild(k);
+      const v = document.createElement('b'); v.textContent = r.value; row.appendChild(v);
+      const nm = document.createElement('span'); nm.textContent = r.name; row.appendChild(nm);
+      tip.appendChild(row);
+    });
+    tip.hidden = false;
+    el.querySelectorAll('.hit.on').forEach((x) => x.classList.remove('on')); hit.classList.add('on');
+    const eb = el.getBoundingClientRect(), hb = hit.getBoundingClientRect();
+    let left = hb.left - eb.left + hb.width / 2 - tip.offsetWidth / 2;
+    left = Math.max(0, Math.min(left, eb.width - tip.offsetWidth));
+    tip.style.left = left + 'px';
+    tip.style.top = Math.max(-8, d.y - tip.offsetHeight - 10) + 'px';
+    if (onShow) onShow(d);
+  };
+  el.addEventListener('pointerover', (e) => { const h = e.target.closest('.hit'); if (h) show(h); });
+  el.addEventListener('click', (e) => { const h = e.target.closest('.hit'); if (h) show(h); else hide(); });
+  el.addEventListener('focusin', (e) => { const h = e.target.closest('.hit'); if (h) show(h); });
+  el.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') hide(); });
+  el.addEventListener('focusout', () => hide());
+}
+let chartResizeT = null;
+window.addEventListener('resize', () => {
+  clearTimeout(chartResizeT);
+  chartResizeT = setTimeout(() => { const c = topV(); if (c && c.v === 'dien' && S.f.dTab === 'bieu') drawCharts(); }, 200);
+});
+
+// ---------- Nhập chỉ số ----------
+VIEWS.dienNhap = {
+  html(p) {
+    const c = S.V.ctByMa[p.ma];
+    if (!c) return `<div class="card empty">${t('notFound')}</div>`;
+    const today = TODAY(), cur = kyHienTai(today);
+    if (!p.ky || !laKy(p.ky) || p.ky > cur) p.ky = cur;
+    const ky = p.ky, x = S.V.csKey[c.ma + '|' + ky];
+    const opts = []; let k = cur;
+    for (let i = 0; i < 9; i++) { opts.push(k); k = kyTruoc(k); }
+    if (opts.indexOf(ky) < 0) opts.push(ky);
+    const codes = tsOfCT(c);
+    let o = `<div class="card"><div class="mhead"><span class="code">${esc(c.ma)}</span><h1>${esc(c.ten)}</h1>
+      <dl class="kv" style="margin-top:10px"><dt>${t('heSo')}</dt><dd class="mono">×${fmtNum(c.heSo, 'raw')}</dd>
+      ${c.soCongTo ? `<dt>${t('soCT')}</dt><dd class="mono">${esc(c.soCongTo)}</dd>` : ''}${c.viTri ? `<dt>${t('location')}</dt><dd>${esc(c.viTri)}</dd>` : ''}</dl></div></div>
+      <form id="dnForm" class="card pad" style="margin-top:12px" autocomplete="off">
+      <label class="fld"><span>${t('kyGhi')}</span><select class="inp" id="dnKy">${opts.map((d) => {
+        const r = S.V.csKey[c.ma + '|' + d];
+        return `<option value="${d}" ${d === ky ? 'selected' : ''}>${fmtD(d)}${d === today ? ' · ' + esc(tp('st_nay')) : ''}${r ? ' — ' + esc(tp('daGhi')) : ''}</option>`;
+      }).join('')}</select></label>
+      ${x ? `<div class="note">${t('suaBanGhi', { n: x.nguoi, t: (x.thoiGian || '').slice(0, 16) })}</div>` : ''}`;
+    codes.forEach((code) => {
+      const ts = S.V.tsByMa[code] || { ten: code, zh: '', dv: '' };
+      const v = x && x.giaTri && x.giaTri[code] !== undefined ? fmtNum(x.giaTri[code], 'raw').replace(/\s/g, '') : '';
+      o += `<label class="fld rd"><span><b class="mono">${esc(code)}</b> · ${esc(ts.ten)}${ts.zh ? `<span class="zi" lang="zh-CN">${esc(ts.zh)}</span>` : ''}</span>
+        <div class="inrow"><input class="inp mono" data-code="${esc(code)}" inputmode="decimal" value="${esc(v)}" autocomplete="off"><span class="u mono">${esc(ts.dv || '')}</span></div>
+        <div class="help" id="h_${esc(code).replace(/\./g, '_')}"></div></label>`;
+    });
+    const names = performers().slice(0, 10);
+    o += `<label class="fld"><span>${t('nguoiGhi')}</span><input class="inp" id="dnNguoi" value="${esc(x ? x.nguoi : S.me.ten)}" maxlength="150"></label>
+      <div class="chips" style="margin:-4px 0 16px">${names.map((n) => `<button type="button" class="chip" data-act="addNameDn" data-n="${esc(n)}">+ ${esc(n)}</button>`).join('')}</div>
+      <label class="fld"><span>${t('note')}</span><textarea class="inp" id="dnGhiChu" rows="2" maxlength="300">${esc(x ? x.ghiChu : '')}</textarea></label>
+      <div class="err" id="dnErr" hidden></div>
+      <div class="btns"><button type="button" class="btn ghost" data-act="back">${t('cancel')}</button><button type="submit" class="btn g" id="dnSave">${IC.check} ${t('saveReading')}</button></div>
+      ${x && !x.cho && (can('huy') || (x.uid === S.me.id && (x.thoiGian || '').slice(0, 10) === today)) ? `<div class="btns" style="margin-top:10px"><button type="button" class="btn danger sm" data-act="delReading" data-id="${esc(x.id)}">${t('delReading')}</button></div>` : ''}
+      </form>
+      ${can('may') ? `<div class="btns" style="margin-top:14px"><button class="btn ghost sm" data-act="ctEdit" data-ma="${esc(c.ma)}">${IC.edit} ${t('editCT')}</button><button class="btn ghost sm" data-act="labelsOne" data-ma="${esc(c.ma)}">${IC.qr} ${t('printQR')}</button></div>` : ''}`;
+    return o;
+  },
+  after(p) {
+    const c = S.V.ctByMa[p.ma]; if (!c) return;
+    $('#dnKy').addEventListener('change', (e) => { p.ky = e.target.value; render(); });
+    $$('#dnForm input[data-code]').forEach((i) => i.addEventListener('input', () => dnCheck(p)));
+    $('#dnForm').addEventListener('submit', (e) => { e.preventDefault(); dnSave(p); });
+    dnCheck(p);
+  }
+};
+function dnValues() { const o = {}; $$('#dnForm input[data-code]').forEach((i) => { o[i.dataset.code] = parseNum(i.value); }); return o; }
+function dnCheck(p) {
+  const c = S.V.ctByMa[p.ma], vals = dnValues();
+  Object.keys(vals).forEach((code) => {
+    const el = $('#h_' + code.replace(/\./g, '_')); if (!el) return;
+    const ts = S.V.tsByMa[code] || {}, v = vals[code];
+    if (ts.tich === false) { el.innerHTML = ''; return; }
+    const pr = prevReading(c.ma, p.ky, code);
+    if (!pr) { el.innerHTML = t('chuaCoKyTruoc'); return; }
+    let h = esc(tp('kyTruoc')) + ' ' + fmtDM(pr.ky) + ': <span class="mono">' + fmtNum(pr.giaTri[code], 'raw') + '</span>';
+    if (v !== null && !isNaN(v)) {
+      const raw = v - pr.giaTri[code], cons = raw * c.heSo;
+      h += `<br><b>${esc(tp('tieuThu'))}: ${fmtNum(cons)} ${esc(ts.dv || '')}</b>${c.heSo !== 1 ? ` <span class="mono">(${fmtNum(raw, 'raw')} × ${fmtNum(c.heSo, 'raw')})</span>` : ''}`;
+      if (raw < 0) h += `<div class="warn bad">${t('wLower')}</div>`;
+      else {
+        const ngay = diffD(p.ky, pr.ky), hist = (S.V.csMa[c.ma] || []).filter((x) => x.ky < p.ky).slice(-3)
+          .map((x) => (S.V.dl[c.ma + '|' + x.ky] || {})[code]).filter((d) => d && !d.am && d.ngay > 0);
+        if (hist.length && ngay > 0) {
+          const avg = hist.reduce((a, d) => a + d.v / d.ngay, 0) / hist.length, rate = cons / ngay;
+          if (avg > 0 && rate > avg * 3) h += `<div class="warn">${t('wHigh', { n: (rate / avg).toFixed(1) })}</div>`;
+        }
+      }
+    } else if (v !== null) h += `<div class="warn bad">${t('badNum', { m: code })}</div>`;
+    el.innerHTML = h;
+  });
+  // Tổng 3 biểu giá phải bằng 1.8.0
+  const e0 = $('#h_1_8_0');
+  if (e0 && ['1.8.0', '1.8.1', '1.8.2', '1.8.3'].every((k) => typeof vals[k] === 'number' && !isNaN(vals[k]))) {
+    const sum = vals['1.8.1'] + vals['1.8.2'] + vals['1.8.3'];
+    if (Math.abs(sum - vals['1.8.0']) > Math.max(1, vals['1.8.0'] * 0.002)) e0.innerHTML += `<div class="warn">${t('wSum', { s: fmtNum(sum, 'raw') })}</div>`;
+  }
+}
+async function dnSave(p) {
+  const fe = $('#dnErr'), show = (h) => { fe.innerHTML = h; fe.hidden = false; };
+  const vals = dnValues(), giaTri = {};
+  for (const code of Object.keys(vals)) {
+    const v = vals[code];
+    if (v === null) continue;
+    if (isNaN(v)) return show(t('badNum', { m: code }));
+    giaTri[code] = v;
+  }
+  if (!Object.keys(giaTri).length) return show(t('needOneNum'));
+  const nguoi = $('#dnNguoi').value.trim();
+  if (!nguoi) return show(t('needPerformer'));
+  const b = $('#dnSave'); b.disabled = true;
+  const r = await send('saveReading', { ma: p.ma, ky: p.ky, giaTri, nguoi, ghiChu: $('#dnGhiChu').value.trim() });
+  if (r.err) { b.disabled = false; return show(errMsg(r.err)); }
+  toast(r.queued ? t('savedLocal') : t('readingSaved'));
+  S.f.dKy = p.ky;
+  if (S.stack.length > 1) back(); else { S.stack = [{ v: 'dien', p: {} }]; render(); }
+}
+
+// ---------- Sửa công tơ ----------
+VIEWS.ctEdit = {
+  html(p) {
+    const c = p.ma ? S.V.ctByMa[p.ma] : null;
+    const v = c || { ten: '', soCongTo: '', viTri: '', heSo: 1, thongSo: [], ghiChu: '', hoatDong: true };
+    const on = new Set(tsOfCT(v));
+    return `<form id="ctForm" class="card pad" autocomplete="off">${c ? `<p style="margin:0 0 12px"><span class="code">${esc(c.ma)}</span></p>` : ''}
+      <label class="fld"><span>${t('name')}</span><input class="inp" id="cTen" value="${esc(v.ten)}" maxlength="120"></label>
+      <label class="fld"><span>${t('soCT')}</span><input class="inp mono" id="cSo" value="${esc(v.soCongTo)}" maxlength="40"></label>
+      <label class="fld"><span>${t('location')}</span><input class="inp" id="cViTri" value="${esc(v.viTri)}" maxlength="120"></label>
+      <label class="fld"><span>${t('heSo')}</span><input class="inp mono" id="cHeSo" inputmode="decimal" value="${esc(fmtNum(v.heSo, 'raw').replace(/\s/g, ''))}"><div class="help">${t('heSoHelp')}</div></label>
+      <div class="fld"><span>${t('thongSoAD')}</span><div class="list">${S.V.ts.map((x) => `<label class="checkrow"><input type="checkbox" data-code="${esc(x.ma)}" ${on.has(x.ma) ? 'checked' : ''}><span class="main"><b class="mono">${esc(x.ma)}</b> · ${esc(x.ten)} <span class="muted">${esc(x.zh || '')} · ${esc(x.dv || '')}</span></span></label>`).join('')}</div></div>
+      <label class="fld"><span>${t('note')}</span><textarea class="inp" id="cGhiChu" rows="2" maxlength="300">${esc(v.ghiChu)}</textarea></label>
+      ${c ? `<label class="switch"><span class="t">${t('active')}</span><input type="checkbox" id="cHD" ${v.hoatDong ? 'checked' : ''}></label>` : ''}
+      <div class="err" id="cErr" hidden></div>
+      <div class="btns" style="margin-top:12px"><button type="button" class="btn ghost" data-act="back">${t('cancel')}</button><button type="submit" class="btn" id="cSave">${t('save')}</button></div></form>`;
+  },
+  after(p) { $('#ctForm').addEventListener('submit', (e) => { e.preventDefault(); ctSave(p); }); }
+};
+async function ctSave(p) {
+  const fe = $('#cErr'), show = (h) => { fe.innerHTML = h; fe.hidden = false; };
+  const heSo = parseNum($('#cHeSo').value);
+  const d = { ma: p.ma || '', ten: $('#cTen').value.trim(), soCongTo: $('#cSo').value.trim(), viTri: $('#cViTri').value.trim(), heSo,
+    thongSo: $$('#ctForm input[data-code]').filter((i) => i.checked).map((i) => i.dataset.code), ghiChu: $('#cGhiChu').value.trim(),
+    hoatDong: $('#cHD') ? $('#cHD').checked : true };
+  if (!d.ten) return show(t('THIEU_TEN'));
+  if (!(heSo > 0)) return show(t('HE_SO_SAI'));
+  if (!d.thongSo.length) return show(t('needOneNum'));
+  const b = $('#cSave'); b.disabled = true;
+  try {
+    const r = await api('saveMeter', d);
+    mergeResult(r); toast(t('saved')); back();
+  } catch (e) { b.disabled = false; show(e.code === 'MANG' ? t('needNet') : errMsg(e)); }
+}
+
+// ---------- Thông số (Quản trị) ----------
+VIEWS.thongSo = {
+  html(p) {
+    if (!p.list) p.list = S.V.ts.map((x) => Object.assign({}, x));
+    return `<p class="help" style="margin:0 0 12px">${t('tsHelp')}</p><form id="tsForm" autocomplete="off">${p.list.map((x, i) => `
+      <div class="card pad tsrow" data-i="${i}">
+        <div class="tsgrid"><label class="fld"><span>${t('tsCode')}</span><input class="inp mono" data-f="ma" value="${esc(x.ma)}" maxlength="12"></label>
+        <label class="fld"><span>${t('tsUnit')}</span><input class="inp mono" data-f="dv" value="${esc(x.dv)}" maxlength="10"></label></div>
+        <label class="fld"><span>${t('tsName')}</span><input class="inp" data-f="ten" value="${esc(x.ten)}" maxlength="60"></label>
+        <label class="fld"><span>${t('tsZh')}</span><input class="inp" data-f="zh" value="${esc(x.zh || '')}" maxlength="40"></label>
+        <div class="tsfoot"><label class="checkrow" style="padding:0;border:0"><input type="checkbox" data-f="tich" ${x.tich !== false ? 'checked' : ''}><span>${t('tsCum')}</span></label>
+        <button type="button" class="btn danger sm" data-act="tsDel" data-i="${i}">${t('delParam')}</button></div>
+      </div>`).join('')}
+      <div class="btns" style="margin:12px 0"><button type="button" class="btn ghost sm" data-act="tsAdd">${IC.plus} ${t('addParam')}</button></div>
+      <div class="err" id="tsErr" hidden></div>
+      <div class="btns"><button type="button" class="btn ghost" data-act="back">${t('cancel')}</button><button type="submit" class="btn" id="tsSave">${t('save')}</button></div></form>`;
+  },
+  after(p) { $('#tsForm').addEventListener('submit', (e) => { e.preventDefault(); tsSave(p); }); }
+};
+function tsRead(p) {
+  p.list = $$('.tsrow').map((r) => ({ ma: $('[data-f="ma"]', r).value.trim(), dv: $('[data-f="dv"]', r).value.trim(), ten: $('[data-f="ten"]', r).value.trim(),
+    zh: $('[data-f="zh"]', r).value.trim(), tich: $('[data-f="tich"]', r).checked }));
+}
+async function tsSave(p) {
+  tsRead(p);
+  const fe = $('#tsErr'), b = $('#tsSave'); b.disabled = true;
+  try {
+    const d = await api('saveParams', { list: p.list });
+    S.base.thongSo = d.thongSo; saveSnap(); rebuild(); toast(t('saved')); back();
+  } catch (e) { b.disabled = false; fe.innerHTML = e.code === 'MANG' ? t('needNet') : errMsg(e); fe.hidden = false; }
+}
+
+// ---------- Excel số điện ----------
+function buildDienWorkbook(y) {
+  const today = TODAY(), cur = kyHienTai(today), cts = activeCT();
+  const H = { b: 1, fill: '#16211F', color: '#FFFFFF', align: 'center', valign: 'center', wrap: 1, border: '#5B6B67' };
+  const B = { border: true }, NUM = Object.assign({ align: 'right', fmt: '#,##0' }, B), RAW = Object.assign({ align: 'right', fmt: '#,##0.0##' }, B);
+  const sheets = [];
+  // Tổng hợp theo tháng
+  const r1 = [[{ v: 'TỔNG HỢP ĐIỆN TIÊU THỤ NĂM ' + y + ' · ' + y + '年用电量汇总', s: { b: 1, sz: 14 } }],
+    [{ v: tp('xlsExported') + ': ' + fmtD(today) + ' · ' + tp('tieuThu') + ' = (' + tv('chiSo') + ' − kỳ trước) × ' + tv('heSo'), s: { i: 1, color: '#55625F' } }], []];
+  const hdr = [tp('congTo'), tp('code'), tp('params'), tp('tsUnit')].concat(Array.from({ length: 12 }, (_, i) => 'T' + (i + 1) + '\n' + (i + 1) + '月'), [tp('total')]);
+  r1.push(hdr.map((h) => ({ v: h, s: H })));
+  cts.forEach((c) => {
+    const codes = tsOfCT(c).filter((k) => (S.V.tsByMa[k] || {}).tich !== false);
+    codes.forEach((code, ci) => {
+      const row = [{ v: ci ? '' : c.ten, s: Object.assign({ b: 1 }, B) }, { v: ci ? '' : c.ma, s: B }, { v: code + ' ' + tsName(code), s: B }, { v: (S.V.tsByMa[code] || {}).dv || '', s: Object.assign({ align: 'center' }, B) }];
+      let tot = 0;
+      for (let m = 1; m <= 12; m++) { const v = monthCons(c.ma, y, m, code); if (v !== null) tot += v; row.push(v === null ? { v: '', s: B } : { v: Math.round(v * 10) / 10, s: NUM }); }
+      row.push({ v: Math.round(tot * 10) / 10, s: Object.assign({}, NUM, { b: 1 }) });
+      r1.push(row);
+    });
+    if (codes.indexOf('1.8.0') >= 0 && codes.indexOf('3.8.0') >= 0) {
+      const row = [{ v: '', s: B }, { v: '', s: B }, { v: 'cosφ', s: Object.assign({ b: 1 }, B) }, { v: '', s: B }];
+      for (let m = 1; m <= 12; m++) {
+        const P = monthCons(c.ma, y, m, '1.8.0'), Q = monthCons(c.ma, y, m, '3.8.0');
+        if (P && Q !== null) { const cs = P / Math.sqrt(P * P + Q * Q); row.push({ v: Math.round(cs * 1000) / 1000, s: Object.assign({ align: 'right', fmt: '0.00', b: 1 }, B, cs < 0.9 ? { fill: '#FBE8E5', color: '#C8372D' } : { color: '#2F8A3B' }) }); }
+        else row.push({ v: '', s: B });
+      }
+      row.push({ v: '', s: B });
+      r1.push(row);
+    }
+  });
+  sheets.push({ name: 'Tổng hợp ' + y + ' · 汇总', rows: r1, cols: [28, 7, 30, 8].concat(Array(12).fill(11), [13]), merges: ['A1:Q1', 'A2:Q2'], freeze: { r: 4, c: 4 }, heights: { 1: 24, 4: 30 }, landscape: 1, printTitles: { rows: '4:4' } });
+  // Mỗi công tơ một trang
+  const kys = kysOfYear(y).filter((k) => k <= cur);
+  cts.forEach((c) => {
+    const codes = tsOfCT(c);
+    const rows = [[{ v: c.ten + ' (' + c.ma + ')' + (c.soCongTo ? ' · ' + c.soCongTo : '') + ' · ' + tv('heSo') + ' ×' + c.heSo + ' · ' + y, s: { b: 1, sz: 13 } }], []];
+    const h1 = [{ v: tp('kyGhi'), s: H }, { v: tp('savedAt'), s: H }, { v: tp('nguoiGhi'), s: H }], h2 = [{ v: '', s: H }, { v: '', s: H }, { v: '', s: H }], merges = ['A3:A4', 'B3:B4', 'C3:C4'];
+    let col = 3;
+    const cols = [12, 17, 22];
+    codes.forEach((code) => {
+      const ts = S.V.tsByMa[code] || {}, span = ts.tich === false ? 1 : 2;
+      h1[col] = { v: code + '\n' + (ts.ten || ''), s: H };
+      if (span === 2) { h1[col + 1] = { v: '', s: H }; merges.push(XW.col(col) + '3:' + XW.col(col + 1) + '3'); }
+      h2[col] = { v: tp('chiSo'), s: H }; cols.push(14);
+      if (span === 2) { h2[col + 1] = { v: tp('tieuThu') + ' (' + (ts.dv || '') + ')', s: H }; cols.push(14); }
+      col += span;
+    });
+    h1[col] = { v: tp('note'), s: H }; h2[col] = { v: '', s: H }; merges.push(XW.col(col) + '3:' + XW.col(col) + '4'); cols.push(26);
+    rows.push(h1, h2);
+    const monthRow = (m) => {
+      const r = [{ v: tv('monthTotal', { m }) + ' · ' + tz('monthTotal', { m }), s: { b: 1, fill: '#EEF1F0', border: true } }, { v: '', s: { fill: '#EEF1F0', border: true } }, { v: '', s: { fill: '#EEF1F0', border: true } }];
+      let cc = 3;
+      codes.forEach((code) => {
+        const ts = S.V.tsByMa[code] || {};
+        r[cc] = { v: '', s: { fill: '#EEF1F0', border: true } };
+        if (ts.tich !== false) { const v = monthCons(c.ma, y, m, code); r[cc + 1] = v === null ? { v: '', s: { fill: '#EEF1F0', border: true } } : { v: Math.round(v * 10) / 10, s: Object.assign({}, NUM, { b: 1, fill: '#EEF1F0' }) }; cc += 2; } else cc += 1;
+      });
+      r[cc] = { v: '', s: { fill: '#EEF1F0', border: true } };
+      return r;
+    };
+    kys.forEach((k, i) => {
+      const x = S.V.csKey[c.ma + '|' + k], d = S.V.dl[c.ma + '|' + k] || {};
+      const r = [{ v: excelSerial(k), s: Object.assign({ fmt: 'dd/mm/yyyy', align: 'center', b: 1 }, B) },
+        x ? { v: x.thoiGian || '', s: B } : { v: tp('chuaGhi'), s: Object.assign({ color: '#D96A12', i: 1 }, B) }, { v: x ? x.nguoi : '', s: B }];
+      let cc = 3;
+      codes.forEach((code) => {
+        const ts = S.V.tsByMa[code] || {}, v = x && x.giaTri ? x.giaTri[code] : undefined, dd = d[code];
+        r[cc] = v === undefined ? { v: '', s: B } : { v: +v, s: RAW };
+        if (ts.tich !== false) { r[cc + 1] = dd ? { v: Math.round(dd.v * 10) / 10, s: Object.assign({}, NUM, dd.am ? { fill: '#FBE8E5', color: '#C8372D' } : {}) } : { v: '', s: B }; cc += 2; } else cc += 1;
+      });
+      r[cc] = { v: x ? x.ghiChu : '', s: Object.assign({ wrap: 1 }, B) };
+      rows.push(r);
+      if (i === kys.length - 1 || kys[i + 1].slice(0, 7) !== k.slice(0, 7)) rows.push(monthRow(+k.slice(5, 7)));
+    });
+    sheets.push({ name: (c.ma + ' ' + c.ten).slice(0, 31), rows, cols, merges: merges.concat(['A1:' + XW.col(col) + '1']), freeze: { r: 4, c: 1 }, heights: { 1: 22, 3: 34, 4: 30 }, landscape: 1, printTitles: { rows: '3:4' } });
+  });
+  return XW.build(sheets);
+}
+async function exportDien(y) {
+  toast(t('exporting'));
+  await sleep(30);
+  let blob;
+  try { blob = buildDienWorkbook(y); } catch (e) { toast(t('LOI', { m: e.message }), true); return; }
+  const tt = $('.toast'); if (tt) tt.remove();
+  await saveFile(blob, 'So-dien-' + y + '_' + TODAY() + '.xlsx');
+}
+
+// ---------- Nút ----------
+Object.assign(ACT, {
+  dTab: (el) => { S.f.dTab = el.dataset.t; render(); },
+  dKyStep: (el) => { const k = S.f.dKy || kyHienTai(TODAY()); S.f.dKy = +el.dataset.d < 0 ? kyTruoc(k) : kyTiep(k); render(); },
+  dCT: (el) => { S.f.dCT = el.dataset.ma; render(); },
+  dYear: (el) => { S.f.dYear = (S.f.dYear || +TODAY().slice(0, 4)) + (+el.dataset.d); render(); },
+  dienNhap: (el) => go('dienNhap', { ma: el.dataset.ma, ky: el.dataset.ky || '' }),
+  addNameDn: (el) => {
+    const i = $('#dnNguoi'), n = el.dataset.n, cur = i.value.split(/[,;、，]+/).map((x) => x.trim()).filter(Boolean);
+    if (cur.indexOf(n) < 0) cur.push(n);
+    i.value = cur.join(', ');
+  },
+  delReading: async (el) => {
+    el.disabled = true;
+    try { const d = await api('deleteReading', { id: el.dataset.id }); mergeResult(d); toast(t('readingDeleted')); back(); }
+    catch (e) { el.disabled = false; toast(e.code === 'MANG' ? t('needNet') : errMsg(e), true); }
+  },
+  ctEdit: (el) => go('ctEdit', { ma: el.dataset.ma || '' }),
+  labelsCT: () => go('labels', { meters: true }),
+  tsAdd: () => { const p = topV().p; tsRead(p); p.list.push({ ma: '', ten: '', zh: '', dv: 'kWh', tich: true }); render(); },
+  tsDel: (el) => { const p = topV().p; tsRead(p); p.list.splice(+el.dataset.i, 1); render(); },
+  exportDien: (el) => exportDien(+el.dataset.y)
+});
 
 // Link từ tem QR: ...?m=M001
 try {
