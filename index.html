@@ -142,7 +142,10 @@ main{max-width:980px;margin:0 auto;padding:16px 16px calc(var(--tab-h) + 28px + 
 .fld{display:block;margin:0 0 14px}
 .fld>span{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
 .fld>span .zi{font-weight:500;font-size:12px}
-.inp{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--card);padding:11px 12px;font-size:16px;min-height:46px}
+.inp{width:100%;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);padding:11px 12px;font-size:16px;min-height:46px}
+.login .zi{color:var(--onnavy2)}
+.login .err{line-height:1.45;text-align:left}
+#apiIn{word-break:break-all;resize:none}
 textarea.inp{min-height:76px;resize:vertical}
 .inp:focus{outline:2px solid var(--focus);outline-offset:0;border-color:transparent}
 .help{font-size:12.5px;color:var(--ink2);margin-top:6px}
@@ -505,7 +508,7 @@ const XW = (() => {
 'use strict';
 const API_URL = "";
 const MODE = "live";
-const APP_VER = "1.0.0";
+const APP_VER = "1.0.1";
 const DemoBackend = null;
 
 const IS_DEMO = MODE === 'demo';
@@ -591,6 +594,8 @@ const TX = {
   appInfo: ['Thông tin', '信息'], appVer: ['Phiên bản app', '应用版本'], srvVer: ['Máy chủ', '服务器'], appLink: ['Link app', '应用链接'],
   serverLink: ['Link máy chủ', '服务器链接'], setupTitle: ['Kết nối máy chủ', '连接服务器'],
   setupHelp: ['Dán link ứng dụng web Apps Script (kết thúc bằng /exec). Chỉ cần làm một lần trên máy này.', '粘贴Apps Script网页应用链接（以/exec结尾）。本机只需设置一次。'],
+  checking: ['Đang kiểm tra kết nối…', '正在检查连接…'],
+  setupCheck: ['Không kết nối được máy chủ. Kiểm tra 3 điều: (1) khi Triển khai chọn "Người có quyền truy cập: Bất kỳ ai"; (2) đã dán Code.gs và bấm Lưu TRƯỚC khi Triển khai — nếu dán sau thì phải Quản lý triển khai → bút chì → Phiên bản mới; (3) link lấy ở Quản lý triển khai, có đuôi /exec.', '无法连接服务器。请检查：(1) 部署时访问权限选“任何人”；(2) 先粘贴Code.gs并保存再部署，之后修改需在“管理部署”中建新版本；(3) 链接来自“管理部署”，以/exec结尾。'],
   setupBad: ['Link không đúng. Link phải bắt đầu bằng https://script.google.com/ và kết thúc bằng /exec', '链接不正确，应以 https://script.google.com/ 开头、以 /exec 结尾'],
   simOff: ['Giả lập mất mạng', '模拟断网'], simOn: ['Đang giả lập mất mạng', '正在模拟断网'],
   demoHint: ['Bản xem thử — PIN: 111111 Quản trị · 222222 Quản lý · 333333 Kỹ thuật', '预览版 — PIN：111111 管理员 · 222222 主管 · 333333 技术员'],
@@ -636,6 +641,8 @@ const ERR = {
   BAN: ['Máy chủ đang bận, thử lại sau ít giây.', '服务器繁忙，请稍后重试。'],
   KHONG_HIEU: ['Máy chủ chưa cập nhật bản mới.', '服务器版本过旧。'],
   CHUA_CAI: ['Chưa có link máy chủ.', '尚未设置服务器链接。'],
+  CHUA_CODE: ['Máy chủ chưa có code mới. Trong Apps Script: dán Code.gs → Lưu → Triển khai → Quản lý triển khai → bút chì → Phiên bản: Phiên bản mới → Triển khai.', '服务器还没有新代码。在Apps Script中：粘贴Code.gs → 保存 → 部署 → 管理部署 → 铅笔 → 新版本 → 部署。'],
+  CAN_QUYEN: ['Link đang đòi đăng nhập Google. Vào Quản lý triển khai → bút chì → Người có quyền truy cập: Bất kỳ ai → Triển khai.', '链接需要登录谷歌。请在“管理部署”中把访问权限改为“任何人”后重新部署。'],
   LOI: ['Có lỗi: {m}', '出错：{m}']
 };
 
@@ -747,9 +754,18 @@ async function api(action, payload, opts) {
     const ctrl = new AbortController();
     const to = setTimeout(() => ctrl.abort(), (opts.timeout || (action === 'data' ? 45 : 30)) * 1000);
     try {
-      const res = await fetch(url, { method: 'POST', body: JSON.stringify(req), signal: ctrl.signal, redirect: 'follow' });
-      j = await res.json();
-    } catch (e) { throw { code: 'MANG' }; } finally { clearTimeout(to); }
+      let txt;
+      try {
+        const res = await fetch(url, { method: 'POST', body: JSON.stringify(req), signal: ctrl.signal, redirect: 'follow' });
+        txt = await res.text();
+      } catch (e) { throw { code: 'MANG' }; }
+      try { j = JSON.parse(txt); } catch (e) {
+        // Trả về trang HTML thay vì dữ liệu: đoán nguyên nhân để báo rõ
+        if (/doPost/i.test(txt)) throw { code: 'CHUA_CODE' };
+        if (/accounts\.google\.com|ServiceLogin|signin/i.test(txt)) throw { code: 'CAN_QUYEN' };
+        throw { code: 'MANG' };
+      }
+    } finally { clearTimeout(to); }
   }
   if (!j || !j.ok) {
     const e = { code: (j && j.code) || 'LOI', message: j && j.message };
@@ -1828,16 +1844,22 @@ function renderSetup(msg) {
   $('#root').innerHTML = `<div class="login"><div class="stripe"></div><div class="brand">${LOGO}<h1>${tv('setupTitle')}<small>${tz('setupTitle')}</small></h1></div>
     <form id="setupF" style="width:100%;max-width:420px;margin-top:26px">
       <p class="lbl" style="margin:0 0 12px">${esc(tv('setupHelp'))}<br><span style="font-family:var(--f-zh)">${esc(tz('setupHelp'))}</span></p>
-      <input class="inp mono" id="apiIn" style="font-size:13px" placeholder="https://script.google.com/macros/s/…/exec" value="${esc(store.get('bd_api', ''))}">
+      <textarea class="inp mono" id="apiIn" rows="3" style="font-size:14px;min-height:0" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" placeholder="https://script.google.com/macros/s/…/exec">${esc(store.get('bd_api', ''))}</textarea>
       <div class="err" id="sErr">${msg || ''}</div>
-      <button class="btn y wide" type="submit" style="margin-top:8px">${esc(tp('save'))}</button></form>
+      <button class="btn y wide" id="sBtn" type="submit" style="margin-top:8px">${esc(tp('save'))}</button></form>
     <div class="ver">v${esc(APP_VER)}</div></div>`;
   $('#setupF').addEventListener('submit', async (e) => {
     e.preventDefault();
-    const u = $('#apiIn').value.trim();
-    if (!/^https:\/\/script\.google\.com\/.+\/exec$/.test(u)) { $('#sErr').innerHTML = t('setupBad'); return; }
+    // Lấy đúng link /exec dù dán kèm chữ thừa, xuống dòng hay khoảng trắng
+    const raw = $('#apiIn').value.replace(/\s+/g, '');
+    const m = raw.match(/https:\/\/script\.google\.com\/[^"'<>]+?\/exec/i);
+    const u = m ? m[0] : raw;
+    $('#apiIn').value = u;
+    if (!m) { $('#sErr').innerHTML = t('setupBad'); return; }
     store.set('bd_api', u);
-    try { await api('ping'); boot(); } catch (x) { $('#sErr').innerHTML = errMsg(x); }
+    const b = $('#sBtn'); b.disabled = true; $('#sErr').innerHTML = `<span style="color:var(--onnavy2)">${t('checking')}</span>`;
+    try { await api('ping'); boot(); }
+    catch (x) { b.disabled = false; $('#sErr').innerHTML = x.code === 'MANG' ? t('setupCheck') : errMsg(x); }
   });
 }
 function startApp() {
