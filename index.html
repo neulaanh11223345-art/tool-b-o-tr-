@@ -426,6 +426,19 @@ table.dtab .nmc{min-width:112px}
 .tsgrid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .tsrow{margin-bottom:10px}
 .tsfoot{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap}
+
+.tag-cao{background:var(--blue-bg);color:var(--blue)}
+.tag-ha{background:var(--green-bg);color:var(--green)}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:420px){.choices{grid-template-columns:1fr}}
+.choice{display:flex;gap:10px;align-items:flex-start;border:1px solid var(--line);border-radius:11px;padding:11px 12px;background:var(--card);cursor:pointer}
+.choice input{width:20px;height:20px;margin:2px 0 0;flex:none;accent-color:var(--navy)}
+.choice:has(input:checked){border-color:var(--navy);box-shadow:inset 0 0 0 1px var(--navy)}
+.choice b .zi{font-weight:500}
+table.dtab .tot{background:var(--blue-bg)}
+table.dtab th.tot{background:var(--blue-bg);color:var(--ink);min-width:96px}
+table.dtab td.miss{color:var(--ink3)}
+.cellbtn{border:0;background:none;padding:0;font:inherit;color:inherit;text-align:right;width:100%}
 </style>
 </head>
 <body>
@@ -601,7 +614,7 @@ const XW = (() => {
 'use strict';
 const API_URL = "https://script.google.com/macros/s/AKfycbxYJ1YcP3FN3oWU8YsOlSpPFxU88fvnoZNPKYjygzrJ7PFPHIDZ1LY0VOkYbtJdhAUWoQ/exec";
 const MODE = "live";
-const APP_VER = "1.1.0";
+const APP_VER = "1.2.0";
 const DemoBackend = null;
 
 const IS_DEMO = MODE === 'demo';
@@ -2136,7 +2149,15 @@ Object.assign(TX, {
   tsHelp: ['Mã OBIS in trên màn hình công tơ. Bỏ đánh dấu "cộng dồn" cho số tức thời như công suất cực đại 1.6.0.', '电表屏幕上显示的OBIS代码。最大需量1.6.0等瞬时值请取消“累计”。'],
   lblDien: ['Quét để ghi số điện', '扫码抄电表'], meterSec: ['Công tơ điện', '电表'], viewList: ['Danh sách', '列表'],
   gapKy: ['gộp {n} kỳ chưa ghi', '含{n}期未抄'], unitKwh: ['kWh', '千瓦时'], allMeters: ['Công tơ', '电表'],
-  printMeters: ['In tem QR công tơ', '打印电表二维码'], paramsBtn: ['Thông số', '参数']
+  printMeters: ['In tem QR công tơ', '打印电表二维码'], paramsBtn: ['Thông số', '参数'],
+  caoAp: ['Cao áp', '高压'], haAp: ['Hạ áp', '低压'], loaiCT: ['Loại công tơ', '电表类型'],
+  caoHelp: ['Công tơ tổng phía cao áp, ghi đủ các mã 1.8.0, 1.8.1, 1.8.2, 1.8.3, 2.8.0, 3.8.0…', '高压侧总表，抄1.8.0、1.8.1、1.8.2、1.8.3、2.8.0、3.8.0等'],
+  haHelp: ['Công tơ tủ điện hạ áp, chỉ ghi một chỉ số', '低压柜电表，只抄一个读数'],
+  caoDesc: ['Ghi nhiều mã: 1.8.0, 3.8.0…', '抄多个代码：1.8.0、3.8.0…'], haDesc: ['Chỉ ghi một chỉ số kWh', '只抄一个读数（kWh）'],
+  csHa: ['Chỉ số công tơ', '电表读数'], tongHa: ['Tổng hạ áp', '低压合计'], chenhLech: ['Chênh lệch', '差额'],
+  chartCaoHa: ['Cao áp và tổng hạ áp theo tháng', '每月高压与低压合计'], kChenh: ['Chênh lệch cao áp − hạ áp tháng {m}', '{m}月高压−低压差额'],
+  chenhNote: ['Gồm tổn thất máy biến áp và phụ tải chưa có công tơ', '含变压器损耗及未计量负荷'],
+  chartHaCT: ['So sánh công tơ hạ áp tháng {m}', '{m}月低压电表对比']
 });
 Object.assign(ERR, {
   KHONG_CO_CT: ['Không tìm thấy công tơ này.', '找不到该电表。'],
@@ -2208,7 +2229,7 @@ function fmtK(v) {
 
 // ---------- Dữ liệu ----------
 const activeCT = () => (S.V && S.V.ct ? S.V.ct.filter((c) => c.hoatDong) : []);
-function tsOfCT(ct) { const all = S.V.ts.map((x) => x.ma); return ct.thongSo && ct.thongSo.length ? ct.thongSo.filter((m) => all.indexOf(m) >= 0) : all; }
+function tsOfCT(ct) { if (ct && ct.loai === 'ha') return ['1.8.0']; const all = S.V.ts.map((x) => x.ma); return ct.thongSo && ct.thongSo.length ? ct.thongSo.filter((m) => all.indexOf(m) >= 0) : all; }
 function tsName(code) { const x = S.V.tsByMa[code]; return x ? x.ten : code; }
 function rebuildDien() {
   const b = S.base, V = S.V;
@@ -2273,7 +2294,7 @@ function findCT(q) {
 }
 function ctRow(c) {
   return `<div class="row" data-act="dienNhap" data-ma="${esc(c.ma)}" role="button" tabindex="0">
-    <div class="main"><div class="nm">${IC.bolt} ${esc(c.ten)}</div><div class="sub"><span class="code">${esc(c.ma)}</span> · ${t('heSo')} ×${fmtNum(c.heSo, 'raw')}</div></div>${IC.chev}</div>`;
+    <div class="main"><div class="nm">${IC.bolt} ${esc(c.ten)}</div><div class="sub"><span class="code">${esc(c.ma)}</span> <span class="tag ${ctLoai(c) === 'ha' ? 'tag-ha' : 'tag-cao'}">${esc(tp(ctLoai(c) === 'ha' ? 'haAp' : 'caoAp'))}</span> · ×${fmtNum(c.heSo, 'raw')}</div></div>${IC.chev}</div>`;
 }
 
 // ---------- Thẻ ở trang chủ ----------
@@ -2287,6 +2308,49 @@ function dienHomeCard() {
     <span class="main"><span class="nm">${st.ky === today && miss ? t('kyHomNay') : t('homeDien')}</span>
     <span class="sub">${tj(['kyN', { d: fmtDM(st.ky) }], ['daGhiN', { a: st.tong - miss, b: st.tong }])}</span></span>${pl}</button>`;
 }
+
+// ---------- Màn Điện ----------
+// ---------- Cao áp / hạ áp ----------
+const ctLoai = (c) => (c && c.loai === 'ha' ? 'ha' : 'cao');
+const activeLoai = (l) => activeCT().filter((c) => ctLoai(c) === l);
+function curLoai() { const f = S.f; if (!f.dLoai || !activeLoai(f.dLoai).length) f.dLoai = activeLoai('cao').length ? 'cao' : 'ha'; return f.dLoai; }
+function loaiSeg(cur) {
+  if (!activeLoai('cao').length || !activeLoai('ha').length) return '';
+  return `<div class="seg wide3" style="margin-bottom:12px">${['cao', 'ha'].map((l) =>
+    `<button class="${cur === l ? 'on' : ''}" data-act="dLoai" data-l="${l}">${tv(l === 'cao' ? 'caoAp' : 'haAp')}<small>${tz(l === 'cao' ? 'caoAp' : 'haAp')}</small></button>`).join('')}</div>`;
+}
+// Công tơ đang chọn: cao áp → mã công tơ; hạ áp → 'ALL' (tổng hạ áp) hoặc mã công tơ
+function curSel(l) {
+  const f = S.f, key = l === 'ha' ? 'dCTha' : 'dCT', list = activeLoai(l);
+  if (!(l === 'ha' && f[key] === 'ALL') && !list.some((c) => c.ma === f[key])) f[key] = l === 'ha' ? 'ALL' : (list[0] || {}).ma;
+  return f[key];
+}
+function selChips(l, cur) {
+  const list = activeLoai(l);
+  if (l === 'cao' && list.length < 2) return '';
+  return `<div class="hscroll" style="margin-bottom:12px">${l === 'ha' ? `<button class="chip${cur === 'ALL' ? ' on' : ''}" data-act="dSel" data-l="ha" data-ma="ALL">${t('tongHa')}</button>` : ''}${list.map((c) =>
+    `<button class="chip${cur === c.ma ? ' on' : ''}" data-act="dSel" data-l="${l}" data-ma="${esc(c.ma)}">${esc(c.ten)}</button>`).join('')}</div>`;
+}
+// Tiêu thụ tháng của một công tơ hoặc tổng hạ áp
+function consSel(sel, y, m, code) {
+  if (sel !== 'ALL') return monthCons(sel, y, m, code || '1.8.0');
+  let sum = 0, has = false;
+  activeLoai('ha').forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); if (v !== null) { sum += v; has = true; } });
+  return has ? sum : null;
+}
+function caoTong(y, m) {
+  let sum = 0, has = false;
+  activeLoai('cao').forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); if (v !== null) { sum += v; has = true; } });
+  return has ? sum : null;
+}
+function periodPt(sel, k) {
+  const ms = sel === 'ALL' ? activeLoai('ha').map((c) => c.ma) : [sel];
+  let v = 0, tot = 0, ngay = 0, has = false;
+  ms.forEach((ma) => { const d = (S.V.dl[ma + '|' + k] || {})['1.8.0']; if (d && !d.am && d.ngay > 0) { v += d.v / d.ngay; tot += d.v; ngay = ngay || d.ngay; has = true; } });
+  return has ? { k, v, tot, ngay } : null;
+}
+const yearSel = () => S.f.dYear || +TODAY().slice(0, 4);
+const yearStep = (extra) => `<div class="caltools"><div class="stepper"><button data-act="dYear" data-d="-1" aria-label="-">${IC.left}</button><b>${t('yearN', { y: yearSel() })}</b><button data-act="dYear" data-d="1" aria-label="+">${IC.right}</button></div>${extra || ''}</div>`;
 
 // ---------- Màn Điện ----------
 VIEWS.dien = {
@@ -2317,29 +2381,33 @@ VIEWS.dien = {
     const w = $('.dtabwrap'); if (w) w.scrollLeft = 0;
   }
 };
-function ctChips(cur, act) {
-  return `<div class="hscroll" style="margin-bottom:12px">${activeCT().map((c) => `<button class="chip${cur === c.ma ? ' on' : ''}" data-act="${act}" data-ma="${esc(c.ma)}">${esc(c.ten)}</button>`).join('')}</div>`;
-}
-function curCT() { const f = S.f, cts = activeCT(); if (!f.dCT || !cts.some((c) => c.ma === f.dCT)) f.dCT = cts[0].ma; return S.V.ctByMa[f.dCT]; }
 
 function dienGhi() {
   const f = S.f, today = TODAY(), cur = kyHienTai(today);
   if (!f.dKy || f.dKy > cur) f.dKy = cur;
   const k = f.dKy;
   let o = `<div class="caltools"><div class="stepper"><button data-act="dKyStep" data-d="-1" aria-label="-">${IC.left}</button><b>${esc(tv('kyN', { d: fmtD(k) }))}<small style="display:block;font-family:var(--f-zh);font-weight:500;color:var(--ink2);font-size:12px">${esc(tz('kyN', { d: fmtDM(k) }))}</small></b><button data-act="dKyStep" data-d="1" aria-label="+" ${k >= cur ? 'disabled' : ''}>${IC.right}</button></div></div>`;
-  o += `<div class="list">${activeCT().map((c) => {
+  const row = (c) => {
     const x = S.V.csKey[c.ma + '|' + k], d = x ? (S.V.dl[c.ma + '|' + k] || {}) : {};
     let pl, sub = '';
     if (x) {
       pl = x.cho ? `<span class="pill p-cho">${t('pending')}</span>` : `<span class="pill p-xong">${t('daGhi')}</span>`;
       const main = x.giaTri['1.8.0'] !== undefined ? '1.8.0' : Object.keys(x.giaTri)[0];
-      sub = `<div class="sub"><span class="mono">${esc(main)}: ${fmtNum(x.giaTri[main], 'raw')}</span>${d[main] ? ' · ' + esc(tp('tieuThu')) + ' <b class="num">' + fmtNum(d[main].v) + '</b> ' + esc((S.V.tsByMa[main] || {}).dv || '') : ''}</div>
+      const lb = ctLoai(c) === 'ha' ? esc(tp('csHa')) : esc(main);
+      sub = `<div class="sub">${lb}: <span class="mono">${fmtNum(x.giaTri[main], 'raw')}</span>${d[main] ? ' · ' + esc(tp('tieuThu')) + ' <b class="num">' + fmtNum(d[main].v) + '</b> kWh' : ''}</div>
         <div class="sub">${esc(x.nguoi)} · ${esc((x.thoiGian || '').slice(5, 16))}</div>`;
     } else pl = `<span class="pill ${k === today ? 'p-nay' : k < today ? 'p-qua' : 'p-ok'}">${t('chuaGhi')}</span>`;
     return `<div class="row" data-act="dienNhap" data-ma="${esc(c.ma)}" data-ky="${k}" role="button" tabindex="0">
       <div class="main"><div class="nm">${esc(c.ten)}</div><div class="sub"><span class="code">${esc(c.ma)}</span> · ×${fmtNum(c.heSo, 'raw')}${c.soCongTo ? ' · ' + esc(c.soCongTo) : ''}</div>${sub}</div>
       <div class="end">${pl}${IC.chev}</div></div>`;
-  }).join('')}</div>`;
+  };
+  ['cao', 'ha'].forEach((l) => {
+    const list = activeLoai(l);
+    if (!list.length) return;
+    const done = list.filter((c) => S.V.csKey[c.ma + '|' + k]).length;
+    o += `<div class="sec" id="sec-${l}"><h2>${t(l === 'cao' ? 'caoAp' : 'haAp')}<span class="cnt">${done}/${list.length}</span></h2></div>
+      <p class="help" style="margin:-4px 0 8px">${t(l === 'cao' ? 'caoHelp' : 'haHelp')}</p><div class="list">${list.map(row).join('')}</div>`;
+  });
   if (can('may')) {
     o += `<div class="btns" style="margin-top:14px"><button class="btn sm" data-act="ctEdit" data-ma="">${IC.plus} ${t('addCT')}</button>
       <button class="btn ghost sm" data-act="labelsCT">${IC.qr} ${t('printQR')}</button>
@@ -2349,26 +2417,30 @@ function dienGhi() {
 }
 
 function dienBang() {
-  const f = S.f, c = curCT(), y = f.dYear || +TODAY().slice(0, 4), today = TODAY(), cur = kyHienTai(today);
-  const codes = tsOfCT(c);
-  let o = ctChips(c.ma, 'dCT') + `<div class="caltools"><div class="stepper"><button data-act="dYear" data-d="-1" aria-label="-">${IC.left}</button><b>${t('yearN', { y })}</b><button data-act="dYear" data-d="1" aria-label="+">${IC.right}</button></div>
-    <button class="btn ghost sm" data-act="exportDien" data-y="${y}">${IC.dl} ${t('exportDien')}</button></div>
-    <p class="help" style="margin:-4px 0 10px">${esc(tp('tieuThu'))} = (${esc(tp('chiSo'))} − ${esc(tp('kyTruoc'))}) × ${fmtNum(c.heSo, 'raw')} ${esc(tp('heSo'))}</p>`;
+  const l = curLoai(), y = yearSel(), cur = kyHienTai(TODAY());
+  let o = loaiSeg(l);
+  const sel = curSel(l);
+  if (l === 'cao') o += selChips('cao', sel);
+  o += yearStep(`<button class="btn ghost sm" data-act="exportDien" data-y="${y}">${IC.dl} ${t('exportDien')}</button>`);
   const kys = kysOfYear(y).filter((k) => k <= cur).reverse();
   if (!kys.length) return o + `<div class="card empty">${t('noData')}</div>`;
-  let h = `<div class="tblwrap dtabwrap"><table class="cal dtab"><thead><tr><th class="nmc" rowspan="2">${t('kyGhi')}</th>`;
+  return o + (l === 'cao' ? bangCao(S.V.ctByMa[sel], y, kys) : bangHa(y, kys));
+}
+function bangCao(c, y, kys) {
+  const codes = tsOfCT(c);
+  let h = `<p class="help" style="margin:-4px 0 10px">${esc(c.ten)} · ${esc(tp('tieuThu'))} = (${esc(tp('chiSo'))} − ${esc(tp('kyTruoc'))}) × ${fmtNum(c.heSo, 'raw')}</p>
+    <div class="tblwrap dtabwrap"><table class="cal dtab"><thead><tr><th class="nmc" rowspan="2">${t('kyGhi')}</th>`;
   codes.forEach((code) => { const ts = S.V.tsByMa[code] || {}; h += `<th colspan="${ts.tich === false ? 1 : 2}" class="pc"><b class="mono">${esc(code)}</b><small>${esc(ts.ten || '')}</small></th>`; });
   h += `<th rowspan="2" class="pc">${t('nguoiGhi')}</th></tr><tr>`;
   codes.forEach((code) => { const ts = S.V.tsByMa[code] || {}; h += `<th class="sub2">${t('chiSo')}</th>` + (ts.tich === false ? '' : `<th class="sub2">${t('tieuThu')}<br><span class="mono">${esc(ts.dv || '')}</span></th>`); });
   h += '</tr></thead><tbody>';
   let lastMonth = '';
   kys.forEach((k) => {
-    const mo = k.slice(0, 7);
-    if (mo !== lastMonth) {
-      lastMonth = mo;
+    if (k.slice(0, 7) !== lastMonth) {
+      lastMonth = k.slice(0, 7);
       const m = +k.slice(5, 7);
       h += `<tr class="mt"><th class="nmc">${esc(tv('monthTotal', { m }))}<small>${esc(tz('monthTotal', { m }))}</small></th>`;
-      codes.forEach((code) => { const ts = S.V.tsByMa[code] || {}; const v = ts.tich === false ? null : monthCons(c.ma, +k.slice(0, 4), m, code); h += ts.tich === false ? '<td></td>' : `<td></td><td class="num"><b>${v === null ? '' : fmtNum(v)}</b></td>`; });
+      codes.forEach((code) => { const ts = S.V.tsByMa[code] || {}; const v = ts.tich === false ? null : monthCons(c.ma, y, m, code); h += ts.tich === false ? '<td></td>' : `<td></td><td class="num"><b>${v === null ? '' : fmtNum(v)}</b></td>`; });
       h += '<td></td></tr>';
     }
     const x = S.V.csKey[c.ma + '|' + k], d = S.V.dl[c.ma + '|' + k] || {};
@@ -2380,39 +2452,69 @@ function dienBang() {
     });
     h += `<td class="who">${x ? esc(x.nguoi) : `<span class="muted">${t('chuaGhi')}</span>`}</td></tr>`;
   });
-  h += '</tbody></table></div>';
-  return o + h;
+  return h + '</tbody></table></div>';
+}
+function bangHa(y, kys) {
+  const list = activeLoai('ha');
+  let h = `<p class="help" style="margin:-4px 0 10px">${esc(tp('tieuThu'))} = (${esc(tp('csHa'))} − ${esc(tp('kyTruoc'))}) × ${esc(tp('heSo'))} (kWh)</p>
+    <div class="tblwrap dtabwrap"><table class="cal dtab"><thead><tr><th class="nmc" rowspan="2">${t('kyGhi')}</th>`;
+  list.forEach((c) => { h += `<th colspan="2" class="pc"><b>${esc(c.ten)}</b><small class="mono">${esc(c.ma)} · ×${fmtNum(c.heSo, 'raw')}</small></th>`; });
+  h += `<th rowspan="2" class="pc tot">${t('tongHa')}<br><span class="mono">kWh</span></th></tr><tr>`;
+  list.forEach(() => { h += `<th class="sub2">${t('chiSo')}</th><th class="sub2">${t('tieuThu')}</th>`; });
+  h += '</tr></thead><tbody>';
+  let lastMonth = '';
+  kys.forEach((k) => {
+    if (k.slice(0, 7) !== lastMonth) {
+      lastMonth = k.slice(0, 7);
+      const m = +k.slice(5, 7), tot = consSel('ALL', y, m);
+      h += `<tr class="mt"><th class="nmc">${esc(tv('monthTotal', { m }))}<small>${esc(tz('monthTotal', { m }))}</small></th>`;
+      list.forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); h += `<td></td><td class="num"><b>${v === null ? '' : fmtNum(v)}</b></td>`; });
+      h += `<td class="num tot"><b>${tot === null ? '' : fmtNum(tot)}</b></td></tr>`;
+    }
+    let sum = 0, has = false;
+    h += `<tr><th class="nmc"><span class="mono" style="font-weight:700;font-size:12.5px">${fmtD(k)}</span></th>`;
+    list.forEach((c) => {
+      const x = S.V.csKey[c.ma + '|' + k], dd = (S.V.dl[c.ma + '|' + k] || {})['1.8.0'];
+      const v = x && x.giaTri ? x.giaTri['1.8.0'] : undefined;
+      if (dd && !dd.am) { sum += dd.v; has = true; }
+      h += `<td class="num mono${x ? '' : ' miss'}"><button class="cellbtn" data-act="dienNhap" data-ma="${esc(c.ma)}" data-ky="${k}">${v === undefined ? (x ? '' : `<span class="muted">${esc(tv('chuaGhi'))}</span>`) : fmtNum(v, 'raw')}</button>${x && x.cho ? '<sup>⏳</sup>' : ''}</td>
+        <td class="num${dd && dd.am ? ' bad' : ''}">${dd ? fmtNum(dd.v) + (dd.gap ? '<sup>*</sup>' : '') : ''}</td>`;
+    });
+    h += `<td class="num tot">${has ? fmtNum(sum) : ''}</td></tr>`;
+  });
+  return h + '</tbody></table></div>';
 }
 
 // ---------- Biểu đồ ----------
 function dienBieu() {
-  const f = S.f, c = curCT(), y = f.dYear || +TODAY().slice(0, 4);
-  return ctChips(c.ma, 'dCT') + `<div class="caltools"><div class="stepper"><button data-act="dYear" data-d="-1" aria-label="-">${IC.left}</button><b>${t('yearN', { y })}</b><button data-act="dYear" data-d="1" aria-label="+">${IC.right}</button></div></div>
-    <div class="kpis" id="kpis"></div>
+  const l = curLoai(), sel = curSel(l);
+  const hasHa = activeLoai('ha').length > 0;
+  return loaiSeg(l) + selChips(l, sel) + yearStep() + `<div class="kpis" id="kpis"></div>
     <div class="card pad chartcard"><h3 class="ch">${t('chartMonth')} <span class="unit mono">kWh</span></h3><div class="legend" id="lg1"></div><div class="chart" id="ch1"></div><p class="help">${t('chartTap')}</p></div>
     <div class="card pad chartcard"><h3 class="ch">${t('chartKy')} <span class="unit mono">kWh/${esc(tv('days', { n: '' }).trim())}</span></h3><div class="chart" id="ch2"></div></div>
-    <div class="card pad chartcard"><h3 class="ch" id="ch3t"></h3><div id="ch3"></div></div>`;
+    ${l === 'cao' && hasHa ? `<div class="card pad chartcard"><h3 class="ch">${t('chartCaoHa')} <span class="unit mono">kWh</span></h3><div class="legend" id="lg3"></div><div class="chart" id="ch3"></div><p class="help">${t('chenhNote')}</p></div>` : ''}
+    ${l === 'ha' ? `<div class="card pad chartcard"><h3 class="ch" id="ch3t"></h3><div id="ch3"></div></div>` : ''}`;
+}
+function kpiHtml(label, val, delta) {
+  return `<div class="kpi"><div class="kl">${label}</div><div class="kv">${val}</div>${delta || ''}</div>`;
 }
 function drawCharts() {
   const el1 = $('#ch1'); if (!el1) return;
-  const f = S.f, c = curCT(), y = f.dYear || +TODAY().slice(0, 4), today = TODAY();
-  const codes = tsOfCT(c);
-  const split = ['1.8.1', '1.8.2', '1.8.3'].every((k) => codes.indexOf(k) >= 0);
-  const series = split ? [
-    { key: '1.8.1', cls: 's1', name: (S.V.tsByMa['1.8.1'] || {}).ten || '1.8.1' },
-    { key: '1.8.2', cls: 's2', name: (S.V.tsByMa['1.8.2'] || {}).ten || '1.8.2' },
-    { key: '1.8.3', cls: 's3', name: (S.V.tsByMa['1.8.3'] || {}).ten || '1.8.3' }
-  ] : [{ key: '1.8.0', cls: 's1', name: (S.V.tsByMa['1.8.0'] || {}).ten || '1.8.0' }];
+  const l = curLoai(), sel = curSel(l), y = yearSel(), today = TODAY();
+  const thisYear = String(y) === today.slice(0, 4);
+  const labels = Array.from({ length: 12 }, (_, i) => String(i + 1)), curIdx = thisYear ? +today.slice(5, 7) - 1 : -1;
+  const c = sel !== 'ALL' ? S.V.ctByMa[sel] : null, codes = c ? tsOfCT(c) : ['1.8.0'];
+  const split = l === 'cao' && ['1.8.1', '1.8.2', '1.8.3'].every((k) => codes.indexOf(k) >= 0);
+  const series = split ? ['1.8.1', '1.8.2', '1.8.3'].map((k, i) => ({ key: k, cls: 's' + (i + 1), name: (S.V.tsByMa[k] || {}).ten || k }))
+    : [{ key: '1.8.0', cls: 's1', name: '' }];
+  // 1. Theo tháng
   const data = [];
   for (let m = 1; m <= 12; m++) {
     const vals = {}; let tot = 0, has = false;
-    series.forEach((s) => { const v = monthCons(c.ma, y, m, s.key); if (v !== null) { vals[s.key] = Math.max(0, v); tot += Math.max(0, v); has = true; } });
-    if (split) { const v0 = monthCons(c.ma, y, m, '1.8.0'); if (v0 !== null && !has) { has = true; } }
+    series.forEach((s) => { const v = consSel(sel, y, m, s.key); if (v !== null) { vals[s.key] = Math.max(0, v); tot += Math.max(0, v); has = true; } });
     data.push(has ? { vals, total: tot } : null);
   }
-  // Nhãn: tháng cao nhất và tháng gần nhất có số
-  const idx = data.map((d, i) => (d ? i : -1)).filter((i) => i >= 0);
-  const lbl = [];
+  const idx = data.map((d, i) => (d ? i : -1)).filter((i) => i >= 0), lbl = [];
   if (idx.length) {
     let mx = idx[0]; idx.forEach((i) => { if (data[i].total > data[mx].total) mx = i; });
     lbl.push(mx); if (idx[idx.length - 1] !== mx) lbl.push(idx[idx.length - 1]);
@@ -2423,44 +2525,58 @@ function drawCharts() {
     rows: [{ value: fmtNum(d.total) + ' kWh', name: tp('total') }].concat(series.length > 1 ? series.map((s) => ({ cls: s.cls, value: fmtNum(d.vals[s.key] || 0) + ' kWh', name: s.key + ' ' + s.name })) : [])
   } : null);
   if (!idx.length) el1.innerHTML = `<div class="empty">${t('noData')}</div>`;
-  else colChart(el1, { labels: Array.from({ length: 12 }, (_, i) => String(i + 1)), series, data, labelIdx: lbl, tips, cur: String(y) === today.slice(0, 4) ? +today.slice(5, 7) - 1 : -1 });
-
-  // Biểu đồ theo kỳ: kWh/ngày
+  else colChart(el1, { labels, series, data, labelIdx: lbl, tips, cur: curIdx });
+  // 2. Theo kỳ
   const kys = kysOfYear(y).filter((k) => k <= kyHienTai(today));
-  const pts = kys.map((k) => { const d = (S.V.dl[c.ma + '|' + k] || {})['1.8.0']; return d && !d.am && d.ngay > 0 ? { k, v: d.v / d.ngay, tot: d.v, ngay: d.ngay } : null; });
-  const el2 = $('#ch2');
+  const pts = kys.map((k) => periodPt(sel, k)), el2 = $('#ch2');
   if (pts.filter(Boolean).length < 2) el2.innerHTML = `<div class="empty">${t('noData')}</div>`;
   else lineChart(el2, { pts, kys });
-
   // KPI
-  const cm = String(y) === today.slice(0, 4) ? +today.slice(5, 7) : 12;
-  const kNow = kyHienTai(today);
-  const vNow = monthCons(c.ma, y, cm, '1.8.0');
-  const pm = cm - 1;
-  const vPrev = pm >= 1 ? monthCons(c.ma, y, pm, '1.8.0') : null, vPrev2 = pm - 1 >= 1 ? monthCons(c.ma, y, pm - 1, '1.8.0') : null;
-  let kp = '';
-  kp += `<div class="kpi"><div class="kl">${String(y) === today.slice(0, 4) ? t('kMonthSoFar', { m: cm, d: fmtDM(kNow) }) : t('kMonth', { m: cm })}</div><div class="kv">${vNow === null ? '—' : fmtNum(vNow)} <small>kWh</small></div></div>`;
+  const cm = thisYear ? +today.slice(5, 7) : 12, pm = cm - 1, kNow = kyHienTai(today);
+  const vNow = consSel(sel, y, cm), vPrev = pm >= 1 ? consSel(sel, y, pm) : null, vPrev2 = pm >= 2 ? consSel(sel, y, pm - 1) : null;
+  let kp = kpiHtml(thisYear ? t('kMonthSoFar', { m: cm, d: fmtDM(kNow) }) : t('kMonth', { m: cm }), `${vNow === null ? '—' : fmtNum(vNow)} <small>kWh</small>`);
   if (pm >= 1) {
     let dl = '';
     if (vPrev !== null && vPrev2) { const pc = (vPrev - vPrev2) / vPrev2 * 100; dl = `<div class="kd ${pc > 0 ? 'up' : 'down'}"><span aria-hidden="true">${pc > 0 ? '▲' : '▼'}</span> ${pc > 0 ? '+' : '−'}${Math.abs(pc).toFixed(1)}% ${t('vsMonth', { m: pm - 1 })}</div>`; }
-    kp += `<div class="kpi"><div class="kl">${t('kMonth', { m: pm })}</div><div class="kv">${vPrev === null ? '—' : fmtNum(vPrev)} <small>kWh</small></div>${dl}</div>`;
+    kp += kpiHtml(t('kMonth', { m: pm }), `${vPrev === null ? '—' : fmtNum(vPrev)} <small>kWh</small>`, dl);
   }
-  if (codes.indexOf('3.8.0') >= 0 && pm >= 1) {
+  if (l === 'cao' && c && codes.indexOf('3.8.0') >= 0 && pm >= 1) {
     const P = monthCons(c.ma, y, pm, '1.8.0'), Q = monthCons(c.ma, y, pm, '3.8.0');
     if (P && Q !== null) {
       const cos = P / Math.sqrt(P * P + Q * Q), good = cos >= 0.9;
-      kp += `<div class="kpi"><div class="kl">${t('kCos', { m: pm })}</div><div class="kv">${cos.toFixed(2)}</div>
-        <div class="kd ${good ? 'good' : 'warn'}"><span aria-hidden="true">${good ? '✓' : '⚠'}</span> ${t(good ? 'cosOk' : 'cosLow')}</div></div>`;
+      kp += kpiHtml(t('kCos', { m: pm }), cos.toFixed(2), `<div class="kd ${good ? 'good' : 'warn'}"><span aria-hidden="true">${good ? '✓' : '⚠'}</span> ${t(good ? 'cosOk' : 'cosLow')}</div>`);
     }
   }
+  if (l === 'cao' && activeLoai('ha').length && pm >= 1) {
+    const P = consSel(sel, y, pm), H = consSel('ALL', y, pm);
+    if (P && H !== null) kp += kpiHtml(t('kChenh', { m: pm }), `${fmtNum(P - H)} <small>kWh</small>`, `<div class="kd">${((P - H) / P * 100).toFixed(1)}% · ${t('chenhNote')}</div>`);
+  }
   $('#kpis').innerHTML = kp;
-
-  // So sánh công tơ (tháng gần nhất có số của công tơ đang chọn)
-  let mm = cm; while (mm > 1 && monthCons(c.ma, y, mm, '1.8.0') === null) mm--;
-  const rows = activeCT().map((x) => ({ c: x, v: monthCons(x.ma, y, mm, '1.8.0') })).filter((r) => r.v !== null).sort((a, b) => b.v - a.v);
-  $('#ch3t').innerHTML = t('chartCT', { m: mm }) + ' <span class="unit mono">kWh</span>';
-  const mx = rows.length ? Math.max(...rows.map((r) => r.v)) : 0;
-  $('#ch3').innerHTML = rows.length ? `<div class="hbars">${rows.map((r) => `<div class="hb${r.c.ma === c.ma ? ' me' : ''}"><span class="hn">${esc(r.c.ten)}</span><span class="track"><i style="width:${mx ? Math.max(1, r.v / mx * 100) : 0}%"></i></span><b class="num">${fmtNum(r.v)}</b></div>`).join('')}</div>` : `<div class="empty">${t('noData')}</div>`;
+  // 3a. Cao áp và tổng hạ áp
+  const el3 = $('#ch3');
+  if (l === 'cao' && $('#lg3')) {
+    const ss = [{ key: 'cao', cls: 's1', name: tp('caoAp') }, { key: 'ha', cls: 's2', name: tp('tongHa') }];
+    const d3 = [], tp3 = [];
+    for (let m = 1; m <= 12; m++) {
+      const P = consSel(sel, y, m), H = consSel('ALL', y, m);
+      if (P === null && H === null) { d3.push(null); tp3.push(null); continue; }
+      d3.push({ vals: { cao: Math.max(0, P || 0), ha: Math.max(0, H || 0) }, total: Math.max(P || 0, H || 0) });
+      const rows = [{ cls: 's1', value: fmtNum(P || 0) + ' kWh', name: tp('caoAp') }, { cls: 's2', value: fmtNum(H || 0) + ' kWh', name: tp('tongHa') }];
+      if (P && H !== null) rows.push({ value: fmtNum(P - H) + ' kWh (' + ((P - H) / P * 100).toFixed(1) + '%)', name: tp('chenhLech') });
+      tp3.push({ title: tp('kMonth', { m }) + ' / ' + y, rows });
+    }
+    $('#lg3').innerHTML = ss.map((s) => `<span><i class="sw ${s.cls}"></i>${esc(s.name)}</span>`).join('');
+    if (!d3.some(Boolean)) el3.innerHTML = `<div class="empty">${t('noData')}</div>`;
+    else colChart(el3, { labels, series: ss, data: d3, labelIdx: [], tips: tp3, cur: curIdx, grouped: true });
+  }
+  // 3b. So sánh công tơ hạ áp
+  if (l === 'ha' && el3) {
+    let mm = cm; while (mm > 1 && consSel('ALL', y, mm) === null) mm--;
+    const rows = activeLoai('ha').map((x) => ({ c: x, v: monthCons(x.ma, y, mm, '1.8.0') })).filter((r) => r.v !== null).sort((a, b) => b.v - a.v);
+    $('#ch3t').innerHTML = t('chartHaCT', { m: mm }) + ' <span class="unit mono">kWh</span>';
+    const mx = rows.length ? Math.max(...rows.map((r) => r.v)) : 0;
+    el3.innerHTML = rows.length ? `<div class="hbars">${rows.map((r) => `<div class="hb${r.c.ma === sel ? ' me' : ''}"><span class="hn">${esc(r.c.ten)}</span><span class="track"><i style="width:${mx ? Math.max(1, r.v / mx * 100) : 0}%"></i></span><b class="num">${fmtNum(r.v)}</b></div>`).join('')}</div>` : `<div class="empty">${t('noData')}</div>`;
+  }
 }
 function niceStep(max, n) {
   const raw = max / n, p = Math.pow(10, Math.floor(Math.log10(raw))), f = raw / p;
@@ -2489,6 +2605,17 @@ function colChart(el, o) {
     const x = pad.l + band * i + (band - bw) / 2;
     xl += `<text x="${pad.l + band * i + band / 2}" y="${H - 6}" class="tick${i === o.cur ? ' curx' : ''}" text-anchor="middle">${o.labels[i]}</text>`;
     if (!d) return;
+    if (o.grouped) {
+      // Cột đứng cạnh nhau, cách 2px
+      const ns = o.series.length, gw = Math.min(20, (band * 0.8 - (ns - 1) * 2) / ns), tw = ns * gw + (ns - 1) * 2, x0 = pad.l + band * i + (band - tw) / 2;
+      o.series.forEach((s, si) => {
+        const v = d.vals[s.key] || 0, y1 = Y(v), h = pad.t + ph - y1;
+        if (h >= 0.8) bars += `<path d="${roundTop(x0 + si * (gw + 2), y1, gw, h, 4)}" class="${s.cls}"/>`;
+      });
+      o.tips[i].y = Y(d.total);
+      hits += `<rect class="hit" x="${pad.l + band * i}" y="${pad.t}" width="${band}" height="${ph}" data-tip="${i}" tabindex="0" role="img" aria-label="${esc(o.tips[i].title + ': ' + o.tips[i].rows.map((r) => r.name + ' ' + r.value).join(', '))}"/>`;
+      return;
+    }
     let cum = 0;
     const nz = o.series.filter((s) => (d.vals[s.key] || 0) > 0);
     nz.forEach((s, si) => {
@@ -2587,7 +2714,7 @@ VIEWS.dienNhap = {
     for (let i = 0; i < 9; i++) { opts.push(k); k = kyTruoc(k); }
     if (opts.indexOf(ky) < 0) opts.push(ky);
     const codes = tsOfCT(c);
-    let o = `<div class="card"><div class="mhead"><span class="code">${esc(c.ma)}</span><h1>${esc(c.ten)}</h1>
+    let o = `<div class="card"><div class="mhead"><span class="code">${esc(c.ma)}</span> <span class="tag ${ctLoai(c) === 'ha' ? 'tag-ha' : 'tag-cao'}">${esc(tp(ctLoai(c) === 'ha' ? 'haAp' : 'caoAp'))}</span><h1>${esc(c.ten)}</h1>
       <dl class="kv" style="margin-top:10px"><dt>${t('heSo')}</dt><dd class="mono">×${fmtNum(c.heSo, 'raw')}</dd>
       ${c.soCongTo ? `<dt>${t('soCT')}</dt><dd class="mono">${esc(c.soCongTo)}</dd>` : ''}${c.viTri ? `<dt>${t('location')}</dt><dd>${esc(c.viTri)}</dd>` : ''}</dl></div></div>
       <form id="dnForm" class="card pad" style="margin-top:12px" autocomplete="off">
@@ -2599,7 +2726,8 @@ VIEWS.dienNhap = {
     codes.forEach((code) => {
       const ts = S.V.tsByMa[code] || { ten: code, zh: '', dv: '' };
       const v = x && x.giaTri && x.giaTri[code] !== undefined ? fmtNum(x.giaTri[code], 'raw').replace(/\s/g, '') : '';
-      o += `<label class="fld rd"><span><b class="mono">${esc(code)}</b> · ${esc(ts.ten)}${ts.zh ? `<span class="zi" lang="zh-CN">${esc(ts.zh)}</span>` : ''}</span>
+      const lab = ctLoai(c) === 'ha' ? t('csHa') : `<b class="mono">${esc(code)}</b> · ${esc(ts.ten)}${ts.zh ? `<span class="zi" lang="zh-CN">${esc(ts.zh)}</span>` : ''}`;
+      o += `<label class="fld rd"><span>${lab}</span>
         <div class="inrow"><input class="inp mono" data-code="${esc(code)}" inputmode="decimal" value="${esc(v)}" autocomplete="off"><span class="u mono">${esc(ts.dv || '')}</span></div>
         <div class="help" id="h_${esc(code).replace(/\./g, '_')}"></div></label>`;
     });
@@ -2678,30 +2806,35 @@ async function dnSave(p) {
 VIEWS.ctEdit = {
   html(p) {
     const c = p.ma ? S.V.ctByMa[p.ma] : null;
-    const v = c || { ten: '', soCongTo: '', viTri: '', heSo: 1, thongSo: [], ghiChu: '', hoatDong: true };
-    const on = new Set(tsOfCT(v));
+    const v = c || { ten: '', soCongTo: '', viTri: '', heSo: 1, thongSo: [], ghiChu: '', hoatDong: true, loai: p.loai || 'ha' };
+    const on = new Set(tsOfCT(Object.assign({}, v, { loai: 'cao' }))), l = ctLoai(v);
     return `<form id="ctForm" class="card pad" autocomplete="off">${c ? `<p style="margin:0 0 12px"><span class="code">${esc(c.ma)}</span></p>` : ''}
+      <div class="fld"><span>${t('loaiCT')}</span><div class="choices">${['cao', 'ha'].map((k) => `<label class="choice"><input type="radio" name="cLoai" value="${k}" ${l === k ? 'checked' : ''}>
+        <span><b>${t(k === 'cao' ? 'caoAp' : 'haAp')}</b><span class="help" style="display:block;margin-top:2px">${t(k === 'cao' ? 'caoDesc' : 'haDesc')}</span></span></label>`).join('')}</div></div>
       <label class="fld"><span>${t('name')}</span><input class="inp" id="cTen" value="${esc(v.ten)}" maxlength="120"></label>
       <label class="fld"><span>${t('soCT')}</span><input class="inp mono" id="cSo" value="${esc(v.soCongTo)}" maxlength="40"></label>
       <label class="fld"><span>${t('location')}</span><input class="inp" id="cViTri" value="${esc(v.viTri)}" maxlength="120"></label>
       <label class="fld"><span>${t('heSo')}</span><input class="inp mono" id="cHeSo" inputmode="decimal" value="${esc(fmtNum(v.heSo, 'raw').replace(/\s/g, ''))}"><div class="help">${t('heSoHelp')}</div></label>
-      <div class="fld"><span>${t('thongSoAD')}</span><div class="list">${S.V.ts.map((x) => `<label class="checkrow"><input type="checkbox" data-code="${esc(x.ma)}" ${on.has(x.ma) ? 'checked' : ''}><span class="main"><b class="mono">${esc(x.ma)}</b> · ${esc(x.ten)} <span class="muted">${esc(x.zh || '')} · ${esc(x.dv || '')}</span></span></label>`).join('')}</div></div>
+      <div class="fld" id="cTS" ${l === 'ha' ? 'hidden' : ''}><span>${t('thongSoAD')}</span><div class="list">${S.V.ts.map((x) => `<label class="checkrow"><input type="checkbox" data-code="${esc(x.ma)}" ${on.has(x.ma) ? 'checked' : ''}><span class="main"><b class="mono">${esc(x.ma)}</b> · ${esc(x.ten)} <span class="muted">${esc(x.zh || '')} · ${esc(x.dv || '')}</span></span></label>`).join('')}</div></div>
       <label class="fld"><span>${t('note')}</span><textarea class="inp" id="cGhiChu" rows="2" maxlength="300">${esc(v.ghiChu)}</textarea></label>
       ${c ? `<label class="switch"><span class="t">${t('active')}</span><input type="checkbox" id="cHD" ${v.hoatDong ? 'checked' : ''}></label>` : ''}
       <div class="err" id="cErr" hidden></div>
       <div class="btns" style="margin-top:12px"><button type="button" class="btn ghost" data-act="back">${t('cancel')}</button><button type="submit" class="btn" id="cSave">${t('save')}</button></div></form>`;
   },
-  after(p) { $('#ctForm').addEventListener('submit', (e) => { e.preventDefault(); ctSave(p); }); }
+  after(p) {
+    $('#ctForm').addEventListener('submit', (e) => { e.preventDefault(); ctSave(p); });
+    $$('input[name="cLoai"]').forEach((r) => r.addEventListener('change', () => { $('#cTS').hidden = r.value === 'ha' && r.checked; }));
+  }
 };
 async function ctSave(p) {
   const fe = $('#cErr'), show = (h) => { fe.innerHTML = h; fe.hidden = false; };
   const heSo = parseNum($('#cHeSo').value);
   const d = { ma: p.ma || '', ten: $('#cTen').value.trim(), soCongTo: $('#cSo').value.trim(), viTri: $('#cViTri').value.trim(), heSo,
     thongSo: $$('#ctForm input[data-code]').filter((i) => i.checked).map((i) => i.dataset.code), ghiChu: $('#cGhiChu').value.trim(),
-    hoatDong: $('#cHD') ? $('#cHD').checked : true };
+    hoatDong: $('#cHD') ? $('#cHD').checked : true, loai: ($('input[name="cLoai"]:checked') || {}).value || 'ha' };
   if (!d.ten) return show(t('THIEU_TEN'));
   if (!(heSo > 0)) return show(t('HE_SO_SAI'));
-  if (!d.thongSo.length) return show(t('needOneNum'));
+  if (d.loai === 'cao' && !d.thongSo.length) return show(t('needOneNum'));
   const b = $('#cSave'); b.disabled = true;
   try {
     const r = await api('saveMeter', d);
@@ -2743,65 +2876,75 @@ async function tsSave(p) {
 
 // ---------- Excel số điện ----------
 function buildDienWorkbook(y) {
-  const today = TODAY(), cur = kyHienTai(today), cts = activeCT();
+  const today = TODAY(), cur = kyHienTai(today), caos = activeLoai('cao'), has = activeLoai('ha');
   const H = { b: 1, fill: '#16211F', color: '#FFFFFF', align: 'center', valign: 'center', wrap: 1, border: '#5B6B67' };
   const B = { border: true }, NUM = Object.assign({ align: 'right', fmt: '#,##0' }, B), RAW = Object.assign({ align: 'right', fmt: '#,##0.0##' }, B);
+  const SEC = { b: 1, fill: '#E4ECF9', color: '#16211F', border: true };
+  const MT = { fill: '#EEF1F0', border: true };
   const sheets = [];
-  // Tổng hợp theo tháng
-  const r1 = [[{ v: 'TỔNG HỢP ĐIỆN TIÊU THỤ NĂM ' + y + ' · ' + y + '年用电量汇总', s: { b: 1, sz: 14 } }],
-    [{ v: tp('xlsExported') + ': ' + fmtD(today) + ' · ' + tp('tieuThu') + ' = (' + tv('chiSo') + ' − kỳ trước) × ' + tv('heSo'), s: { i: 1, color: '#55625F' } }], []];
-  const hdr = [tp('congTo'), tp('code'), tp('params'), tp('tsUnit')].concat(Array.from({ length: 12 }, (_, i) => 'T' + (i + 1) + '\n' + (i + 1) + '月'), [tp('total')]);
-  r1.push(hdr.map((h) => ({ v: h, s: H })));
-  cts.forEach((c) => {
-    const codes = tsOfCT(c).filter((k) => (S.V.tsByMa[k] || {}).tich !== false);
-    codes.forEach((code, ci) => {
-      const row = [{ v: ci ? '' : c.ten, s: Object.assign({ b: 1 }, B) }, { v: ci ? '' : c.ma, s: B }, { v: code + ' ' + tsName(code), s: B }, { v: (S.V.tsByMa[code] || {}).dv || '', s: Object.assign({ align: 'center' }, B) }];
-      let tot = 0;
-      for (let m = 1; m <= 12; m++) { const v = monthCons(c.ma, y, m, code); if (v !== null) tot += v; row.push(v === null ? { v: '', s: B } : { v: Math.round(v * 10) / 10, s: NUM }); }
-      row.push({ v: Math.round(tot * 10) / 10, s: Object.assign({}, NUM, { b: 1 }) });
-      r1.push(row);
-    });
-    if (codes.indexOf('1.8.0') >= 0 && codes.indexOf('3.8.0') >= 0) {
-      const row = [{ v: '', s: B }, { v: '', s: B }, { v: 'cosφ', s: Object.assign({ b: 1 }, B) }, { v: '', s: B }];
-      for (let m = 1; m <= 12; m++) {
-        const P = monthCons(c.ma, y, m, '1.8.0'), Q = monthCons(c.ma, y, m, '3.8.0');
-        if (P && Q !== null) { const cs = P / Math.sqrt(P * P + Q * Q); row.push({ v: Math.round(cs * 1000) / 1000, s: Object.assign({ align: 'right', fmt: '0.00', b: 1 }, B, cs < 0.9 ? { fill: '#FBE8E5', color: '#C8372D' } : { color: '#2F8A3B' }) }); }
-        else row.push({ v: '', s: B });
+  const r1 = (v) => Math.round(v * 10) / 10;
+  // ===== Trang 1: tổng hợp theo tháng, tách cao áp / hạ áp =====
+  const rows = [[{ v: 'TỔNG HỢP ĐIỆN TIÊU THỤ NĂM ' + y + ' · ' + y + '年用电量汇总', s: { b: 1, sz: 14 } }],
+    [{ v: tp('xlsExported') + ': ' + fmtD(today) + ' · ' + tp('tieuThu') + ' = (' + tv('chiSo') + ' − ' + tv('kyTruoc') + ') × ' + tv('heSo') + ' (kWh)', s: { i: 1, color: '#55625F' } }], []];
+  const hdr = [tp('congTo'), tp('tsCode'), tp('params'), tp('tsUnit')].concat(Array.from({ length: 12 }, (_, i) => 'T' + (i + 1) + '\n' + (i + 1) + '月'), [tp('total')]);
+  rows.push(hdr.map((h) => ({ v: h, s: H })));
+  const secRow = (txt) => { const r = [{ v: txt, s: SEC }]; for (let i = 1; i < 17; i++) r.push({ v: '', s: SEC }); rows.push(r); };
+  const monthRow = (label1, label2, label3, unit, fn, style) => {
+    const row = [{ v: label1, s: Object.assign({ b: 1 }, B, style || {}) }, { v: label2, s: Object.assign({}, B, style || {}) }, { v: label3, s: Object.assign({}, B, style || {}) }, { v: unit, s: Object.assign({ align: 'center' }, B, style || {}) }];
+    let tot = 0, any = false;
+    for (let m = 1; m <= 12; m++) { const v = fn(m); if (v !== null) { tot += v; any = true; } row.push(v === null ? { v: '', s: Object.assign({}, B, style || {}) } : { v: r1(v), s: Object.assign({}, NUM, style || {}) }); }
+    row.push(any ? { v: r1(tot), s: Object.assign({}, NUM, { b: 1 }, style || {}) } : { v: '', s: Object.assign({}, B, style || {}) });
+    rows.push(row);
+  };
+  const merges = ['A1:Q1', 'A2:Q2'];
+  if (caos.length) {
+    secRow(tp('caoAp') + ' — ' + tv('caoHelp'));
+    merges.push('A' + rows.length + ':Q' + rows.length);
+    caos.forEach((c) => {
+      const codes = tsOfCT(c).filter((k) => (S.V.tsByMa[k] || {}).tich !== false);
+      codes.forEach((code, ci) => monthRow(ci ? '' : c.ten, ci ? '' : c.ma, code + ' ' + tsName(code), (S.V.tsByMa[code] || {}).dv || '', (m) => monthCons(c.ma, y, m, code)));
+      if (codes.indexOf('1.8.0') >= 0 && codes.indexOf('3.8.0') >= 0) {
+        const row = [{ v: '', s: B }, { v: '', s: B }, { v: 'cosφ', s: Object.assign({ b: 1 }, B) }, { v: '', s: B }];
+        for (let m = 1; m <= 12; m++) {
+          const P = monthCons(c.ma, y, m, '1.8.0'), Q = monthCons(c.ma, y, m, '3.8.0');
+          if (P && Q !== null) { const cs = P / Math.sqrt(P * P + Q * Q); row.push({ v: Math.round(cs * 1000) / 1000, s: Object.assign({ align: 'right', fmt: '0.00', b: 1 }, B, cs < 0.9 ? { fill: '#FBE8E5', color: '#C8372D' } : { color: '#2F8A3B' }) }); }
+          else row.push({ v: '', s: B });
+        }
+        row.push({ v: '', s: B });
+        rows.push(row);
       }
-      row.push({ v: '', s: B });
-      r1.push(row);
+    });
+  }
+  if (has.length) {
+    secRow(tp('haAp') + ' — ' + tv('haHelp'));
+    merges.push('A' + rows.length + ':Q' + rows.length);
+    has.forEach((c) => monthRow(c.ten, c.ma, tp('csHa'), 'kWh', (m) => monthCons(c.ma, y, m, '1.8.0')));
+    monthRow(tp('tongHa'), '', '', 'kWh', (m) => consSel('ALL', y, m), { fill: '#EEF1F0', b: 1 });
+    if (caos.length) {
+      monthRow(tp('chenhLech') + ' ' + tp('caoAp') + ' − ' + tp('haAp'), '', tv('chenhNote'), 'kWh', (m) => {
+        const P = caoTong(y, m), Hh = consSel('ALL', y, m);
+        return P !== null && Hh !== null ? P - Hh : null;
+      }, { fill: '#FDEEDF' });
     }
-  });
-  sheets.push({ name: 'Tổng hợp ' + y + ' · 汇总', rows: r1, cols: [28, 7, 30, 8].concat(Array(12).fill(11), [13]), merges: ['A1:Q1', 'A2:Q2'], freeze: { r: 4, c: 4 }, heights: { 1: 24, 4: 30 }, landscape: 1, printTitles: { rows: '4:4' } });
-  // Mỗi công tơ một trang
+  }
+  sheets.push({ name: 'Tổng hợp ' + y + ' · 汇总', rows, cols: [30, 7, 30, 8].concat(Array(12).fill(11), [13]), merges, freeze: { r: 4, c: 4 }, heights: { 1: 24, 4: 30 }, landscape: 1, printTitles: { rows: '4:4' } });
   const kys = kysOfYear(y).filter((k) => k <= cur);
-  cts.forEach((c) => {
+  // ===== Mỗi công tơ cao áp một trang =====
+  caos.forEach((c) => {
     const codes = tsOfCT(c);
-    const rows = [[{ v: c.ten + ' (' + c.ma + ')' + (c.soCongTo ? ' · ' + c.soCongTo : '') + ' · ' + tv('heSo') + ' ×' + c.heSo + ' · ' + y, s: { b: 1, sz: 13 } }], []];
-    const h1 = [{ v: tp('kyGhi'), s: H }, { v: tp('savedAt'), s: H }, { v: tp('nguoiGhi'), s: H }], h2 = [{ v: '', s: H }, { v: '', s: H }, { v: '', s: H }], merges = ['A3:A4', 'B3:B4', 'C3:C4'];
-    let col = 3;
-    const cols = [12, 17, 22];
+    const rs = [[{ v: tp('caoAp') + ': ' + c.ten + ' (' + c.ma + ')' + (c.soCongTo ? ' · ' + c.soCongTo : '') + ' · ' + tv('heSo') + ' ×' + c.heSo + ' · ' + y, s: { b: 1, sz: 13 } }], []];
+    const h1 = [{ v: tp('kyGhi'), s: H }, { v: tp('savedAt'), s: H }, { v: tp('nguoiGhi'), s: H }], h2 = [{ v: '', s: H }, { v: '', s: H }, { v: '', s: H }], mg = ['A3:A4', 'B3:B4', 'C3:C4'];
+    let col = 3; const cols = [12, 17, 22];
     codes.forEach((code) => {
       const ts = S.V.tsByMa[code] || {}, span = ts.tich === false ? 1 : 2;
       h1[col] = { v: code + '\n' + (ts.ten || ''), s: H };
-      if (span === 2) { h1[col + 1] = { v: '', s: H }; merges.push(XW.col(col) + '3:' + XW.col(col + 1) + '3'); }
+      if (span === 2) { h1[col + 1] = { v: '', s: H }; mg.push(XW.col(col) + '3:' + XW.col(col + 1) + '3'); }
       h2[col] = { v: tp('chiSo'), s: H }; cols.push(14);
       if (span === 2) { h2[col + 1] = { v: tp('tieuThu') + ' (' + (ts.dv || '') + ')', s: H }; cols.push(14); }
       col += span;
     });
-    h1[col] = { v: tp('note'), s: H }; h2[col] = { v: '', s: H }; merges.push(XW.col(col) + '3:' + XW.col(col) + '4'); cols.push(26);
-    rows.push(h1, h2);
-    const monthRow = (m) => {
-      const r = [{ v: tv('monthTotal', { m }) + ' · ' + tz('monthTotal', { m }), s: { b: 1, fill: '#EEF1F0', border: true } }, { v: '', s: { fill: '#EEF1F0', border: true } }, { v: '', s: { fill: '#EEF1F0', border: true } }];
-      let cc = 3;
-      codes.forEach((code) => {
-        const ts = S.V.tsByMa[code] || {};
-        r[cc] = { v: '', s: { fill: '#EEF1F0', border: true } };
-        if (ts.tich !== false) { const v = monthCons(c.ma, y, m, code); r[cc + 1] = v === null ? { v: '', s: { fill: '#EEF1F0', border: true } } : { v: Math.round(v * 10) / 10, s: Object.assign({}, NUM, { b: 1, fill: '#EEF1F0' }) }; cc += 2; } else cc += 1;
-      });
-      r[cc] = { v: '', s: { fill: '#EEF1F0', border: true } };
-      return r;
-    };
+    h1[col] = { v: tp('note'), s: H }; h2[col] = { v: '', s: H }; mg.push(XW.col(col) + '3:' + XW.col(col) + '4'); cols.push(26);
+    rs.push(h1, h2);
     kys.forEach((k, i) => {
       const x = S.V.csKey[c.ma + '|' + k], d = S.V.dl[c.ma + '|' + k] || {};
       const r = [{ v: excelSerial(k), s: Object.assign({ fmt: 'dd/mm/yyyy', align: 'center', b: 1 }, B) },
@@ -2810,14 +2953,61 @@ function buildDienWorkbook(y) {
       codes.forEach((code) => {
         const ts = S.V.tsByMa[code] || {}, v = x && x.giaTri ? x.giaTri[code] : undefined, dd = d[code];
         r[cc] = v === undefined ? { v: '', s: B } : { v: +v, s: RAW };
-        if (ts.tich !== false) { r[cc + 1] = dd ? { v: Math.round(dd.v * 10) / 10, s: Object.assign({}, NUM, dd.am ? { fill: '#FBE8E5', color: '#C8372D' } : {}) } : { v: '', s: B }; cc += 2; } else cc += 1;
+        if (ts.tich !== false) { r[cc + 1] = dd ? { v: r1(dd.v), s: Object.assign({}, NUM, dd.am ? { fill: '#FBE8E5', color: '#C8372D' } : {}) } : { v: '', s: B }; cc += 2; } else cc += 1;
       });
       r[cc] = { v: x ? x.ghiChu : '', s: Object.assign({ wrap: 1 }, B) };
-      rows.push(r);
-      if (i === kys.length - 1 || kys[i + 1].slice(0, 7) !== k.slice(0, 7)) rows.push(monthRow(+k.slice(5, 7)));
+      rs.push(r);
+      if (i === kys.length - 1 || kys[i + 1].slice(0, 7) !== k.slice(0, 7)) {
+        const m = +k.slice(5, 7), mr = [{ v: tv('monthTotal', { m }) + ' · ' + tz('monthTotal', { m }), s: Object.assign({ b: 1 }, MT) }, { v: '', s: MT }, { v: '', s: MT }];
+        let c2 = 3;
+        codes.forEach((code) => {
+          const ts = S.V.tsByMa[code] || {};
+          mr[c2] = { v: '', s: MT };
+          if (ts.tich !== false) { const v = monthCons(c.ma, y, m, code); mr[c2 + 1] = v === null ? { v: '', s: MT } : { v: r1(v), s: Object.assign({}, NUM, { b: 1, fill: '#EEF1F0' }) }; c2 += 2; } else c2 += 1;
+        });
+        mr[c2] = { v: '', s: MT };
+        rs.push(mr);
+      }
     });
-    sheets.push({ name: (c.ma + ' ' + c.ten).slice(0, 31), rows, cols, merges: merges.concat(['A1:' + XW.col(col) + '1']), freeze: { r: 4, c: 1 }, heights: { 1: 22, 3: 34, 4: 30 }, landscape: 1, printTitles: { rows: '3:4' } });
+    sheets.push({ name: (c.ma + ' ' + c.ten).slice(0, 31), rows: rs, cols, merges: mg.concat(['A1:' + XW.col(col) + '1']), freeze: { r: 4, c: 1 }, heights: { 1: 22, 3: 34, 4: 30 }, landscape: 1, printTitles: { rows: '3:4' } });
   });
+  // ===== Hạ áp: một trang chung, mỗi công tơ 2 cột =====
+  if (has.length) {
+    const rs = [[{ v: tp('haAp') + ' — ' + tv('haHelp') + ' · ' + y, s: { b: 1, sz: 13 } }], []];
+    const h1 = [{ v: tp('kyGhi'), s: H }], h2 = [{ v: '', s: H }], mg = ['A3:A4'], cols = [12];
+    let col = 1;
+    has.forEach((c) => {
+      h1[col] = { v: c.ten + '\n' + c.ma + ' · ×' + c.heSo, s: H }; h1[col + 1] = { v: '', s: H };
+      mg.push(XW.col(col) + '3:' + XW.col(col + 1) + '3');
+      h2[col] = { v: tp('chiSo'), s: H }; h2[col + 1] = { v: tp('tieuThu') + ' (kWh)', s: H };
+      cols.push(13, 13); col += 2;
+    });
+    h1[col] = { v: tp('tongHa') + ' (kWh)', s: H }; h2[col] = { v: '', s: H }; mg.push(XW.col(col) + '3:' + XW.col(col) + '4'); cols.push(15);
+    rs.push(h1, h2);
+    kys.forEach((k, i) => {
+      const r = [{ v: excelSerial(k), s: Object.assign({ fmt: 'dd/mm/yyyy', align: 'center', b: 1 }, B) }];
+      let cc = 1, sum = 0, any = false;
+      has.forEach((c) => {
+        const x = S.V.csKey[c.ma + '|' + k], dd = (S.V.dl[c.ma + '|' + k] || {})['1.8.0'];
+        const v = x && x.giaTri ? x.giaTri['1.8.0'] : undefined;
+        r[cc] = v === undefined ? (x ? { v: '', s: B } : { v: tp('chuaGhi'), s: Object.assign({ color: '#D96A12', i: 1, sz: 8 }, B) }) : { v: +v, s: RAW };
+        r[cc + 1] = dd ? { v: r1(dd.v), s: Object.assign({}, NUM, dd.am ? { fill: '#FBE8E5', color: '#C8372D' } : {}) } : { v: '', s: B };
+        if (dd && !dd.am) { sum += dd.v; any = true; }
+        cc += 2;
+      });
+      r[cc] = any ? { v: r1(sum), s: Object.assign({}, NUM, { b: 1 }) } : { v: '', s: B };
+      rs.push(r);
+      if (i === kys.length - 1 || kys[i + 1].slice(0, 7) !== k.slice(0, 7)) {
+        const m = +k.slice(5, 7), mr = [{ v: tv('monthTotal', { m }) + ' · ' + tz('monthTotal', { m }), s: Object.assign({ b: 1 }, MT) }];
+        let c2 = 1;
+        has.forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); mr[c2] = { v: '', s: MT }; mr[c2 + 1] = v === null ? { v: '', s: MT } : { v: r1(v), s: Object.assign({}, NUM, { b: 1, fill: '#EEF1F0' }) }; c2 += 2; });
+        const tot = consSel('ALL', y, m);
+        mr[c2] = tot === null ? { v: '', s: MT } : { v: r1(tot), s: Object.assign({}, NUM, { b: 1, fill: '#EEF1F0' }) };
+        rs.push(mr);
+      }
+    });
+    sheets.push({ name: 'Hạ áp ' + y + ' · 低压', rows: rs, cols, merges: mg.concat(['A1:' + XW.col(col) + '1']), freeze: { r: 4, c: 1 }, heights: { 1: 22, 3: 44, 4: 30 }, landscape: 1, printTitles: { rows: '3:4' } });
+  }
   return XW.build(sheets);
 }
 async function exportDien(y) {
@@ -2834,6 +3024,8 @@ Object.assign(ACT, {
   dTab: (el) => { S.f.dTab = el.dataset.t; render(); },
   dKyStep: (el) => { const k = S.f.dKy || kyHienTai(TODAY()); S.f.dKy = +el.dataset.d < 0 ? kyTruoc(k) : kyTiep(k); render(); },
   dCT: (el) => { S.f.dCT = el.dataset.ma; render(); },
+  dLoai: (el) => { S.f.dLoai = el.dataset.l; render(); },
+  dSel: (el) => { if (el.dataset.l === 'ha') S.f.dCTha = el.dataset.ma; else S.f.dCT = el.dataset.ma; render(); },
   dYear: (el) => { S.f.dYear = (S.f.dYear || +TODAY().slice(0, 4)) + (+el.dataset.d); render(); },
   dienNhap: (el) => go('dienNhap', { ma: el.dataset.ma, ky: el.dataset.ky || '' }),
   addNameDn: (el) => {
