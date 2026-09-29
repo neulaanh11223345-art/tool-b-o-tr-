@@ -439,6 +439,21 @@ table.dtab .tot{background:var(--blue-bg)}
 table.dtab th.tot{background:var(--blue-bg);color:var(--ink);min-width:96px}
 table.dtab td.miss{color:var(--ink3)}
 .cellbtn{border:0;background:none;padding:0;font:inherit;color:inherit;text-align:right;width:100%}
+/* Công tơ nhánh + bảng theo tháng (1.3) */
+.tag-nhanh{background:var(--orange-bg);color:var(--orange)}
+.choices{grid-template-columns:repeat(auto-fit,minmax(150px,1fr))}
+table.mtab td.num,table.mtab th.sub2{min-width:74px}
+table.mtab th.sub2.tot,table.mtab td.tot{min-width:92px}
+table.mtab .nmc .s{margin-top:2px}
+table.mtab tr.chl th,table.mtab tr.chl td{background:var(--orange-bg)}
+table.mtab tr.chl .nmc .s{white-space:normal;font-weight:500}
+table.mtab .pct{display:block;font-size:11px;color:var(--ink2)}
+table.mtab td.muted{color:var(--ink3);text-align:center}
+.chip small.muted{font-weight:500}
+@media (max-width:420px){.choices{grid-template-columns:1fr}}
+table.mtab .nmc button{font-family:var(--f-ui);font-size:13px;font-weight:700}
+table.mtab .nmc button .zi{display:block;margin:1px 0 0;font-size:11.5px;font-weight:500}
+table.mtab .nmc{min-width:156px;max-width:172px}
 </style>
 </head>
 <body>
@@ -614,7 +629,7 @@ const XW = (() => {
 'use strict';
 const API_URL = "https://script.google.com/macros/s/AKfycbxYJ1YcP3FN3oWU8YsOlSpPFxU88fvnoZNPKYjygzrJ7PFPHIDZ1LY0VOkYbtJdhAUWoQ/exec";
 const MODE = "live";
-const APP_VER = "1.2.0";
+const APP_VER = "1.3.0";
 const DemoBackend = null;
 
 const IS_DEMO = MODE === 'demo';
@@ -1188,9 +1203,10 @@ VIEWS.home = {
 // ---------- Quét QR ----------
 function pickList(q) {
   const list = findMay(q, activeMay()).slice(0, q ? 60 : 12);
-  const cts = findCT(q);
+  // Công tơ chỉ hiện khi có gõ tìm (nhiều công tơ trùng tên máy VKY…); máy lên trước
+  const cts = q && q.trim() ? findCT(q).slice(0, 60) : [];
   if (!list.length && !cts.length) return `<div class="empty">${t('notFound')}</div>`;
-  return cts.map(ctRow).join('') + list.map((m) => mRow(m, stOf(m), false, can('confirm'))).join('');
+  return list.map((m) => mRow(m, stOf(m), false, can('confirm'))).join('') + cts.map(ctRow).join('');
 }
 VIEWS.scan = {
   html() {
@@ -2142,7 +2158,7 @@ Object.assign(TX, {
   chartCT: ['So sánh công tơ tháng {m}', '{m}月各电表对比'], chartTap: ['Chạm vào cột để xem số', '点击柱子查看数值'],
   total: ['Tổng', '合计'], noData: ['Chưa đủ số liệu để vẽ biểu đồ', '数据不足，无法绘图'], perDay: ['Bình quân/ngày', '日均'],
   wholeKy: ['Cả kỳ', '本期'], daysN: ['{n} ngày', '{n}天'],
-  sampleNote: ['Số điện trong bản xem thử là số mẫu', '预览版的电表数据为示例'],
+  sampleNote: ['Bản xem thử: số hạ áp và nhánh lấy từ file Excel T1–T8/2026; công tơ cao áp E01 là số mẫu', '预览版：低压与分表读数来自2026年1–8月Excel；高压表E01为示例数据'],
   exportDien: ['Xuất Excel', '导出Excel'], monthTotal: ['Tổng tháng {m}', '{m}月合计'],
   tsCode: ['Mã', '代码'], tsName: ['Tên tiếng Việt', '越南语名称'], tsZh: ['Tên tiếng Trung', '中文名称'], tsUnit: ['Đơn vị', '单位'],
   tsCum: ['Chỉ số cộng dồn (tính tiêu thụ)', '累计读数（计算用量）'], addParam: ['Thêm thông số', '添加参数'], delParam: ['Bỏ', '删除'],
@@ -2152,8 +2168,16 @@ Object.assign(TX, {
   printMeters: ['In tem QR công tơ', '打印电表二维码'], paramsBtn: ['Thông số', '参数'],
   caoAp: ['Cao áp', '高压'], haAp: ['Hạ áp', '低压'], loaiCT: ['Loại công tơ', '电表类型'],
   caoHelp: ['Công tơ tổng phía cao áp, ghi đủ các mã 1.8.0, 1.8.1, 1.8.2, 1.8.3, 2.8.0, 3.8.0…', '高压侧总表，抄1.8.0、1.8.1、1.8.2、1.8.3、2.8.0、3.8.0等'],
-  haHelp: ['Công tơ tủ điện hạ áp, chỉ ghi một chỉ số', '低压柜电表，只抄一个读数'],
-  caoDesc: ['Ghi nhiều mã: 1.8.0, 3.8.0…', '抄多个代码：1.8.0、3.8.0…'], haDesc: ['Chỉ ghi một chỉ số kWh', '只抄一个读数（kWh）'],
+  haHelp: ['Công tơ tủ tổng hạ áp, chỉ ghi một chỉ số; cộng vào tổng hạ áp', '低压总柜电表，只抄一个读数，计入低压合计'],
+  caoDesc: ['Ghi nhiều mã: 1.8.0, 3.8.0…', '抄多个代码：1.8.0、3.8.0…'], haDesc: ['Tủ tổng: một chỉ số, cộng vào tổng hạ áp', '总柜：一个读数，计入低压合计'],
+  nhanh: ['Nhánh', '分表'], nhanhDesc: ['Công tơ nhánh (máy, khu vực): một chỉ số, không cộng vào tổng hạ áp', '分表（设备、区域）：一个读数，不计入低压合计'],
+  nhanhHelp: ['Công tơ nhánh sau tủ tổng (từng máy, từng khu); không cộng vào tổng hạ áp', '总柜下的分表（设备、区域），不计入低压合计'],
+  tongNhanh: ['Tổng nhánh', '分表合计'], kChenhHN: ['Chênh lệch hạ áp − nhánh tháng {m}', '{m}月低压−分表差额'],
+  chenhHNNote: ['Phụ tải chưa có công tơ nhánh và hao hụt đường dây', '未装分表的负载及线损'],
+  chartHaNhanh: ['Tổng hạ áp và tổng nhánh theo tháng', '每月低压合计与分表合计'], chartNhanhCT: ['So sánh công tơ nhánh tháng {m}', '{m}月各分表对比'],
+  monthYM: ['Tháng {m}/{y}', '{y}年{m}月'], csNgay: ['Chỉ số ngày', '抄表读数'], ttKwh: ['Tiêu thụ (kWh)', '用电量（kWh）'],
+  caThang: ['Cả tháng', '全月'], gapNote: ['* gồm cả thời gian của kỳ trước chưa ghi', '* 含之前未抄期间的用电量'], ngungCT: ['ngừng', '停用'],
+  soThang: ['Sổ tháng {m}', '{m}月记录'], stt: ['STT', '序号'],
   csHa: ['Chỉ số công tơ', '电表读数'], tongHa: ['Tổng hạ áp', '低压合计'], chenhLech: ['Chênh lệch', '差额'],
   chartCaoHa: ['Cao áp và tổng hạ áp theo tháng', '每月高压与低压合计'], kChenh: ['Chênh lệch cao áp − hạ áp tháng {m}', '{m}月高压−低压差额'],
   chenhNote: ['Gồm tổn thất máy biến áp và phụ tải chưa có công tơ', '含变压器损耗及未计量负荷'],
@@ -2229,7 +2253,7 @@ function fmtK(v) {
 
 // ---------- Dữ liệu ----------
 const activeCT = () => (S.V && S.V.ct ? S.V.ct.filter((c) => c.hoatDong) : []);
-function tsOfCT(ct) { if (ct && ct.loai === 'ha') return ['1.8.0']; const all = S.V.ts.map((x) => x.ma); return ct.thongSo && ct.thongSo.length ? ct.thongSo.filter((m) => all.indexOf(m) >= 0) : all; }
+function tsOfCT(ct) { if (ctLoai(ct) !== 'cao') return ['1.8.0']; const all = S.V.ts.map((x) => x.ma); return ct.thongSo && ct.thongSo.length ? ct.thongSo.filter((m) => all.indexOf(m) >= 0) : all; }
 function tsName(code) { const x = S.V.tsByMa[code]; return x ? x.ten : code; }
 function rebuildDien() {
   const b = S.base, V = S.V;
@@ -2294,7 +2318,7 @@ function findCT(q) {
 }
 function ctRow(c) {
   return `<div class="row" data-act="dienNhap" data-ma="${esc(c.ma)}" role="button" tabindex="0">
-    <div class="main"><div class="nm">${IC.bolt} ${esc(c.ten)}</div><div class="sub"><span class="code">${esc(c.ma)}</span> <span class="tag ${ctLoai(c) === 'ha' ? 'tag-ha' : 'tag-cao'}">${esc(tp(ctLoai(c) === 'ha' ? 'haAp' : 'caoAp'))}</span> · ×${fmtNum(c.heSo, 'raw')}</div></div>${IC.chev}</div>`;
+    <div class="main"><div class="nm">${IC.bolt} ${esc(c.ten)}</div><div class="sub"><span class="code">${esc(c.ma)}</span> ${loaiTag(c)} · ×${fmtNum(c.heSo, 'raw')}</div></div>${IC.chev}</div>`;
 }
 
 // ---------- Thẻ ở trang chủ ----------
@@ -2310,41 +2334,61 @@ function dienHomeCard() {
 }
 
 // ---------- Màn Điện ----------
-// ---------- Cao áp / hạ áp ----------
-const ctLoai = (c) => (c && c.loai === 'ha' ? 'ha' : 'cao');
+// ---------- Cao áp / hạ áp / nhánh ----------
+// cao: công tơ tổng cao áp (nhiều mã OBIS) · ha: tủ tổng hạ áp (cộng vào tổng hạ áp) · nhanh: công tơ nhánh sau tủ
+const LOAI = ['cao', 'ha', 'nhanh'];
+const LOAI_TX = { cao: 'caoAp', ha: 'haAp', nhanh: 'nhanh' };
+const LOAI_HELP = { cao: 'caoHelp', ha: 'haHelp', nhanh: 'nhanhHelp' };
+const LOAI_DESC = { cao: 'caoDesc', ha: 'haDesc', nhanh: 'nhanhDesc' };
+const LOAI_TONG = { ha: 'tongHa', nhanh: 'tongNhanh' };
+const SEL_KEY = { cao: 'dCT', ha: 'dCTha', nhanh: 'dCTnh' };
+function ctLoai(c) { return c && (c.loai === 'ha' || c.loai === 'nhanh') ? c.loai : 'cao'; }
+const loaiTag = (c) => `<span class="tag tag-${ctLoai(c)}">${esc(tp(LOAI_TX[ctLoai(c)]))}</span>`;
 const activeLoai = (l) => activeCT().filter((c) => ctLoai(c) === l);
-function curLoai() { const f = S.f; if (!f.dLoai || !activeLoai(f.dLoai).length) f.dLoai = activeLoai('cao').length ? 'cao' : 'ha'; return f.dLoai; }
+// Công tơ để xem bảng / biểu đồ năm y: đang theo dõi, hoặc đã ngừng nhưng có số trong năm đó
+function hasYear(ma, y) { const p = String(y); return (S.V.csMa[ma] || []).some((x) => x.ky.slice(0, 4) === p); }
+function shownLoai(l, y) { return (S.V.ct || []).filter((c) => ctLoai(c) === l && (c.hoatDong || hasYear(c.ma, y))); }
+const yLoai = (l) => shownLoai(l, yearSel());
+function curLoai() { const f = S.f; if (!f.dLoai || !yLoai(f.dLoai).length) f.dLoai = LOAI.find((l) => yLoai(l).length) || 'ha'; return f.dLoai; }
 function loaiSeg(cur) {
-  if (!activeLoai('cao').length || !activeLoai('ha').length) return '';
-  return `<div class="seg wide3" style="margin-bottom:12px">${['cao', 'ha'].map((l) =>
-    `<button class="${cur === l ? 'on' : ''}" data-act="dLoai" data-l="${l}">${tv(l === 'cao' ? 'caoAp' : 'haAp')}<small>${tz(l === 'cao' ? 'caoAp' : 'haAp')}</small></button>`).join('')}</div>`;
+  const ls = LOAI.filter((l) => yLoai(l).length);
+  if (ls.length < 2) return '';
+  return `<div class="seg wide3" style="margin-bottom:12px">${ls.map((l) =>
+    `<button class="${cur === l ? 'on' : ''}" data-act="dLoai" data-l="${l}">${tv(LOAI_TX[l])}<small>${tz(LOAI_TX[l])}</small></button>`).join('')}</div>`;
 }
-// Công tơ đang chọn: cao áp → mã công tơ; hạ áp → 'ALL' (tổng hạ áp) hoặc mã công tơ
+// Công tơ đang chọn: cao áp → mã công tơ; hạ áp / nhánh → 'ALL' (tổng) hoặc mã công tơ
 function curSel(l) {
-  const f = S.f, key = l === 'ha' ? 'dCTha' : 'dCT', list = activeLoai(l);
-  if (!(l === 'ha' && f[key] === 'ALL') && !list.some((c) => c.ma === f[key])) f[key] = l === 'ha' ? 'ALL' : (list[0] || {}).ma;
+  const f = S.f, key = SEL_KEY[l], list = yLoai(l);
+  if (!(l !== 'cao' && f[key] === 'ALL') && !list.some((c) => c.ma === f[key])) f[key] = l !== 'cao' ? 'ALL' : (list[0] || {}).ma;
   return f[key];
 }
 function selChips(l, cur) {
-  const list = activeLoai(l);
+  const list = yLoai(l);
   if (l === 'cao' && list.length < 2) return '';
-  return `<div class="hscroll" style="margin-bottom:12px">${l === 'ha' ? `<button class="chip${cur === 'ALL' ? ' on' : ''}" data-act="dSel" data-l="ha" data-ma="ALL">${t('tongHa')}</button>` : ''}${list.map((c) =>
-    `<button class="chip${cur === c.ma ? ' on' : ''}" data-act="dSel" data-l="${l}" data-ma="${esc(c.ma)}">${esc(c.ten)}</button>`).join('')}</div>`;
+  return `<div class="hscroll" style="margin-bottom:12px">${l !== 'cao' ? `<button class="chip${cur === 'ALL' ? ' on' : ''}" data-act="dSel" data-l="${l}" data-ma="ALL">${t(LOAI_TONG[l])}</button>` : ''}${list.map((c) =>
+    `<button class="chip${cur === c.ma ? ' on' : ''}" data-act="dSel" data-l="${l}" data-ma="${esc(c.ma)}">${esc(c.ten)}${c.hoatDong ? '' : ` <small class="muted">(${esc(tv('ngungCT'))})</small>`}</button>`).join('')}</div>`;
 }
-// Tiêu thụ tháng của một công tơ hoặc tổng hạ áp
-function consSel(sel, y, m, code) {
+// Tiêu thụ tháng của một công tơ, hoặc tổng của một loại (sel = 'ALL', mặc định tổng hạ áp)
+function consSel(sel, y, m, code, l) {
   if (sel !== 'ALL') return monthCons(sel, y, m, code || '1.8.0');
   let sum = 0, has = false;
-  activeLoai('ha').forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); if (v !== null) { sum += v; has = true; } });
+  shownLoai(l || 'ha', y).forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); if (v !== null) { sum += v; has = true; } });
   return has ? sum : null;
 }
 function caoTong(y, m) {
   let sum = 0, has = false;
-  activeLoai('cao').forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); if (v !== null) { sum += v; has = true; } });
+  shownLoai('cao', y).forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); if (v !== null) { sum += v; has = true; } });
   return has ? sum : null;
 }
-function periodPt(sel, k) {
-  const ms = sel === 'ALL' ? activeLoai('ha').map((c) => c.ma) : [sel];
+// Tiêu thụ của một kỳ: một công tơ hoặc tổng một loại
+function kyCons(sel, k, l) {
+  const ms = sel === 'ALL' ? shownLoai(l || 'ha', +k.slice(0, 4)).map((c) => c.ma) : [sel];
+  let v = 0, has = false, gap = false;
+  ms.forEach((ma) => { const d = (S.V.dl[ma + '|' + k] || {})['1.8.0']; if (d && !d.am) { v += d.v; has = true; gap = gap || d.gap; } });
+  return has ? { v, gap } : null;
+}
+function periodPt(sel, k, l) {
+  const ms = sel === 'ALL' ? shownLoai(l || 'ha', +k.slice(0, 4)).map((c) => c.ma) : [sel];
   let v = 0, tot = 0, ngay = 0, has = false;
   ms.forEach((ma) => { const d = (S.V.dl[ma + '|' + k] || {})['1.8.0']; if (d && !d.am && d.ngay > 0) { v += d.v / d.ngay; tot += d.v; ngay = ngay || d.ngay; has = true; } });
   return has ? { k, v, tot, ngay } : null;
@@ -2393,7 +2437,7 @@ function dienGhi() {
     if (x) {
       pl = x.cho ? `<span class="pill p-cho">${t('pending')}</span>` : `<span class="pill p-xong">${t('daGhi')}</span>`;
       const main = x.giaTri['1.8.0'] !== undefined ? '1.8.0' : Object.keys(x.giaTri)[0];
-      const lb = ctLoai(c) === 'ha' ? esc(tp('csHa')) : esc(main);
+      const lb = ctLoai(c) !== 'cao' ? esc(tp('csHa')) : esc(main);
       sub = `<div class="sub">${lb}: <span class="mono">${fmtNum(x.giaTri[main], 'raw')}</span>${d[main] ? ' · ' + esc(tp('tieuThu')) + ' <b class="num">' + fmtNum(d[main].v) + '</b> kWh' : ''}</div>
         <div class="sub">${esc(x.nguoi)} · ${esc((x.thoiGian || '').slice(5, 16))}</div>`;
     } else pl = `<span class="pill ${k === today ? 'p-nay' : k < today ? 'p-qua' : 'p-ok'}">${t('chuaGhi')}</span>`;
@@ -2401,12 +2445,12 @@ function dienGhi() {
       <div class="main"><div class="nm">${esc(c.ten)}</div><div class="sub"><span class="code">${esc(c.ma)}</span> · ×${fmtNum(c.heSo, 'raw')}${c.soCongTo ? ' · ' + esc(c.soCongTo) : ''}</div>${sub}</div>
       <div class="end">${pl}${IC.chev}</div></div>`;
   };
-  ['cao', 'ha'].forEach((l) => {
+  LOAI.forEach((l) => {
     const list = activeLoai(l);
     if (!list.length) return;
     const done = list.filter((c) => S.V.csKey[c.ma + '|' + k]).length;
-    o += `<div class="sec" id="sec-${l}"><h2>${t(l === 'cao' ? 'caoAp' : 'haAp')}<span class="cnt">${done}/${list.length}</span></h2></div>
-      <p class="help" style="margin:-4px 0 8px">${t(l === 'cao' ? 'caoHelp' : 'haHelp')}</p><div class="list">${list.map(row).join('')}</div>`;
+    o += `<div class="sec" id="sec-${l}"><h2>${t(LOAI_TX[l])}<span class="cnt">${done}/${list.length}</span></h2></div>
+      <p class="help" style="margin:-4px 0 8px">${t(LOAI_HELP[l])}</p><div class="list">${list.map(row).join('')}</div>`;
   });
   if (can('may')) {
     o += `<div class="btns" style="margin-top:14px"><button class="btn sm" data-act="ctEdit" data-ma="">${IC.plus} ${t('addCT')}</button>
@@ -2419,6 +2463,7 @@ function dienGhi() {
 function dienBang() {
   const l = curLoai(), y = yearSel(), cur = kyHienTai(TODAY());
   let o = loaiSeg(l);
+  if (l === 'nhanh') return o + bangThang(l);
   const sel = curSel(l);
   if (l === 'cao') o += selChips('cao', sel);
   o += yearStep(`<button class="btn ghost sm" data-act="exportDien" data-y="${y}">${IC.dl} ${t('exportDien')}</button>`);
@@ -2455,7 +2500,7 @@ function bangCao(c, y, kys) {
   return h + '</tbody></table></div>';
 }
 function bangHa(y, kys) {
-  const list = activeLoai('ha');
+  const list = shownLoai('ha', y);
   let h = `<p class="help" style="margin:-4px 0 10px">${esc(tp('tieuThu'))} = (${esc(tp('csHa'))} − ${esc(tp('kyTruoc'))}) × ${esc(tp('heSo'))} (kWh)</p>
     <div class="tblwrap dtabwrap"><table class="cal dtab"><thead><tr><th class="nmc" rowspan="2">${t('kyGhi')}</th>`;
   list.forEach((c) => { h += `<th colspan="2" class="pc"><b>${esc(c.ten)}</b><small class="mono">${esc(c.ma)} · ×${fmtNum(c.heSo, 'raw')}</small></th>`; });
@@ -2466,7 +2511,7 @@ function bangHa(y, kys) {
   kys.forEach((k) => {
     if (k.slice(0, 7) !== lastMonth) {
       lastMonth = k.slice(0, 7);
-      const m = +k.slice(5, 7), tot = consSel('ALL', y, m);
+      const m = +k.slice(5, 7), tot = consSel('ALL', y, m, null, 'ha');
       h += `<tr class="mt"><th class="nmc">${esc(tv('monthTotal', { m }))}<small>${esc(tz('monthTotal', { m }))}</small></th>`;
       list.forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); h += `<td></td><td class="num"><b>${v === null ? '' : fmtNum(v)}</b></td>`; });
       h += `<td class="num tot"><b>${tot === null ? '' : fmtNum(tot)}</b></td></tr>`;
@@ -2485,15 +2530,75 @@ function bangHa(y, kys) {
   return h + '</tbody></table></div>';
 }
 
+// Bảng theo tháng như sổ ghi Excel: mỗi công tơ một dòng; chỉ số cuối tháng trước, ngày 10, 20, cuối tháng; tiêu thụ từng kỳ và cả tháng
+// "Tên Việt · 中文名" → [Việt, Trung]
+function splitTen(t) { const i = String(t).indexOf(' · '); return i < 0 ? [t, ''] : [t.slice(0, i), t.slice(i + 3)]; }
+function thangMacDinh(l) {
+  const cur = kyHienTai(TODAY()), ms = S.V.ct.filter((c) => ctLoai(c) === l).map((c) => c.ma);
+  let best = '';
+  ms.forEach((ma) => (S.V.csMa[ma] || []).forEach((x) => { if (x.ky <= cur && x.ky.slice(0, 7) > best) best = x.ky.slice(0, 7); }));
+  return best || cur.slice(0, 7);
+}
+function bangThang(l) {
+  const f = S.f, cur = kyHienTai(TODAY());
+  if (!f.dYM || f.dYM > cur.slice(0, 7)) f.dYM = thangMacDinh(l);
+  const ym = f.dYM, y = +ym.slice(0, 4), m = +ym.slice(5, 7), kE = kyDate(y, m, dim(y, m));
+  const kys = [kyTruoc(kyDate(y, m, 10)), kyDate(y, m, 10), kyDate(y, m, 20), kE];
+  // công tơ đã ngừng chỉ hiện ở tháng còn có số
+  const list = shownLoai(l, y).filter((c) => c.hoatDong || kys.slice(1).some((k) => S.V.csKey[c.ma + '|' + k])), has = shownLoai('ha', y);
+  let o = `<div class="caltools"><div class="stepper"><button data-act="dYM" data-d="-1" aria-label="-">${IC.left}</button><b>${esc(tv('monthYM', { m, y }))}<small style="display:block;font-family:var(--f-zh);font-weight:500;color:var(--ink2);font-size:12px">${esc(tz('monthYM', { m, y }))}</small></b><button data-act="dYM" data-d="1" aria-label="+" ${ym >= cur.slice(0, 7) ? 'disabled' : ''}>${IC.right}</button></div>
+    <button class="btn ghost sm" data-act="exportDien" data-y="${y}">${IC.dl} ${t('exportDien')}</button></div>`;
+  if (!list.length) return o + `<div class="card empty">${t('noData')}</div>`;
+  const rng = [`1–10`, `11–20`, `21–${dim(y, m)}`];
+  let h = `<p class="help" style="margin:-4px 0 10px">${esc(tp('tieuThu'))} = (${esc(tp('csHa'))} − ${esc(tp('kyTruoc'))}) × ${esc(tp('heSo'))}</p>
+    <div class="tblwrap dtabwrap"><table class="cal dtab mtab"><thead><tr><th class="nmc" rowspan="2">${t('congTo')}</th>
+    <th colspan="4" class="pc">${t('csNgay')}</th><th colspan="4" class="pc tot">${t('ttKwh')}</th></tr><tr>`;
+  kys.forEach((k) => { h += `<th class="sub2 mono">${fmtDM(k)}</th>`; });
+  rng.forEach((r) => { h += `<th class="sub2 mono">${r}</th>`; });
+  h += `<th class="sub2 tot">${t('caThang')}</th></tr></thead><tbody>`;
+  let anyGap = false;
+  const consCell = (d) => { if (!d) return '<td class="num"></td>'; if (d.gap) anyGap = true; return `<td class="num${d.am ? ' bad' : ''}">${fmtNum(d.v)}${d.gap ? '<sup>*</sup>' : ''}</td>`; };
+  list.forEach((c) => {
+    const [tVi, tZh] = splitTen(c.ten);
+    h += `<tr><th class="nmc"><button data-act="dienNhap" data-ma="${esc(c.ma)}" data-ky="${kE <= cur ? kE : cur}">${esc(tVi)}${tZh ? `<span class="zi" lang="zh-CN">${esc(tZh)}</span>` : ''}</button><span class="s mono">${esc(c.ma)}${c.heSo !== 1 ? ' · ×' + fmtNum(c.heSo, 'raw') : ''}${c.hoatDong ? '' : ' · ' + esc(tp('ngungCT'))}</span></th>`;
+    kys.forEach((k) => {
+      const x = S.V.csKey[c.ma + '|' + k], v = x && x.giaTri ? x.giaTri['1.8.0'] : undefined;
+      if (k > cur) { h += '<td class="num muted">·</td>'; return; }
+      h += `<td class="num mono${x ? '' : ' miss'}"><button class="cellbtn" data-act="dienNhap" data-ma="${esc(c.ma)}" data-ky="${k}">${v === undefined ? (x ? '' : `<span class="muted">—</span>`) : fmtNum(v, 'raw')}</button>${x && x.cho ? '<sup>⏳</sup>' : ''}</td>`;
+    });
+    kys.slice(1).forEach((k) => { h += consCell((S.V.dl[c.ma + '|' + k] || {})['1.8.0']); });
+    const mv = monthCons(c.ma, y, m, '1.8.0');
+    h += `<td class="num tot"><b>${mv === null ? '' : fmtNum(mv)}</b></td></tr>`;
+  });
+  const sumRow = (label, ll, cls) => {
+    let r = `<tr class="mt${cls ? ' ' + cls : ''}"><th class="nmc">${label}</th><td colspan="4"></td>`;
+    kys.slice(1).forEach((k) => { const d = kyCons('ALL', k, ll); r += `<td class="num"><b>${d ? fmtNum(d.v) : ''}</b></td>`; });
+    const tv0 = consSel('ALL', y, m, null, ll);
+    return r + `<td class="num tot"><b>${tv0 === null ? '' : fmtNum(tv0)}</b></td></tr>`;
+  };
+  h += sumRow(t(LOAI_TONG[l]), l);
+  if (l === 'nhanh' && has.length) {
+    h += sumRow(t('tongHa'), 'ha');
+    let r = `<tr class="mt chl"><th class="nmc">${t('chenhLech')}<span class="s">${esc(tv('chenhHNNote'))}</span></th><td colspan="4"></td>`;
+    kys.slice(1).forEach((k) => { const a = kyCons('ALL', k, 'ha'), b = kyCons('ALL', k, 'nhanh'); r += `<td class="num">${a && b ? fmtNum(a.v - b.v) : ''}</td>`; });
+    const A = consSel('ALL', y, m, null, 'ha'), B = consSel('ALL', y, m, null, 'nhanh');
+    h += r + `<td class="num tot">${A && B !== null ? `<b>${fmtNum(A - B)}</b><small class="pct">${((A - B) / A * 100).toFixed(1)}%</small>` : ''}</td></tr>`;
+  }
+  h += '</tbody></table></div>';
+  if (anyGap) h += `<p class="help" style="margin-top:8px">${t('gapNote')}</p>`;
+  return o + h;
+}
+
 // ---------- Biểu đồ ----------
 function dienBieu() {
   const l = curLoai(), sel = curSel(l);
-  const hasHa = activeLoai('ha').length > 0;
+  const hasHa = yLoai('ha').length > 0;
+  const cmp = l === 'cao' && hasHa ? 'chartCaoHa' : l === 'nhanh' && hasHa && sel === 'ALL' ? 'chartHaNhanh' : '';
   return loaiSeg(l) + selChips(l, sel) + yearStep() + `<div class="kpis" id="kpis"></div>
     <div class="card pad chartcard"><h3 class="ch">${t('chartMonth')} <span class="unit mono">kWh</span></h3><div class="legend" id="lg1"></div><div class="chart" id="ch1"></div><p class="help">${t('chartTap')}</p></div>
     <div class="card pad chartcard"><h3 class="ch">${t('chartKy')} <span class="unit mono">kWh/${esc(tv('days', { n: '' }).trim())}</span></h3><div class="chart" id="ch2"></div></div>
-    ${l === 'cao' && hasHa ? `<div class="card pad chartcard"><h3 class="ch">${t('chartCaoHa')} <span class="unit mono">kWh</span></h3><div class="legend" id="lg3"></div><div class="chart" id="ch3"></div><p class="help">${t('chenhNote')}</p></div>` : ''}
-    ${l === 'ha' ? `<div class="card pad chartcard"><h3 class="ch" id="ch3t"></h3><div id="ch3"></div></div>` : ''}`;
+    ${cmp ? `<div class="card pad chartcard"><h3 class="ch">${t(cmp)} <span class="unit mono">kWh</span></h3><div class="legend" id="lg3"></div><div class="chart" id="ch3"></div><p class="help">${t(l === 'cao' ? 'chenhNote' : 'chenhHNNote')}</p></div>` : ''}
+    ${l !== 'cao' ? `<div class="card pad chartcard"><h3 class="ch" id="ch4t"></h3><div id="ch4"></div></div>` : ''}`;
 }
 function kpiHtml(label, val, delta) {
   return `<div class="kpi"><div class="kl">${label}</div><div class="kv">${val}</div>${delta || ''}</div>`;
@@ -2511,7 +2616,7 @@ function drawCharts() {
   const data = [];
   for (let m = 1; m <= 12; m++) {
     const vals = {}; let tot = 0, has = false;
-    series.forEach((s) => { const v = consSel(sel, y, m, s.key); if (v !== null) { vals[s.key] = Math.max(0, v); tot += Math.max(0, v); has = true; } });
+    series.forEach((s) => { const v = consSel(sel, y, m, s.key, l); if (v !== null) { vals[s.key] = Math.max(0, v); tot += Math.max(0, v); has = true; } });
     data.push(has ? { vals, total: tot } : null);
   }
   const idx = data.map((d, i) => (d ? i : -1)).filter((i) => i >= 0), lbl = [];
@@ -2528,12 +2633,12 @@ function drawCharts() {
   else colChart(el1, { labels, series, data, labelIdx: lbl, tips, cur: curIdx });
   // 2. Theo kỳ
   const kys = kysOfYear(y).filter((k) => k <= kyHienTai(today));
-  const pts = kys.map((k) => periodPt(sel, k)), el2 = $('#ch2');
+  const pts = kys.map((k) => periodPt(sel, k, l)), el2 = $('#ch2');
   if (pts.filter(Boolean).length < 2) el2.innerHTML = `<div class="empty">${t('noData')}</div>`;
   else lineChart(el2, { pts, kys });
   // KPI
   const cm = thisYear ? +today.slice(5, 7) : 12, pm = cm - 1, kNow = kyHienTai(today);
-  const vNow = consSel(sel, y, cm), vPrev = pm >= 1 ? consSel(sel, y, pm) : null, vPrev2 = pm >= 2 ? consSel(sel, y, pm - 1) : null;
+  const vNow = consSel(sel, y, cm, null, l), vPrev = pm >= 1 ? consSel(sel, y, pm, null, l) : null, vPrev2 = pm >= 2 ? consSel(sel, y, pm - 1, null, l) : null;
   let kp = kpiHtml(thisYear ? t('kMonthSoFar', { m: cm, d: fmtDM(kNow) }) : t('kMonth', { m: cm }), `${vNow === null ? '—' : fmtNum(vNow)} <small>kWh</small>`);
   if (pm >= 1) {
     let dl = '';
@@ -2547,21 +2652,26 @@ function drawCharts() {
       kp += kpiHtml(t('kCos', { m: pm }), cos.toFixed(2), `<div class="kd ${good ? 'good' : 'warn'}"><span aria-hidden="true">${good ? '✓' : '⚠'}</span> ${t(good ? 'cosOk' : 'cosLow')}</div>`);
     }
   }
-  if (l === 'cao' && activeLoai('ha').length && pm >= 1) {
-    const P = consSel(sel, y, pm), H = consSel('ALL', y, pm);
+  if (l === 'cao' && yLoai('ha').length && pm >= 1) {
+    const P = consSel(sel, y, pm), H = consSel('ALL', y, pm, null, 'ha');
     if (P && H !== null) kp += kpiHtml(t('kChenh', { m: pm }), `${fmtNum(P - H)} <small>kWh</small>`, `<div class="kd">${((P - H) / P * 100).toFixed(1)}% · ${t('chenhNote')}</div>`);
   }
+  if (l === 'nhanh' && sel === 'ALL' && yLoai('ha').length && pm >= 1) {
+    const A = consSel('ALL', y, pm, null, 'ha'), B = consSel('ALL', y, pm, null, 'nhanh');
+    if (A && B !== null) kp += kpiHtml(t('kChenhHN', { m: pm }), `${fmtNum(A - B)} <small>kWh</small>`, `<div class="kd">${((A - B) / A * 100).toFixed(1)}% · ${t('chenhHNNote')}</div>`);
+  }
   $('#kpis').innerHTML = kp;
-  // 3a. Cao áp và tổng hạ áp
+  // 3a. So hai mức: cao áp với tổng hạ áp, hoặc tổng hạ áp với tổng nhánh
   const el3 = $('#ch3');
-  if (l === 'cao' && $('#lg3')) {
-    const ss = [{ key: 'cao', cls: 's1', name: tp('caoAp') }, { key: 'ha', cls: 's2', name: tp('tongHa') }];
+  if ($('#lg3')) {
+    const up = l === 'cao' ? ['cao', 'caoAp'] : ['ha', 'tongHa'], dn = l === 'cao' ? ['ha', 'tongHa'] : ['nhanh', 'tongNhanh'];
+    const ss = [{ key: 'a', cls: 's1', name: tp(up[1]) }, { key: 'b', cls: 's2', name: tp(dn[1]) }];
     const d3 = [], tp3 = [];
     for (let m = 1; m <= 12; m++) {
-      const P = consSel(sel, y, m), H = consSel('ALL', y, m);
+      const P = l === 'cao' ? consSel(sel, y, m) : consSel('ALL', y, m, null, up[0]), H = consSel('ALL', y, m, null, dn[0]);
       if (P === null && H === null) { d3.push(null); tp3.push(null); continue; }
-      d3.push({ vals: { cao: Math.max(0, P || 0), ha: Math.max(0, H || 0) }, total: Math.max(P || 0, H || 0) });
-      const rows = [{ cls: 's1', value: fmtNum(P || 0) + ' kWh', name: tp('caoAp') }, { cls: 's2', value: fmtNum(H || 0) + ' kWh', name: tp('tongHa') }];
+      d3.push({ vals: { a: Math.max(0, P || 0), b: Math.max(0, H || 0) }, total: Math.max(P || 0, H || 0) });
+      const rows = [{ cls: 's1', value: fmtNum(P || 0) + ' kWh', name: tp(up[1]) }, { cls: 's2', value: fmtNum(H || 0) + ' kWh', name: tp(dn[1]) }];
       if (P && H !== null) rows.push({ value: fmtNum(P - H) + ' kWh (' + ((P - H) / P * 100).toFixed(1) + '%)', name: tp('chenhLech') });
       tp3.push({ title: tp('kMonth', { m }) + ' / ' + y, rows });
     }
@@ -2569,13 +2679,14 @@ function drawCharts() {
     if (!d3.some(Boolean)) el3.innerHTML = `<div class="empty">${t('noData')}</div>`;
     else colChart(el3, { labels, series: ss, data: d3, labelIdx: [], tips: tp3, cur: curIdx, grouped: true });
   }
-  // 3b. So sánh công tơ hạ áp
-  if (l === 'ha' && el3) {
-    let mm = cm; while (mm > 1 && consSel('ALL', y, mm) === null) mm--;
-    const rows = activeLoai('ha').map((x) => ({ c: x, v: monthCons(x.ma, y, mm, '1.8.0') })).filter((r) => r.v !== null).sort((a, b) => b.v - a.v);
-    $('#ch3t').innerHTML = t('chartHaCT', { m: mm }) + ' <span class="unit mono">kWh</span>';
+  // 3b. So sánh các công tơ hạ áp / nhánh trong tháng gần nhất có số
+  const el4 = $('#ch4');
+  if (l !== 'cao' && el4) {
+    let mm = cm; while (mm > 1 && consSel('ALL', y, mm, null, l) === null) mm--;
+    const rows = yLoai(l).map((x) => ({ c: x, v: monthCons(x.ma, y, mm, '1.8.0') })).filter((r) => r.v !== null).sort((a, b) => b.v - a.v);
+    $('#ch4t').innerHTML = t(l === 'ha' ? 'chartHaCT' : 'chartNhanhCT', { m: mm }) + ' <span class="unit mono">kWh</span>';
     const mx = rows.length ? Math.max(...rows.map((r) => r.v)) : 0;
-    el3.innerHTML = rows.length ? `<div class="hbars">${rows.map((r) => `<div class="hb${r.c.ma === sel ? ' me' : ''}"><span class="hn">${esc(r.c.ten)}</span><span class="track"><i style="width:${mx ? Math.max(1, r.v / mx * 100) : 0}%"></i></span><b class="num">${fmtNum(r.v)}</b></div>`).join('')}</div>` : `<div class="empty">${t('noData')}</div>`;
+    el4.innerHTML = rows.length ? `<div class="hbars">${rows.map((r) => `<div class="hb${r.c.ma === sel ? ' me' : ''}"><span class="hn">${esc(r.c.ten)}</span><span class="track"><i style="width:${mx ? Math.max(1, r.v / mx * 100) : 0}%"></i></span><b class="num">${fmtNum(r.v)}</b></div>`).join('')}</div>` : `<div class="empty">${t('noData')}</div>`;
   }
 }
 function niceStep(max, n) {
@@ -2714,7 +2825,7 @@ VIEWS.dienNhap = {
     for (let i = 0; i < 9; i++) { opts.push(k); k = kyTruoc(k); }
     if (opts.indexOf(ky) < 0) opts.push(ky);
     const codes = tsOfCT(c);
-    let o = `<div class="card"><div class="mhead"><span class="code">${esc(c.ma)}</span> <span class="tag ${ctLoai(c) === 'ha' ? 'tag-ha' : 'tag-cao'}">${esc(tp(ctLoai(c) === 'ha' ? 'haAp' : 'caoAp'))}</span><h1>${esc(c.ten)}</h1>
+    let o = `<div class="card"><div class="mhead"><span class="code">${esc(c.ma)}</span> ${loaiTag(c)}<h1>${esc(c.ten)}</h1>
       <dl class="kv" style="margin-top:10px"><dt>${t('heSo')}</dt><dd class="mono">×${fmtNum(c.heSo, 'raw')}</dd>
       ${c.soCongTo ? `<dt>${t('soCT')}</dt><dd class="mono">${esc(c.soCongTo)}</dd>` : ''}${c.viTri ? `<dt>${t('location')}</dt><dd>${esc(c.viTri)}</dd>` : ''}</dl></div></div>
       <form id="dnForm" class="card pad" style="margin-top:12px" autocomplete="off">
@@ -2726,7 +2837,7 @@ VIEWS.dienNhap = {
     codes.forEach((code) => {
       const ts = S.V.tsByMa[code] || { ten: code, zh: '', dv: '' };
       const v = x && x.giaTri && x.giaTri[code] !== undefined ? fmtNum(x.giaTri[code], 'raw').replace(/\s/g, '') : '';
-      const lab = ctLoai(c) === 'ha' ? t('csHa') : `<b class="mono">${esc(code)}</b> · ${esc(ts.ten)}${ts.zh ? `<span class="zi" lang="zh-CN">${esc(ts.zh)}</span>` : ''}`;
+      const lab = ctLoai(c) !== 'cao' ? t('csHa') : `<b class="mono">${esc(code)}</b> · ${esc(ts.ten)}${ts.zh ? `<span class="zi" lang="zh-CN">${esc(ts.zh)}</span>` : ''}`;
       o += `<label class="fld rd"><span>${lab}</span>
         <div class="inrow"><input class="inp mono" data-code="${esc(code)}" inputmode="decimal" value="${esc(v)}" autocomplete="off"><span class="u mono">${esc(ts.dv || '')}</span></div>
         <div class="help" id="h_${esc(code).replace(/\./g, '_')}"></div></label>`;
@@ -2809,13 +2920,13 @@ VIEWS.ctEdit = {
     const v = c || { ten: '', soCongTo: '', viTri: '', heSo: 1, thongSo: [], ghiChu: '', hoatDong: true, loai: p.loai || 'ha' };
     const on = new Set(tsOfCT(Object.assign({}, v, { loai: 'cao' }))), l = ctLoai(v);
     return `<form id="ctForm" class="card pad" autocomplete="off">${c ? `<p style="margin:0 0 12px"><span class="code">${esc(c.ma)}</span></p>` : ''}
-      <div class="fld"><span>${t('loaiCT')}</span><div class="choices">${['cao', 'ha'].map((k) => `<label class="choice"><input type="radio" name="cLoai" value="${k}" ${l === k ? 'checked' : ''}>
-        <span><b>${t(k === 'cao' ? 'caoAp' : 'haAp')}</b><span class="help" style="display:block;margin-top:2px">${t(k === 'cao' ? 'caoDesc' : 'haDesc')}</span></span></label>`).join('')}</div></div>
+      <div class="fld"><span>${t('loaiCT')}</span><div class="choices">${LOAI.map((k) => `<label class="choice"><input type="radio" name="cLoai" value="${k}" ${l === k ? 'checked' : ''}>
+        <span><b>${t(LOAI_TX[k])}</b><span class="help" style="display:block;margin-top:2px">${t(LOAI_DESC[k])}</span></span></label>`).join('')}</div></div>
       <label class="fld"><span>${t('name')}</span><input class="inp" id="cTen" value="${esc(v.ten)}" maxlength="120"></label>
       <label class="fld"><span>${t('soCT')}</span><input class="inp mono" id="cSo" value="${esc(v.soCongTo)}" maxlength="40"></label>
       <label class="fld"><span>${t('location')}</span><input class="inp" id="cViTri" value="${esc(v.viTri)}" maxlength="120"></label>
       <label class="fld"><span>${t('heSo')}</span><input class="inp mono" id="cHeSo" inputmode="decimal" value="${esc(fmtNum(v.heSo, 'raw').replace(/\s/g, ''))}"><div class="help">${t('heSoHelp')}</div></label>
-      <div class="fld" id="cTS" ${l === 'ha' ? 'hidden' : ''}><span>${t('thongSoAD')}</span><div class="list">${S.V.ts.map((x) => `<label class="checkrow"><input type="checkbox" data-code="${esc(x.ma)}" ${on.has(x.ma) ? 'checked' : ''}><span class="main"><b class="mono">${esc(x.ma)}</b> · ${esc(x.ten)} <span class="muted">${esc(x.zh || '')} · ${esc(x.dv || '')}</span></span></label>`).join('')}</div></div>
+      <div class="fld" id="cTS" ${l !== 'cao' ? 'hidden' : ''}><span>${t('thongSoAD')}</span><div class="list">${S.V.ts.map((x) => `<label class="checkrow"><input type="checkbox" data-code="${esc(x.ma)}" ${on.has(x.ma) ? 'checked' : ''}><span class="main"><b class="mono">${esc(x.ma)}</b> · ${esc(x.ten)} <span class="muted">${esc(x.zh || '')} · ${esc(x.dv || '')}</span></span></label>`).join('')}</div></div>
       <label class="fld"><span>${t('note')}</span><textarea class="inp" id="cGhiChu" rows="2" maxlength="300">${esc(v.ghiChu)}</textarea></label>
       ${c ? `<label class="switch"><span class="t">${t('active')}</span><input type="checkbox" id="cHD" ${v.hoatDong ? 'checked' : ''}></label>` : ''}
       <div class="err" id="cErr" hidden></div>
@@ -2823,7 +2934,7 @@ VIEWS.ctEdit = {
   },
   after(p) {
     $('#ctForm').addEventListener('submit', (e) => { e.preventDefault(); ctSave(p); });
-    $$('input[name="cLoai"]').forEach((r) => r.addEventListener('change', () => { $('#cTS').hidden = r.value === 'ha' && r.checked; }));
+    $$('input[name="cLoai"]').forEach((r) => r.addEventListener('change', () => { if (r.checked) $('#cTS').hidden = r.value !== 'cao'; }));
   }
 };
 async function ctSave(p) {
@@ -2876,7 +2987,7 @@ async function tsSave(p) {
 
 // ---------- Excel số điện ----------
 function buildDienWorkbook(y) {
-  const today = TODAY(), cur = kyHienTai(today), caos = activeLoai('cao'), has = activeLoai('ha');
+  const today = TODAY(), cur = kyHienTai(today), caos = shownLoai('cao', y), has = shownLoai('ha', y), nhs = shownLoai('nhanh', y);
   const H = { b: 1, fill: '#16211F', color: '#FFFFFF', align: 'center', valign: 'center', wrap: 1, border: '#5B6B67' };
   const B = { border: true }, NUM = Object.assign({ align: 'right', fmt: '#,##0' }, B), RAW = Object.assign({ align: 'right', fmt: '#,##0.0##' }, B);
   const SEC = { b: 1, fill: '#E4ECF9', color: '#16211F', border: true };
@@ -2919,11 +3030,23 @@ function buildDienWorkbook(y) {
     secRow(tp('haAp') + ' — ' + tv('haHelp'));
     merges.push('A' + rows.length + ':Q' + rows.length);
     has.forEach((c) => monthRow(c.ten, c.ma, tp('csHa'), 'kWh', (m) => monthCons(c.ma, y, m, '1.8.0')));
-    monthRow(tp('tongHa'), '', '', 'kWh', (m) => consSel('ALL', y, m), { fill: '#EEF1F0', b: 1 });
+    monthRow(tp('tongHa'), '', '', 'kWh', (m) => consSel('ALL', y, m, null, 'ha'), { fill: '#EEF1F0', b: 1 });
     if (caos.length) {
       monthRow(tp('chenhLech') + ' ' + tp('caoAp') + ' − ' + tp('haAp'), '', tv('chenhNote'), 'kWh', (m) => {
-        const P = caoTong(y, m), Hh = consSel('ALL', y, m);
+        const P = caoTong(y, m), Hh = consSel('ALL', y, m, null, 'ha');
         return P !== null && Hh !== null ? P - Hh : null;
+      }, { fill: '#FDEEDF' });
+    }
+  }
+  if (nhs.length) {
+    secRow(tp('nhanh') + ' — ' + tv('nhanhHelp'));
+    merges.push('A' + rows.length + ':Q' + rows.length);
+    nhs.forEach((c) => monthRow(c.ten + (c.hoatDong ? '' : ' (' + tv('ngungCT') + ')'), c.ma, tp('csHa'), 'kWh', (m) => monthCons(c.ma, y, m, '1.8.0')));
+    monthRow(tp('tongNhanh'), '', '', 'kWh', (m) => consSel('ALL', y, m, null, 'nhanh'), { fill: '#EEF1F0', b: 1 });
+    if (has.length) {
+      monthRow(tp('chenhLech') + ' ' + tp('haAp') + ' − ' + tp('nhanh'), '', tv('chenhHNNote'), 'kWh', (m) => {
+        const A = consSel('ALL', y, m, null, 'ha'), Bn = consSel('ALL', y, m, null, 'nhanh');
+        return A !== null && Bn !== null ? A - Bn : null;
       }, { fill: '#FDEEDF' });
     }
   }
@@ -3001,12 +3124,60 @@ function buildDienWorkbook(y) {
         const m = +k.slice(5, 7), mr = [{ v: tv('monthTotal', { m }) + ' · ' + tz('monthTotal', { m }), s: Object.assign({ b: 1 }, MT) }];
         let c2 = 1;
         has.forEach((c) => { const v = monthCons(c.ma, y, m, '1.8.0'); mr[c2] = { v: '', s: MT }; mr[c2 + 1] = v === null ? { v: '', s: MT } : { v: r1(v), s: Object.assign({}, NUM, { b: 1, fill: '#EEF1F0' }) }; c2 += 2; });
-        const tot = consSel('ALL', y, m);
+        const tot = consSel('ALL', y, m, null, 'ha');
         mr[c2] = tot === null ? { v: '', s: MT } : { v: r1(tot), s: Object.assign({}, NUM, { b: 1, fill: '#EEF1F0' }) };
         rs.push(mr);
       }
     });
     sheets.push({ name: 'Hạ áp ' + y + ' · 低压', rows: rs, cols, merges: mg.concat(['A1:' + XW.col(col) + '1']), freeze: { r: 4, c: 1 }, heights: { 1: 22, 3: 44, 4: 30 }, landscape: 1, printTitles: { rows: '3:4' } });
+  }
+  // ===== Sổ tháng (giống sổ ghi Excel): tủ tổng hạ áp + công tơ nhánh, mỗi tháng một trang =====
+  if (has.length || nhs.length) {
+    for (let m = 1; m <= 12; m++) {
+      const kE = kyDate(y, m, dim(y, m)), kys4 = [kyTruoc(kyDate(y, m, 10)), kyDate(y, m, 10), kyDate(y, m, 20), kE];
+      if (kys4[1] > cur) break;
+      // công tơ đã ngừng chỉ ghi vào tháng còn có số
+      const coSo = (c) => kys4.slice(1).some((k) => S.V.csKey[c.ma + '|' + k]);
+      const has1 = has.filter((c) => c.hoatDong || coSo(c)), nhs1 = nhs.filter((c) => c.hoatDong || coSo(c));
+      if (!has1.concat(nhs1).some(coSo)) continue;
+      const rng = ['1–10', '11–20', '21–' + dim(y, m)];
+      const rs = [[{ v: 'SỔ GHI SỐ ĐIỆN THÁNG ' + m + '/' + y + ' · ' + y + '年' + m + '月抄表记录', s: { b: 1, sz: 14 } }],
+        [{ v: tp('xlsExported') + ': ' + fmtD(today) + ' · ' + tp('tieuThu') + ' = (' + tv('chiSo') + ' − ' + tv('kyTruoc') + ') × ' + tv('heSo') + ' (kWh)', s: { i: 1, color: '#55625F' } }], []];
+      rs.push([tp('stt'), tp('congTo'), tp('tsCode'), tp('heSo'), tp('csNgay'), '', '', '', tp('ttKwh'), '', '', ''].map((v) => ({ v, s: H })));
+      rs.push(['', '', '', ''].concat(kys4.map((k) => fmtDM(k)), rng, [tp('caThang')]).map((v) => ({ v, s: H })));
+      const mg = ['A1:L1', 'A2:L2', 'A4:A5', 'B4:B5', 'C4:C5', 'D4:D5', 'E4:H4', 'I4:L4'];
+      let stt = 0;
+      const line = (c) => {
+        stt++;
+        const r = [{ v: stt, s: Object.assign({ align: 'center' }, B) }, { v: c.ten + (c.hoatDong ? '' : ' (' + tv('ngungCT') + ')'), s: Object.assign({ b: 1 }, B) }, { v: c.ma, s: Object.assign({ align: 'center' }, B) }, { v: c.heSo, s: Object.assign({ align: 'right' }, B) }];
+        kys4.forEach((k) => { const x = S.V.csKey[c.ma + '|' + k], v = x && x.giaTri ? x.giaTri['1.8.0'] : undefined; r.push(v === undefined ? { v: '', s: B } : { v: +v, s: RAW }); });
+        kys4.slice(1).forEach((k) => { const d = (S.V.dl[c.ma + '|' + k] || {})['1.8.0']; r.push(d ? { v: r1(d.v), s: Object.assign({}, NUM, d.am ? { fill: '#FBE8E5', color: '#C8372D' } : {}) } : { v: '', s: B }); });
+        const mv = monthCons(c.ma, y, m, '1.8.0');
+        r.push(mv === null ? { v: '', s: B } : { v: r1(mv), s: Object.assign({}, NUM, { b: 1 }) });
+        rs.push(r);
+      };
+      const tong = (label, l, style) => {
+        const r = [{ v: '', s: style }, { v: label, s: Object.assign({ b: 1 }, style) }, { v: '', s: style }, { v: '', s: style }, { v: '', s: style }, { v: '', s: style }, { v: '', s: style }, { v: '', s: style }];
+        kys4.slice(1).forEach((k) => { const d = kyCons('ALL', k, l); r.push(d ? { v: r1(d.v), s: Object.assign({}, NUM, { b: 1 }, style) } : { v: '', s: style }); });
+        const tv0 = consSel('ALL', y, m, null, l);
+        r.push(tv0 === null ? { v: '', s: style } : { v: r1(tv0), s: Object.assign({}, NUM, { b: 1 }, style) });
+        rs.push(r);
+        return tv0;
+      };
+      const sec = (txt) => { const r = [{ v: txt, s: SEC }]; for (let i = 1; i < 12; i++) r.push({ v: '', s: SEC }); rs.push(r); mg.push('A' + rs.length + ':L' + rs.length); };
+      let A = null, Bn = null;
+      if (has1.length) { sec(tp('haAp') + ' — ' + tv('haHelp')); has1.forEach(line); A = tong(tp('tongHa'), 'ha', MT); }
+      if (nhs1.length) { sec(tp('nhanh') + ' — ' + tv('nhanhHelp')); nhs1.forEach(line); Bn = tong(tp('tongNhanh'), 'nhanh', MT); }
+      if (A !== null && Bn !== null) {
+        const st = { fill: '#FDEEDF', border: true }, r = [{ v: '', s: st }, { v: tp('chenhLech') + ' ' + tp('haAp') + ' − ' + tp('nhanh'), s: Object.assign({ b: 1 }, st) }, { v: tv('chenhHNNote'), s: Object.assign({ i: 1, wrap: 1 }, st) }];
+        for (let i = 3; i < 8; i++) r.push({ v: '', s: st });
+        kys4.slice(1).forEach((k) => { const a = kyCons('ALL', k, 'ha'), b = kyCons('ALL', k, 'nhanh'); r.push(a && b ? { v: r1(a.v - b.v), s: Object.assign({}, NUM, st) } : { v: '', s: st }); });
+        r.push({ v: r1(A - Bn), s: Object.assign({}, NUM, { b: 1 }, st) });
+        rs.push(r);
+        mg.push('C' + rs.length + ':H' + rs.length);
+      }
+      sheets.push({ name: 'T' + m + '-' + y + ' · ' + m + '月', rows: rs, cols: [6, 34, 7, 8, 13, 13, 13, 13, 12, 12, 12, 14], merges: mg, freeze: { r: 5, c: 2 }, heights: { 1: 24, 4: 22, 5: 22 }, landscape: 1, printTitles: { rows: '4:5' } });
+    }
   }
   return XW.build(sheets);
 }
@@ -3025,8 +3196,12 @@ Object.assign(ACT, {
   dKyStep: (el) => { const k = S.f.dKy || kyHienTai(TODAY()); S.f.dKy = +el.dataset.d < 0 ? kyTruoc(k) : kyTiep(k); render(); },
   dCT: (el) => { S.f.dCT = el.dataset.ma; render(); },
   dLoai: (el) => { S.f.dLoai = el.dataset.l; render(); },
-  dSel: (el) => { if (el.dataset.l === 'ha') S.f.dCTha = el.dataset.ma; else S.f.dCT = el.dataset.ma; render(); },
+  dSel: (el) => { S.f[SEL_KEY[el.dataset.l] || 'dCT'] = el.dataset.ma; render(); },
   dYear: (el) => { S.f.dYear = (S.f.dYear || +TODAY().slice(0, 4)) + (+el.dataset.d); render(); },
+  dYM: (el) => {
+    const [y, m] = (S.f.dYM || TODAY().slice(0, 7)).split('-').map(Number), n = y * 12 + m - 1 + (+el.dataset.d);
+    S.f.dYM = Math.floor(n / 12) + '-' + pad2(n % 12 + 1); S.f.dYear = Math.floor(n / 12); render();
+  },
   dienNhap: (el) => go('dienNhap', { ma: el.dataset.ma, ky: el.dataset.ky || '' }),
   addNameDn: (el) => {
     const i = $('#dnNguoi'), n = el.dataset.n, cur = i.value.split(/[,;、，]+/).map((x) => x.trim()).filter(Boolean);

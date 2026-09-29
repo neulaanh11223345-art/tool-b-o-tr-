@@ -1,7 +1,7 @@
 // Service worker: mở app khi mất mạng.
 // Trang: lấy mạng trước, quá 6 giây hoặc mất mạng thì dùng bản đã lưu.
 // Thư viện CDN và phông chữ: dùng bản đã lưu trước.
-const CACHE = 'baoduong-v1.0';
+const CACHE = 'baoduong-v1.3';
 const LIBS = [
   'https://cdn.jsdelivr.net/npm/html5-qrcode@2.3.8/html5-qrcode.min.js',
   'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js'
