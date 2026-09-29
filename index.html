@@ -454,6 +454,9 @@ table.mtab td.muted{color:var(--ink3);text-align:center}
 table.mtab .nmc button{font-family:var(--f-ui);font-size:13px;font-weight:700}
 table.mtab .nmc button .zi{display:block;margin:1px 0 0;font-size:11.5px;font-weight:500}
 table.mtab .nmc{min-width:156px;max-width:172px}
+.srvwarn{background:var(--red-bg);color:var(--ink);border:1px solid var(--red)}
+.srvwarn .zi{color:var(--ink2)}
+.kv dd.bad{color:var(--red)}
 </style>
 </head>
 <body>
@@ -629,7 +632,7 @@ const XW = (() => {
 'use strict';
 const API_URL = "https://script.google.com/macros/s/AKfycbxYJ1YcP3FN3oWU8YsOlSpPFxU88fvnoZNPKYjygzrJ7PFPHIDZ1LY0VOkYbtJdhAUWoQ/exec";
 const MODE = "live";
-const APP_VER = "1.3.0";
+const APP_VER = "1.3.1";
 const DemoBackend = null;
 
 const IS_DEMO = MODE === 'demo';
@@ -1677,9 +1680,9 @@ VIEWS.admin = {
       <button class="row" data-act="go" data-v="thongSo">${IC.edit}<div class="main"><div class="nm">${t('t_thongSo')}</div><div class="sub">1.8.0 · 1.8.1 · 1.8.2 · 1.8.3 · 2.8.0 …</div></div>${IC.chev}</button>
       </div>${sec('appInfo')}<div class="card pad"><dl class="kv">
       <dt>${t('appVer')}</dt><dd class="mono">${esc(APP_VER)}${IS_DEMO ? ' · demo' : ''}</dd>
-      <dt>${t('srvVer')}</dt><dd class="mono">${esc(b.phienBan || '?')}</dd>
+      <dt>${t('srvVer')}</dt><dd class="mono${srvOld() ? ' bad' : ''}">${esc(b.phienBan || '?')}</dd>
       ${IS_DEMO ? '' : `<dt>${t('appLink')}</dt><dd class="mono" style="font-size:12px">${esc(appLink())}</dd>`}
-      </dl></div>`;
+      </dl></div>${srvWarn()}`;
   }
 };
 VIEWS.users = {
@@ -2178,6 +2181,8 @@ Object.assign(TX, {
   monthYM: ['Tháng {m}/{y}', '{y}年{m}月'], csNgay: ['Chỉ số ngày', '抄表读数'], ttKwh: ['Tiêu thụ (kWh)', '用电量（kWh）'],
   caThang: ['Cả tháng', '全月'], gapNote: ['* gồm cả thời gian của kỳ trước chưa ghi', '* 含之前未抄期间的用电量'], ngungCT: ['ngừng', '停用'],
   soThang: ['Sổ tháng {m}', '{m}月记录'], stt: ['STT', '序号'],
+  srvOld: ['Máy chủ đang chạy bản {v}, app cần bản {c} trở lên. Vì vậy app chưa tách được Hạ áp / Nhánh và coi mọi công tơ là cao áp.', '服务器版本为{v}，需要{c}或以上，所以暂时无法区分低压/分表，所有电表都被当作高压表。'],
+  srvOldFix: ['Cách sửa (Quản trị): Apps Script → dán Code.gs mới → Lưu → Triển khai → Quản lý triển khai → bút chì → Phiên bản: Phiên bản mới → Triển khai. Không chọn "Tùy chọn triển khai mới" vì sẽ ra link khác.', '修复方法（管理员）：Apps Script → 粘贴新Code.gs → 保存 → 部署 → 管理部署 → 铅笔 → 版本：新版本 → 部署。不要选“新建部署”，否则链接会变。'],
   csHa: ['Chỉ số công tơ', '电表读数'], tongHa: ['Tổng hạ áp', '低压合计'], chenhLech: ['Chênh lệch', '差额'],
   chartCaoHa: ['Cao áp và tổng hạ áp theo tháng', '每月高压与低压合计'], kChenh: ['Chênh lệch cao áp − hạ áp tháng {m}', '{m}月高压−低压差额'],
   chenhNote: ['Gồm tổn thất máy biến áp và phụ tải chưa có công tơ', '含变压器损耗及未计量负荷'],
@@ -2195,6 +2200,15 @@ Object.assign(ERR, {
   MA_TS_TRUNG: ['Mã thông số {m} bị trùng.', '参数代码{m}重复。']
 });
 
+// Máy chủ cũ hơn bản app cần (ví dụ triển khai chưa lên Phiên bản mới): báo rõ cách sửa
+const SRV_CAN = '1.3.0';
+function verLt(a, b) {
+  const x = String(a || '0').split('.').map((n) => +n || 0), y = String(b).split('.').map((n) => +n || 0);
+  for (let i = 0; i < 3; i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) < (y[i] || 0);
+  return false;
+}
+const srvOld = () => !!(S.base && verLt(S.base.phienBan, SRV_CAN));
+const srvWarn = () => (srvOld() ? `<div class="note srvwarn" id="srvWarn">${t('srvOld', { v: S.base.phienBan || '?', c: SRV_CAN })}<div style="margin-top:6px">${t('srvOldFix')}</div></div>` : '');
 // Ghép nhiều câu song ngữ: dòng tiếng Việt rồi dòng tiếng Trung
 function tj(...parts) {
   return esc(parts.map(([k, v]) => tv(k, v)).join(' · ')) + '<span class="zi" lang="zh-CN">' + esc(parts.map(([k, v]) => tz(k, v)).join(' · ')) + '</span>';
@@ -2403,6 +2417,7 @@ VIEWS.dien = {
     if (!f.dTab) f.dTab = 'ghi';
     let o = '';
     if (IS_DEMO && cts.length) o += `<p class="help" style="margin:0 0 10px">${t('sampleNote')}</p>`;
+    o += srvWarn();
     if (!cts.length) {
       return o + `<div class="card empty">${t('noCT')}<div style="margin-top:6px">${t(can('may') ? 'noCTadd' : 'noCTask')}</div>
         ${can('may') ? `<div class="btns" style="justify-content:center;margin-top:14px"><button class="btn sm" data-act="ctEdit" data-ma="">${IC.plus} ${t('addCT')}</button>${can('admin') ? `<button class="btn ghost sm" data-act="go" data-v="thongSo">${t('paramsBtn')}</button>` : ''}</div>` : ''}</div>`;
@@ -2609,7 +2624,9 @@ function drawCharts() {
   const thisYear = String(y) === today.slice(0, 4);
   const labels = Array.from({ length: 12 }, (_, i) => String(i + 1)), curIdx = thisYear ? +today.slice(5, 7) - 1 : -1;
   const c = sel !== 'ALL' ? S.V.ctByMa[sel] : null, codes = c ? tsOfCT(c) : ['1.8.0'];
-  const split = l === 'cao' && ['1.8.1', '1.8.2', '1.8.3'].every((k) => codes.indexOf(k) >= 0);
+  // Chỉ tách 3 biểu giá khi công tơ thật sự có ghi 1.8.1–1.8.3 trong năm; không thì vẽ theo 1.8.0
+  const coBieuGia = !!c && (S.V.csMa[c.ma] || []).some((x) => x.ky.slice(0, 4) === String(y) && x.giaTri && ['1.8.1', '1.8.2', '1.8.3'].some((k) => x.giaTri[k] !== undefined));
+  const split = l === 'cao' && coBieuGia && ['1.8.1', '1.8.2', '1.8.3'].every((k) => codes.indexOf(k) >= 0);
   const series = split ? ['1.8.1', '1.8.2', '1.8.3'].map((k, i) => ({ key: k, cls: 's' + (i + 1), name: (S.V.tsByMa[k] || {}).ten || k }))
     : [{ key: '1.8.0', cls: 's1', name: '' }];
   // 1. Theo tháng
