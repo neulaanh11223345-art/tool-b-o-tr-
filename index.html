@@ -264,7 +264,7 @@ table.cal tr.grp th.nmc{background:var(--bg);font-size:12px;color:var(--ink2);fo
 @media (prefers-reduced-motion:reduce){.sheet,.sheet-bg{animation:none}}
 .toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(var(--tab-h) + 18px + env(safe-area-inset-bottom,0px));background:var(--navy);color:#fff;border-radius:12px;padding:11px 16px;font-size:14px;font-weight:600;z-index:80;max-width:min(92vw,480px);box-shadow:0 6px 24px rgba(0,0,0,.25);text-align:center}
 .toast .zi{color:#C9D4D1;font-weight:500}
-.toast.bad{background:var(--red)}
+.toast.bad{background:var(--red);color:#fff}
 .toast.bad .zi{color:#FFE3DF}
 
 /* ---------- thanh dưới ---------- */
@@ -530,6 +530,72 @@ table.mtab .nmc{min-width:156px;max-width:172px}
 .dsbtn .x{height:38px}
 @media (max-width:380px){.sorow{grid-template-columns:1fr 128px}.dsgrid{grid-template-columns:1fr 1fr}}
 .lkn2{color:var(--ink)}
+
+/* ---------- kho linh kiện ---------- */
+.khohead .kh1{display:flex;align-items:center;gap:12px}
+.khohead .kh1 b{font-size:17px}
+.khohead .kh1t{min-width:0}
+.khohead .kh1 b .zi{font-size:14px}
+.khoinf{margin-top:10px;font-size:13px;color:var(--ink2)}
+.khoinf .zh{font-family:var(--f-zh)}
+.khoinf b{color:var(--ink)}
+.khoinf .kf{font-size:12px;margin-top:2px;overflow-wrap:anywhere}
+.khohead .kh1 .sub{font-size:13px;color:var(--ink2)}
+.khohead .kh1 .sub .zi{display:inline}
+.kic,.khohome .eic{width:42px;height:42px;border-radius:11px;background:var(--orange-bg);color:var(--orange);display:grid;place-items:center;flex:none}
+.khohead .help .zi{display:block;margin:0;font-size:12px}
+.khobtn{min-height:50px}
+.khorow .nm .zi,.ksi .kn .zi,.lkrow .nm .zi,.sheet h3 .zi{display:block;margin:0;font-size:13px;font-weight:500}
+.khorow .sub .qc{font-size:12.5px}
+.kmeta{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.kbin{display:inline-flex;align-items:center;gap:3px;font-family:var(--f-mono);font-size:12px;color:var(--ink2)}
+.kbin svg{flex:none;color:var(--ink3)}
+.kmay{font-size:12px;font-weight:600;color:var(--blue)}
+.ktag{display:inline-block;border-radius:6px;padding:1px 7px;font-size:12px;font-weight:600;margin-right:8px}
+.ktag.ok{background:var(--green-bg);color:var(--green)}
+.ktag.het{background:var(--red-bg);color:var(--red)}
+.ktag.app{background:var(--soft);color:var(--ink2);border:1px solid var(--line)}
+.ktag .zi{display:inline;color:inherit;font-size:11px}
+.kline{display:flex;align-items:center;flex-wrap:wrap;gap:2px 0}
+.klink{display:flex;align-items:center;gap:8px;background:var(--blue-bg);border-radius:9px;padding:6px 6px 6px 9px;font-size:12.5px}
+.klink .kl{flex:1;min-width:0;display:flex;flex-wrap:wrap;align-items:center;gap:4px 8px}
+.klink>svg{width:16px;height:16px;color:var(--blue);flex:none}
+.klink .code{background:var(--card)}
+.klink .ktag{margin-right:0}
+.klink .kx{margin-left:auto;width:30px;height:30px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink2);font-weight:700;flex:none}
+.ksug{display:flex;flex-direction:column;gap:6px;margin-top:2px}
+.kst{font-size:12px;color:var(--ink2);font-weight:600}
+.kst .zi{display:inline}
+.ksi{display:flex;align-items:center;gap:10px;width:100%;text-align:left;border:1px solid var(--line);background:var(--card);border-radius:10px;padding:8px 10px}
+.ksi:active{background:var(--soft)}
+.ksi .kn{flex:1;min-width:0;font-weight:600;font-size:14px;line-height:1.3;overflow-wrap:anywhere}
+.ksi .kn small{display:block;font-weight:500;font-size:12px;color:var(--ink2)}
+.ksi .pill{flex:none}
+.ksi .kplus{flex:none;width:30px;height:30px;border-radius:8px;background:var(--navy);color:#fff;display:grid;place-items:center}
+.ksi .kplus svg{width:18px;height:18px}
+.khotim{margin:0 0 12px;display:flex;flex-direction:column;gap:10px;border-color:var(--blue);box-shadow:inset 0 0 0 1px var(--blue)}
+.kst2{display:flex;align-items:center;gap:8px;font-weight:700;font-size:14px}
+.kst2 svg{color:var(--blue);flex:none}
+.kst2 .zi{font-weight:500;font-size:12.5px}
+.ksethem{margin:0;color:var(--blue)}
+.ksethem .zi{display:block;margin:0}
+.dssug{display:flex;flex-direction:column;gap:6px}
+.dssug:empty{display:none}
+.lksug:empty{display:none}
+.dsrow.flash{animation:kflash 1.6s ease-out}
+@keyframes kflash{0%{box-shadow:0 0 0 3px var(--yellow)}100%{box-shadow:0 0 0 0 transparent}}
+.ktiles{grid-template-columns:repeat(3,1fr)}
+.ktile{min-height:74px}
+.ktile b{font-size:24px}
+.ktile span{font-size:12.5px}
+.ktile .zi{display:block;margin:0}
+.kdet{margin-bottom:10px}
+.kdet summary{cursor:pointer;font-weight:700;font-size:14.5px;padding:10px 2px;list-style-position:inside}
+.kdet summary .zi{font-weight:500}
+.kdet summary .cnt{color:var(--ink2);font-weight:500;margin-left:4px}
+.kchg{font-size:13px;gap:5px}
+@media (prefers-reduced-motion:reduce){.dsrow.flash{animation:none}}
+@media (max-width:380px){.ktiles{grid-template-columns:repeat(2,1fr)}}
 </style>
 </head>
 <body>
@@ -705,7 +771,7 @@ const XW = (() => {
 'use strict';
 const API_URL = "https://script.google.com/macros/s/AKfycbxYJ1YcP3FN3oWU8YsOlSpPFxU88fvnoZNPKYjygzrJ7PFPHIDZ1LY0VOkYbtJdhAUWoQ/exec";
 const MODE = "live";
-const APP_VER = "1.4.0";
+const APP_VER = "1.5.0";
 const DemoBackend = null;
 
 const IS_DEMO = MODE === 'demo';
@@ -981,6 +1047,7 @@ async function refresh(silent) {
   try {
     const d = await api('data');
     S.base = d; S.lastLoad = Date.now(); saveSnap(); rebuild();
+    khoSync();
     if (d.me) { S.me = d.me; store.set('bd_me', d.me); }
     softRender();
     openDeep(true);
@@ -1052,6 +1119,7 @@ function mergeResult(d) {
     const i = L.findIndex((x) => x.ma === d.congTo.ma);
     if (i >= 0) L[i] = d.congTo; else L.push(d.congTo);
   }
+  if (d.kho) khoApply(d.kho);
   saveSnap(); rebuild();
 }
 
@@ -1073,7 +1141,7 @@ function rebuild() {
     // Linh kiện mới ghi khi bảo dưỡng (máy chủ cũng tự thêm vào danh sách của máy)
     ((q.p.chiTiet && q.p.chiTiet.lk) || []).forEach((k) => {
       m.linhKien = (m.linhKien || []).slice();
-      if (!m.linhKien.some((x) => x.id === k.id)) m.linhKien.push({ id: k.id, ten: k.ten, quyCach: k.quyCach || '', dv: k.dv || '', sl: '', ghiChu: '' });
+      if (!m.linhKien.some((x) => x.id === k.id)) m.linhKien.push(Object.assign({ id: k.id, ten: k.ten, quyCach: k.quyCach || '', dv: k.dv || '', sl: '', ghiChu: '' }, k.maKho ? { maKho: k.maKho } : {}));
     });
   });
   const lsMa = {};
@@ -1189,7 +1257,7 @@ function render() {
   $('#barLead').innerHTML = S.stack.length > 1
     ? `<button class="back" data-act="back" aria-label="${tp('back')}">${IC.left}</button>`
     : `<button class="logo" data-act="tab" data-v="home" aria-label="${tp('home')}">${LOGO}</button>`;
-  const root = S.stack[0].v === 'hist' ? 'list' : S.stack[0].v;
+  const root = S.stack[0].v === 'hist' || S.stack[0].v === 'kho' ? 'list' : S.stack[0].v;
   $$('.tab').forEach((b) => b.classList.toggle('on', b.dataset.v === root));
   $('#meBtn').innerHTML = `<span class="nm">${esc(S.me ? S.me.ten : '?')}</span>`;
   const n = S.V ? activeMay().filter((m) => { const k = stOf(m).k; return k === 'qua' || k === 'nay'; }).length : 0;
@@ -1270,6 +1338,7 @@ VIEWS.home = {
     if (can('confirm')) h += `<button class="cta" data-act="tab" data-v="scan"><span class="ic">${IC.scan}</span><span>${tv('scanCta')}<span class="zi">${tz('scanCta')}</span></span></button>`;
     if (can('may')) h += srvWarn();
     h += dienHomeCard();
+    h += khoHomeCard();
     const block = (k, arr) => arr.length ? `<div id="sec-${k}">${sec('st_' + k, arr.length)}<div class="list">${arr.map((o) => mRow(o.m, o.st, true)).join('')}</div></div>` : '';
     if (!g.qua.length && !g.nay.length) {
       const nx = activeMay().filter((m) => m.hanKeTiep > today).sort((a, b) => (a.hanKeTiep > b.hanKeTiep ? 1 : -1))[0];
@@ -1573,7 +1642,8 @@ VIEWS.cal = {
 };
 
 // ---------- Danh sách máy ----------
-const listSeg = (cur) => `<div class="seg" style="margin-bottom:12px"><button class="${cur === 'list' ? 'on' : ''}" data-act="tab" data-v="list">${tv('viewList')} ${tz('viewList')}</button><button class="${cur === 'hist' ? 'on' : ''}" data-act="tab" data-v="hist">${tv('history')} ${tz('history')}</button></div>`;
+const listSeg = (cur) => `<div class="seg wide3" style="margin-bottom:12px">${[['list', 'segList'], ['hist', 'history'], ['kho', 'segKho']].map(([v, k]) =>
+  `<button class="${cur === v ? 'on' : ''}" data-act="tab" data-v="${v}">${tv(k)}<small>${tz(k)}</small></button>`).join('')}</div>`;
 VIEWS.list = {
   html() {
     const f = S.f;
@@ -2292,7 +2362,7 @@ Object.assign(ERR, {
 });
 
 // Máy chủ cũ hơn bản app cần (ví dụ triển khai chưa lên Phiên bản mới): báo rõ cách sửa
-const SRV_CAN = '1.4.0';
+const SRV_CAN = '1.5.0';
 function verLt(a, b) {
   const x = String(a || '0').split('.').map((n) => +n || 0), y = String(b).split('.').map((n) => +n || 0);
   for (let i = 0; i < 3; i++) if ((x[i] || 0) !== (y[i] || 0)) return (x[i] || 0) < (y[i] || 0);
@@ -3470,8 +3540,9 @@ function ktMaySections(m) {
     const row = (k, s, old) => {
       const n = s && s.nam[y], last = s && s.ds[0];
       return `<button class="row lkrow" data-act="lkHist" data-ma="${esc(m.ma)}" data-id="${esc(k.id)}">
-        <div class="main"><div class="nm">${esc(k.ten)}${k.quyCach ? ` <span class="qc">${esc(k.quyCach)}</span>` : ''}</div>
+        <div class="main"><div class="nm">${lkTenH(k.ten)}${k.quyCach ? ` <span class="qc">${esc(k.quyCach)}</span>` : ''}</div>
         ${old ? `<div class="sub"><span class="tag tag-cu">${t('lkCu')}</span></div>` : ''}
+        ${!old && k.maKho && khoGet(k.maKho) ? `<div class="sub kline">${tonLine(khoGet(k.maKho))}</div>` : ''}
         ${k.sl !== '' && k.sl !== undefined && k.sl !== null ? `<div class="sub">${t('trenMay')}: <b class="mono">${esc(soG(k.sl))}</b>${k.dv ? ' ' + esc(k.dv) : ''}</div>` : ''}
         <div class="sub${n ? ' lkn2' : ''}">${n ? `<b class="mono">${y}</b>: ${lkNamTxt(n, k.dv)}` : t('lkChuaDung')}</div></div>
         <div class="end">${last ? `<span class="lkd">${fmtDM(last.x.ngay)}<small>${last.x.ngay.slice(0, 4)}</small></span>` : ''}${IC.chev}</div></button>`;
@@ -3486,20 +3557,22 @@ function openLKHist(ma, id) {
   const s = thongKeLK(ma)[id], k = lkOf(m).find((x) => x.id === id) || s;
   if (!k) return;
   const nams = s ? Object.keys(s.nam).sort().reverse() : [];
+  const kx = khoGet(k.maKho);
   openSheet(`<div class="grab"></div>
-    <h3>${esc(k.ten)}</h3>
+    <h3>${lkTenH(k.ten)}</h3>
     <div class="who">${esc(m.ten)} <span class="code">${esc(m.ma)}</span></div>
     <dl class="kv">
       ${k.quyCach ? `<dt>${t('quyCach')}</dt><dd>${esc(k.quyCach)}</dd>` : ''}
       ${k.sl !== '' && k.sl !== undefined && k.sl !== null ? `<dt>${t('slMay')}</dt><dd>${esc(soG(k.sl))} ${esc(k.dv || '')}</dd>` : ''}
       ${k.ghiChu ? `<dt>${t('ghiChuLK')}</dt><dd>${esc(k.ghiChu)}</dd>` : ''}
+      ${kx ? `<dt>${t('maKho')}</dt><dd><span class="code">${esc(kx.ma)}</span></dd><dt>${t('tonKho')}</dt><dd>${tonLine(kx)}</dd>` : ''}
       ${nams.map((y) => `<dt>${t('lkTongNam', { y })}</dt><dd>${lkNamTxt(s.nam[y], k.dv)}</dd>`).join('')}
     </dl>
     ${secL('lkLichSu', s ? s.ds.length : 0)}
     ${s && s.ds.length ? `<div class="list">${s.ds.map(({ x, k: u }) => `<button class="hrow" data-act="hdetail" data-id="${esc(x.id)}">
       <div class="dd">${fmtDM(x.ngay)}<small>${x.ngay.slice(0, 4)}</small></div>
       <div class="main"><div class="nm"><span class="mono">×${esc(soG(u.sl))}</span> ${esc(u.dv || '')} · ${t(u.loai === 'BOSUNG' ? 'boSung' : 'thay')}</div><div class="sub">${esc(x.nguoi)}</div></div>${hTag(x)}</button>`).join('')}</div>` : `<div class="card empty">${t('lkNone')}</div>`}
-    <div class="btns" style="margin-top:16px"><button class="btn ghost" data-act="closeSheet">${t('close')}</button></div>`);
+    <div class="btns" style="margin-top:16px">${kx ? `<button class="btn ghost" data-act="khoItem" data-ma="${esc(kx.ma)}">${IC.box} ${t('khoXem')}</button>` : ''}<button class="btn ghost" data-act="closeSheet">${t('close')}</button></div>`);
 }
 
 // ---------- Dòng lịch sử: dấu nhỏ, chi tiết ----------
@@ -3530,7 +3603,7 @@ function ctDetail(c) {
       <div class="end"><span class="pill ${h.vuot ? 'p-qua' : 'p-xong'}" title="${h.vuot ? esc(tp('ngoaiNguong')) : ''}"><b class="mono">${h.vuot ? '⚠ ' : ''}${esc(soG(h.v))}${h.dv ? ' ' + esc(h.dv) : ''}</b></span></div></div>`).join('')}</div>`;
   }
   if (lk.length) {
-    o += secL('lkUsed', lk.length) + `<div class="list">${lk.map((k) => `<div class="row"><div class="main"><div class="nm">${esc(k.ten)}${k.quyCach ? ` <span class="qc">${esc(k.quyCach)}</span>` : ''}</div><div class="sub">${t(k.loai === 'BOSUNG' ? 'boSung' : 'thay')}</div></div>
+    o += secL('lkUsed', lk.length) + `<div class="list">${lk.map((k) => `<div class="row"><div class="main"><div class="nm">${lkTenH(k.ten)}${k.quyCach ? ` <span class="qc">${esc(k.quyCach)}</span>` : ''}</div><div class="sub">${t(k.loai === 'BOSUNG' ? 'boSung' : 'thay')}</div></div>
       <div class="end"><b class="mono lkn">×${esc(soG(k.sl))}</b>${k.dv ? `<span class="muted">${esc(k.dv)}</span>` : ''}</div></div>`).join('')}</div>`;
   }
   return o;
@@ -3590,9 +3663,15 @@ function lkRowsHtml() {
     const dv = khac ? '' : (k && k.dv) || '';
     const del = `<button type="button" class="x" data-act="lkDel" data-i="${i}" aria-label="${esc(tp('del'))}">✕</button>`;
     const khacIn = `<input class="inp" data-lf="ten" value="${esc(r.ten || '')}" placeholder="${esc(tp('lkTen'))}" maxlength="120"><input class="inp" data-lf="dv" value="${esc(r.dv || '')}" placeholder="${esc(tp('dv'))}" maxlength="12">`;
+    const kx = khac ? khoGet(r.maKho) : k && khoGet(k.maKho);
+    const extra = khac
+      ? (kx ? `<div class="klink">${IC.box}<div class="kl"><span class="code">${esc(kx.ma)}</span>${tonLine(kx)}</div><button type="button" class="kx" data-act="lkUnlink" data-i="${i}" aria-label="${esc(tp('khoBoLK'))}">✕</button></div>`
+        : `<div class="lksug">${khoSugHtml(r.ten || '', 'lkSug', i)}</div>`)
+      : (kx ? `<div class="kline">${tonLine(kx)}</div>` : '');
     return `<div class="lkin" data-i="${i}">
       ${ds.length ? `<div class="lkt"><select class="inp" data-lf="id">${ds.map((x) => `<option value="${esc(x.id)}"${x.id === r.id ? ' selected' : ''}>${esc(x.ten)}${x.quyCach ? ' — ' + esc(x.quyCach) : ''}</option>`).join('')}<option value="__khac"${khac ? ' selected' : ''}>${esc(tp('lkKhac'))}</option></select>${del}</div>
         ${khac ? `<div class="lkkhac">${khacIn}</div>` : ''}` : `<div class="lkkhac x3">${khacIn}${del}</div>`}
+      ${extra}
       <div class="lkq"><span class="slin"><input class="inp" data-lf="sl" value="${esc(r.sl)}" inputmode="decimal" autocomplete="off" maxlength="10" placeholder="${esc(tv('sl'))}" aria-label="${esc(tp('sl'))}">${dv ? `<i>${esc(dv)}</i>` : ''}</span>
         <div class="seg"><button type="button" class="${r.loai !== 'BOSUNG' ? 'on' : ''}" data-act="lkLoai" data-i="${i}" data-v="THAY">${tv('thay')} ${tz('thay')}</button><button type="button" class="${r.loai === 'BOSUNG' ? 'on' : ''}" data-act="lkLoai" data-i="${i}" data-v="BOSUNG">${tv('boSung')} ${tz('boSung')}</button></div></div>
     </div>`;
@@ -3610,7 +3689,12 @@ function ktConfirmAfter(bg) {
       return;
     }
     const row = el.closest('.lkin');
-    if (row && el.dataset.lf && el.dataset.lf !== 'id') { const r = f.lk[+row.dataset.i]; if (r) r[el.dataset.lf] = el.value; }
+    if (row && el.dataset.lf && el.dataset.lf !== 'id') {
+      const r = f.lk[+row.dataset.i]; if (r) r[el.dataset.lf] = el.value;
+      // Gõ tên linh kiện khác: gợi ý linh kiện có trong kho
+      const sg = $('.lksug', row);
+      if (r && el.dataset.lf === 'ten' && sg && !r.maKho) sg.innerHTML = khoSugHtml(el.value, 'lkSug', row.dataset.i);
+    }
   });
   bg.addEventListener('change', (e) => {
     const el = e.target, f = S.ctF, row = el.closest && el.closest('.lkin');
@@ -3649,13 +3733,14 @@ function ktCollect(m) {
       const ten = (r.ten || '').trim();
       if (!ten) return { err: t('needLKTen') };
       if (!(sl > 0)) return { err: t('needSL') };
-      const co = ds.find((x) => norm(x.ten) === norm(ten));
-      if (co) lk.push({ id: co.id, ten: co.ten, quyCach: co.quyCach || '', dv: co.dv || '', sl, loai: r.loai || 'THAY' });
-      else lk.push({ id: r.newId || (r.newId = newId('LK')), ten, quyCach: '', dv: (r.dv || '').trim(), sl, loai: r.loai || 'THAY' });
+      const kx = khoGet(r.maKho);
+      const co = (kx && ds.find((x) => { const g = khoGet(x.maKho); return g && g.ma === kx.ma; })) || ds.find((x) => norm(x.ten) === norm(ten));
+      if (co) lk.push({ id: co.id, ten: co.ten, quyCach: co.quyCach || '', dv: co.dv || '', sl, loai: r.loai || 'THAY', maKho: co.maKho });
+      else lk.push({ id: r.newId || (r.newId = newId('LK')), ten, quyCach: kx ? (r.quyCach || '') : '', dv: (r.dv || '').trim(), sl, loai: r.loai || 'THAY', maKho: kx ? kx.ma : undefined });
     } else {
       const k = ds.find((x) => x.id === r.id); if (!k) continue;
       if (!(sl > 0)) return { err: t('needSL') };
-      lk.push({ id: k.id, ten: k.ten, quyCach: k.quyCach || '', dv: k.dv || '', sl, loai: r.loai || 'THAY' });
+      lk.push({ id: k.id, ten: k.ten, quyCach: k.quyCach || '', dv: k.dv || '', sl, loai: r.loai || 'THAY', maKho: k.maKho });
     }
   }
   return { v: kt.length || so.length || lk.length ? { kt, so, lk } : null };
@@ -3673,10 +3758,18 @@ VIEWS.dsEdit = {
     const val = (v) => esc(v === undefined || v === null ? '' : v);
     let o = srvWarn('kt') + `<div class="card pad dshead"><span class="code">${esc(m.ma)}</span> <b>${esc(m.ten)}</b><div class="help">${t(hm ? 'hmHelp' : 'lkHelp')}</div></div>`;
     o += `<div class="btns dstools" style="margin:12px 0">${hm && m.noiDung ? `<button class="btn ghost sm" data-act="dsFromND">${t('layND')}</button>` : ''}<button class="btn ghost sm" data-act="dsCopy">${t('chepTu')}</button></div>`;
+    if (!hm && S.kho.ds.length) {
+      o += `<div class="card pad khotim"><div class="kst2">${IC.box}<span>${tv('timKho')}<span class="zi">${tz('timKho')}</span></span></div>
+        <div class="searchbox">${IC.search}<input class="inp" id="dsKhoQ" type="search" value="${esc(p.khoQ || '')}" placeholder="${esc(tp('timKhoPh'))}" autocomplete="off" enterkeyhint="search"></div>
+        <div id="dsKhoRes">${khoTimHtml(p.khoQ || '')}</div></div>`;
+    }
+    const seThem = !srvOld('kho') ? `<div class="help ksethem">${t('khoSeThem')}</div>` : '';
     o += `<div class="dslist" id="dsList">${p.ds.length ? p.ds.map((x, i) => `<div class="dsrow" data-i="${i}">
       <div class="dsno mono">${i + 1}</div>
       <div class="dsbody">
         ${lbl(hm ? 'hmTen' : 'lkTen', `<input class="inp" data-f="ten" value="${val(x.ten)}" maxlength="120" autocomplete="off">`)}
+        ${hm ? '' : (x.maKho && khoGet(x.maKho) ? `<div class="klink">${IC.box}<div class="kl"><span class="code">${esc(khoGet(x.maKho).ma)}</span>${tonLine(khoGet(x.maKho))}</div><button type="button" class="kx" data-act="dsUnlink" data-i="${i}" aria-label="${esc(tp('khoBoLK'))}">✕</button></div>`
+          : `<div class="dssug">${String(x.ten || '').trim() ? seThem : ''}</div>`)}
         ${hm ? `<div class="seg dskieu"><button type="button" class="${x.kieu !== 'SO' ? 'on' : ''}" data-act="dsKieu" data-i="${i}" data-v="OK">${tv('kieuOK')} ${tz('kieuOK')}</button><button type="button" class="${x.kieu === 'SO' ? 'on' : ''}" data-act="dsKieu" data-i="${i}" data-v="SO">${tv('kieuSO')} ${tz('kieuSO')}</button></div>
           ${x.kieu === 'SO' ? `<div class="dsgrid">${lbl('min', `<input class="inp" data-f="min" value="${val(x.min)}" inputmode="decimal" maxlength="16">`)}${lbl('max', `<input class="inp" data-f="max" value="${val(x.max)}" inputmode="decimal" maxlength="16">`)}${lbl('dv', `<input class="inp" data-f="dv" value="${val(x.dv)}" maxlength="12">`)}</div>` : ''}`
         : `<div class="dsgrid">${lbl('quyCach', `<input class="inp" data-f="quyCach" value="${val(x.quyCach)}" maxlength="80">`)}${lbl('dv', `<input class="inp" data-f="dv" value="${val(x.dv)}" maxlength="12">`)}${lbl('slMay', `<input class="inp" data-f="sl" value="${val(x.sl)}" inputmode="decimal" maxlength="10">`)}</div>
@@ -3694,8 +3787,14 @@ VIEWS.dsEdit = {
 document.addEventListener('input', (e) => {
   const cur = topV(), el = e.target;
   if (!cur || cur.v !== 'dsEdit' || !el.closest) return;
-  const row = el.closest('.dsrow');
-  if (row && el.dataset.f && cur.p.ds && cur.p.ds[+row.dataset.i]) cur.p.ds[+row.dataset.i][el.dataset.f] = el.value;
+  if (el.id === 'dsKhoQ') { cur.p.khoQ = el.value; const r = $('#dsKhoRes'); if (r) r.innerHTML = khoTimHtml(el.value); return; }
+  const row = el.closest('.dsrow'), x = row && cur.p.ds && cur.p.ds[+row.dataset.i];
+  if (x && el.dataset.f) x[el.dataset.f] = el.value;
+  // Gõ tên linh kiện: gợi ý linh kiện trong kho; không chọn thì lưu xong tự thêm vào kho
+  if (x && el.dataset.f === 'ten' && cur.p.k === 'lk' && !x.maKho) {
+    const sg = $('.dssug', row);
+    if (sg) sg.innerHTML = khoSugHtml(el.value, 'dsSug', row.dataset.i) + (el.value.trim() && !srvOld('kho') ? `<div class="help ksethem">${t('khoSeThem')}</div>` : '');
+  }
 });
 document.addEventListener('change', (e) => {
   const cur = topV();
@@ -3749,7 +3848,7 @@ async function dsSave(el) {
     } else {
       const sl = parseSo(x.sl);
       if (sl !== null && (isNaN(sl) || sl < 0)) return show(t('SO_SAI') + ' — ' + esc(ten));
-      ds.push({ id: x.id, ten, quyCach: String(x.quyCach || '').trim(), dv: String(x.dv || '').trim(), sl: sl === null ? '' : sl, ghiChu: String(x.ghiChu || '').trim() });
+      ds.push({ id: x.id, ten, quyCach: String(x.quyCach || '').trim(), dv: String(x.dv || '').trim(), sl: sl === null ? '' : sl, ghiChu: String(x.ghiChu || '').trim(), maKho: x.maKho || undefined });
     }
   }
   el.disabled = true;
@@ -3771,18 +3870,19 @@ function lkSheets(y) {
     .forEach((x) => x.chiTiet.lk.forEach((k) => dung.push({ x, k })));
   // Chi tiết từng lần
   const r1 = [[{ v: tv('xLKTitle', { y }) + ' · ' + tz('xLKTitle', { y }), s: { b: 1, sz: 14 } }], []];
-  const h1 = [tp('dateDone'), tp('code'), tp('name'), tp('group'), tp('lkTen'), tp('quyCach'), tp('sl'), tp('dv'), tp('xLoai'), tp('performer'), tp('xStatus')];
+  const h1 = [tp('dateDone'), tp('code'), tp('name'), tp('group'), tp('lkTen'), tp('quyCach'), tp('sl'), tp('dv'), tp('xLoai'), tp('performer'), tp('xStatus'), tp('maKho')];
+  const mkOf = (m, k) => { const g = khoGet(k.maKho || ((lkOf(m).find((y) => y.id === k.id) || {}).maKho)); return g ? g.ma : ''; };
   r1.push(h1.map((h) => ({ v: h, s: H })));
   dung.forEach(({ x, k }) => {
     const m = S.V.byMa[x.ma];
     r1.push([{ v: excelSerial(x.ngay), s: Object.assign({ fmt: 'dd/mm/yyyy', align: 'center' }, B) }, { v: x.ma, s: B }, { v: m ? m.ten : x.tenMay, s: B }, { v: m ? m.nhom : '', s: B },
       { v: k.ten, s: Object.assign({ b: 1 }, B) }, { v: k.quyCach || '', s: B }, { v: +k.sl, s: Object.assign({ align: 'center' }, B) }, { v: k.dv || '', s: B },
-      { v: tp(k.loai === 'BOSUNG' ? 'boSung' : 'thay'), s: B }, { v: x.nguoi, s: B }, { v: x.cho ? tp('pending') : 'OK', s: B }]);
+      { v: tp(k.loai === 'BOSUNG' ? 'boSung' : 'thay'), s: B }, { v: x.nguoi, s: B }, { v: x.cho ? tp('pending') : 'OK', s: B }, { v: mkOf(m, k), s: B }]);
   });
-  const s1 = { name: tv('xLKSheet', { y }) + ' · ' + tz('xLKSheet', { y }), rows: r1, cols: [12, 7, 30, 20, 30, 14, 8, 10, 16, 24, 14], merges: ['A1:K1'], freeze: { r: 3 }, heights: { 1: 24, 3: 30 }, landscape: 1, printTitles: { rows: '3:3' } };
+  const s1 = { name: tv('xLKSheet', { y }) + ' · ' + tz('xLKSheet', { y }), rows: r1, cols: [12, 7, 30, 20, 30, 14, 8, 10, 16, 24, 14, 13], merges: ['A1:L1'], freeze: { r: 3 }, heights: { 1: 24, 3: 30 }, landscape: 1, printTitles: { rows: '3:3' } };
   // Tổng theo máy
   const r2 = [[{ v: tv('xLKTongTitle', { y }) + ' · ' + tz('xLKTongTitle', { y }), s: { b: 1, sz: 14 } }], []];
-  const h2 = [tp('code'), tp('name'), tp('group'), tp('lkTen'), tp('quyCach'), tp('dv'), tp('slMay'), tp('xSLThay'), tp('xSLBS'), tp('xSoLan'), tp('ganNhat')];
+  const h2 = [tp('code'), tp('name'), tp('group'), tp('lkTen'), tp('quyCach'), tp('dv'), tp('slMay'), tp('xSLThay'), tp('xSLBS'), tp('xSoLan'), tp('ganNhat'), tp('maKho'), tp('tonKho')];
   r2.push(h2.map((h) => ({ v: h, s: H })));
   const ordered = [];
   byGroup(S.V.may).forEach(([, a]) => a.forEach((m) => ordered.push(m)));
@@ -3793,16 +3893,17 @@ function lkSheets(y) {
       const k = lkOf(m).find((x) => x.id === id) || st[id], s = st[id], n = s && s.nam[y];
       const last = s && s.ds.find((d) => d.x.ngay.slice(0, 4) <= String(y));
       if (!m.hoatDong && !n) return;
-      const zero = !n;
+      const zero = !n, kx = khoGet(k.maKho);
       const st2 = Object.assign({}, B, zero ? { color: '#86928F' } : {});
       r2.push([{ v: m.ma, s: st2 }, { v: m.ten, s: st2 }, { v: m.nhom, s: st2 }, { v: k.ten, s: Object.assign({ b: zero ? 0 : 1 }, st2) }, { v: k.quyCach || '', s: st2 }, { v: k.dv || '', s: st2 },
         { v: k.sl === '' || k.sl === undefined || k.sl === null ? '' : +k.sl, s: Object.assign({ align: 'center' }, st2) },
         { v: n ? n.thay : 0, s: Object.assign({ align: 'center', b: n && n.thay ? 1 : 0 }, st2) }, { v: n ? n.bs : 0, s: Object.assign({ align: 'center' }, st2) },
         { v: n ? n.lan : 0, s: Object.assign({ align: 'center' }, st2) },
-        last ? { v: excelSerial(last.x.ngay), s: Object.assign({ fmt: 'dd/mm/yyyy', align: 'center' }, st2) } : { v: '', s: st2 }]);
+        last ? { v: excelSerial(last.x.ngay), s: Object.assign({ fmt: 'dd/mm/yyyy', align: 'center' }, st2) } : { v: '', s: st2 },
+        { v: kx ? kx.ma : '', s: st2 }, { v: kx && tonOf(kx) !== null ? tonOf(kx) : '', s: Object.assign({ align: 'center' }, st2, kx && tonOf(kx) === 0 ? { color: '#C8372D', b: 1 } : {}) }]);
     });
   });
-  const s2 = { name: tv('xLKTong', { y }) + ' · ' + tz('xLKTong', { y }), rows: r2, cols: [7, 30, 20, 30, 14, 10, 10, 10, 10, 9, 12], merges: ['A1:K1'], freeze: { r: 3 }, heights: { 1: 24, 3: 30 }, landscape: 1, printTitles: { rows: '3:3' } };
+  const s2 = { name: tv('xLKTong', { y }) + ' · ' + tz('xLKTong', { y }), rows: r2, cols: [7, 30, 20, 30, 14, 10, 10, 10, 10, 9, 12, 13, 9], merges: ['A1:M1'], freeze: { r: 3 }, heights: { 1: 24, 3: 30 }, landscape: 1, printTitles: { rows: '3:3' } };
   return [s2, s1];
 }
 
@@ -3842,7 +3943,630 @@ Object.assign(ACT, {
     const r = $$('.lkin'); const last = r[r.length - 1]; if (last) { const i = $('[data-lf="ten"]', last) || $('[data-lf="sl"]', last); if (i) i.focus(); }
   },
   lkDel: (el) => { const f = S.ctF; if (!f) return; f.lk.splice(+el.dataset.i, 1); lkPaint(); },
+  lkSug: (el) => {
+    const f = S.ctF, r = f && f.lk[+el.dataset.i], x = khoGet(el.dataset.ma); if (!r || !x) return;
+    const co = lkOf(S.V.byMa[f.ma]).find((k) => { const g = khoGet(k.maKho); return g && g.ma === x.ma; });
+    if (co) { r.id = co.id; r.loai = loaiMacDinh(co); delete r.maKho; } else Object.assign(r, { ten: x.ten, dv: dvTxt(x.dv).slice(0, 12), quyCach: x.qc || '', maKho: x.ma });
+    lkPaint();
+    const row = $(`.lkin[data-i="${el.dataset.i}"]`), q = row && $('[data-lf="sl"]', row); if (q) q.focus();
+  },
+  lkUnlink: (el) => { const f = S.ctF, r = f && f.lk[+el.dataset.i]; if (r) { delete r.maKho; r.quyCach = ''; lkPaint(); } },
+  dsKhoAdd: (el) => {
+    const p = topV().p, x = khoGet(el.dataset.ma); if (!x) return;
+    if (p.ds.some((k) => { const g = khoGet(k.maKho); return g && g.ma === x.ma; })) { toast(t('khoDaCo'), true); return; }
+    p.ds.push(Object.assign({ id: newId('LK'), sl: '', ghiChu: '' }, lkTuKho(x)));
+    p.khoQ = ''; render();
+    const r = $$('.dsrow'), last = r[r.length - 1]; if (last) { last.scrollIntoView({ block: 'center' }); last.classList.add('flash'); }
+    toast(t('khoDaThem', { m: lkTach(x.ten).vi }));
+  },
+  dsSug: (el) => {
+    const p = topV().p, i = +el.dataset.i, x = khoGet(el.dataset.ma); if (!x || !p.ds[i]) return;
+    if (p.ds.some((k, j) => { const g = khoGet(k.maKho); return j !== i && g && g.ma === x.ma; })) { toast(t('khoDaCo'), true); return; }
+    Object.assign(p.ds[i], lkTuKho(x)); render();
+  },
+  dsUnlink: (el) => { const p = topV().p, x = p.ds[+el.dataset.i]; if (x) { delete x.maKho; render(); } },
   lkLoai: (el) => { const f = S.ctF, r = f && f.lk[+el.dataset.i]; if (r) { r.loai = el.dataset.v; lkPaint(); } }
+});
+
+// ===================== KHO LINH KIỆN · 备件库 =====================
+// Danh mục linh kiện = file tồn kho tải từ ERP (Quản lý nhập lại mỗi tuần) + linh kiện gõ tay trong app (máy chủ tự thêm, nguồn APP).
+// Mỗi mục: {ma, ten, qc, dv, nh, ton, vt: [[kho, ô, SL]], ng: ERP|APP, cf (1 = có trong file lần nhập gần nhất), cn, gc, gop, an}
+// Linh kiện của máy (linhKien) và linh kiện đã thay (chiTiet.lk) gắn với kho qua trường maKho.
+Object.assign(TX, {
+  t_kho: ['Kho linh kiện', '备件库'], t_khoNhap: ['Nhập file kho', '导入库存文件'],
+  segList: ['Danh sách', '列表'], segKho: ['Kho linh kiện', '备件库'],
+  khoN: ['{n} mã linh kiện', '{n}种零件'], khoConN: ['{n} còn hàng', '{n}种有货'],
+  khoLuc: ['Nhập file lúc', '导入时间'], khoTuFile: ['{f} · {u}', '{f} · {u}'],
+  khoCu: ['Đã {n} ngày chưa nhập file kho mới', '已{n}天未导入新库存文件'],
+  khoChuaNhap: ['Chưa nhập file kho ERP', '尚未导入ERP库存文件'],
+  khoNhapBtn: ['Nhập file kho (ERP)', '导入库存文件（ERP）'],
+  khoNhapHelp: ['Tải file tồn kho từ ERP (.xlsx) về điện thoại rồi bấm nút trên để chọn. Mỗi tuần nhập lại file mới để cập nhật tồn kho.', '从ERP导出库存文件（.xlsx）保存到手机，再点上面的按钮选择。每周导入新文件以更新库存。'],
+  khoTrong: ['Chưa có dữ liệu kho. Bấm "Nhập file kho (ERP)" và chọn file Excel tải từ ERP.', '还没有库存数据。点击“导入库存文件”，选择ERP导出的Excel。'],
+  khoTrongKT: ['Chưa có dữ liệu kho. Nhờ Quản lý nhập file kho từ ERP.', '还没有库存数据，请主管导入ERP库存文件。'],
+  khoSearch: ['Tìm mã, tên, quy cách', '搜索品号、名称、规格'],
+  kfCon: ['Còn hàng', '有货'], kfHet: ['Hết hàng', '缺货'], kfApp: ['Thêm từ app', '应用添加'], kfMay: ['Đang dùng trên máy', '设备在用'],
+  khoKQ: ['Linh kiện', '零件'], khoMore: ['Xem thêm ({n})', '显示更多（{n}）'],
+  hetHang: ['Hết hàng', '缺货'], tonKho: ['Tồn kho', '库存'], khoApp: ['Thêm từ app', '应用添加'],
+  khoViTri: ['Vị trí trong kho', '库位'], khoKho: ['Kho', '仓库'], khoO: ['Ô', '库位'],
+  khoDungMay: ['Dùng trên máy', '使用设备'], khoChuaDung: ['Chưa gắn với máy nào', '尚未关联设备'],
+  khoDaThay: ['Đã thay / bổ sung', '更换/补充记录'], maKho: ['Mã kho', '品号'], nhomKho: ['Nhóm', '群组'],
+  nguon: ['Nguồn', '来源'], nguonERP: ['File kho ERP', 'ERP库存文件'], nguonAPP: ['Thêm trong app', '应用中添加'],
+  khoGop: ['Đã gộp vào mã {m}', '已合并到{m}'], khoAn: ['Ẩn khỏi danh sách tìm', '从搜索列表隐藏'], khoHienLai: ['Hiện lại', '恢复显示'],
+  khoDaAn: ['Đã ẩn', '已隐藏'], khoSuaApp: ['Sửa linh kiện thêm trong app', '编辑应用添加的零件'],
+  khoNgoaiFile: ['Không có trong file kho lần nhập gần nhất', '最近导入的文件中没有'], khoCn: ['Cập nhật', '更新'],
+  khoXem: ['Xem trong kho', '在库中查看'], khoChoTai: ['Đang tải danh sách kho…', '正在加载库存列表…'],
+  khoDoc: ['Đang đọc file…', '正在读取文件…'], khoFile: ['File', '文件'], khoSheet: ['Trang', '工作表'],
+  khoDong: ['{n} dòng → {m} mã', '{n}行 → {m}种'], khoBoQua: ['{n} dòng không có mã, đã bỏ qua', '{n}行没有品号，已跳过'],
+  khoCotDoc: ['Cột đã đọc', '已读取的列'],
+  kMoi: ['Mã mới', '新增'], kDoiTon: ['Đổi tồn', '库存变化'], kHet: ['Hết hàng', '缺货'], kVeLai: ['Có hàng lại', '恢复有货'],
+  kGiu: ['Không đổi', '不变'], kDoiTen: ['Đổi tên / quy cách', '名称/规格变化'], kGop: ['Linh kiện app trùng ERP (sẽ gộp)', '应用零件与ERP重复（将合并）'],
+  kHetHelp: ['Có trong kho của app nhưng không còn trong file này → tồn về 0 (không xoá)', '应用中有但此文件中没有 → 库存归零（不删除）'],
+  khoItWarn: ['File này chỉ có {n} mã, ít hơn nhiều so với {c} mã lần trước. Kiểm tra lại có đúng file đầy đủ (cả các kho) không.', '此文件只有{n}种，远少于上次的{c}种。请确认是否为完整文件（包含所有仓库）。'],
+  khoLuu: ['Lưu vào app', '保存到应用'], khoDangLuu: ['Đang lưu… có thể mất 1 phút', '正在保存…可能需要1分钟'],
+  khoDaLuu: ['Đã cập nhật kho: {n} mã · {a} mới · {b} hết hàng', '库存已更新：{n}种 · 新增{a} · 缺货{b}'],
+  khoXemN: ['{n} mã', '{n}种'], khoChiHien: ['Chỉ hiện {n} mã đầu', '仅显示前{n}种'],
+  timKho: ['Tìm trong kho linh kiện', '在备件库中查找'], timKhoPh: ['Gõ mã hoặc tên linh kiện…', '输入品号或名称…'],
+  khoDaCo: ['Linh kiện này đã có trong danh sách', '清单中已有此零件'], khoDaThem: ['Đã thêm: {m}', '已添加：{m}'],
+  khoSeThem: ['Chưa có trong kho → lưu xong tự thêm vào kho linh kiện', '库中没有 → 保存后自动加入备件库'],
+  khoGoiY: ['Có trong kho, bấm để chọn:', '库中有，点击选择：'], khoBoLK: ['Bỏ liên kết', '取消关联'],
+  khoKhongThay: ['Không thấy trong kho', '库中未找到'], khoHome: ['Kho linh kiện', '备件库'],
+  srvMissKho: ['Kho linh kiện (nhập file ERP, tìm linh kiện)', '备件库（导入ERP文件、查找零件）']
+});
+Object.assign(ERR, {
+  KHO_TRONG: ['File không có linh kiện nào.', '文件中没有零件。'],
+  KHO_NHIEU: ['File quá nhiều dòng (tối đa 20 000 mã).', '文件行数太多（最多20000种）。'],
+  KHO_ERP: ['Linh kiện từ file ERP: sửa trong ERP rồi nhập lại file.', 'ERP零件请在ERP中修改后重新导入。'],
+  FILE_SAI: ['Không đọc được file. Chọn đúng file Excel (.xlsx) tải từ ERP.', '无法读取文件，请选择ERP导出的Excel（.xlsx）。'],
+  FILE_XLS: ['File .xls (Excel cũ) chưa đọc được. Mở file bằng Excel hoặc Numbers rồi lưu lại dạng .xlsx.', '暂不支持.xls旧格式，请用Excel或Numbers另存为.xlsx。'],
+  KHONG_COT: ['Không thấy cột 品号 (mã) và 品名 (tên) trong file.', '文件中找不到“品号”和“品名”列。'],
+  IOS_CU: ['Điện thoại cần iOS 16.4 trở lên để đọc file Excel. Hãy cập nhật iOS.', '需要iOS 16.4或以上才能读取Excel，请更新系统。']
+});
+Object.assign(TITLES, { kho: 't_kho', khoNhap: 't_khoNhap' });
+ROOTS.push('kho');
+LIVE_VIEWS.push('kho');
+SRV_PHAN.push(['kho', '1.5.0', 'srvMissKho']);
+IC.box = `<svg ${ICP}><path d="M3.5 7.5 12 3l8.5 4.5v9L12 21l-8.5-4.5z"/><path d="M3.5 7.5 12 12l8.5-4.5M12 12v9"/></svg>`;
+IC.pin = `<svg ${ICP} width="14" height="14"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg>`;
+Object.assign(S.f, { khoQ: '', khoF: '', khoLim: 60 });
+
+// ---------- Đọc file .xlsx / .csv ngay trên điện thoại (không cần thư viện) ----------
+async function inflateRaw(data) {
+  if (typeof DecompressionStream === 'undefined') throw { code: 'IOS_CU' };
+  const st = new Blob([data]).stream().pipeThrough(new DecompressionStream('deflate-raw'));
+  return new Uint8Array(await new Response(st).arrayBuffer());
+}
+function unzipFile(buf) {
+  const u8 = new Uint8Array(buf), dv = new DataView(buf), td = new TextDecoder();
+  let e = -1;
+  for (let i = u8.length - 22; i >= Math.max(0, u8.length - 65557); i--) if (dv.getUint32(i, true) === 0x06054b50) { e = i; break; }
+  if (e < 0) throw { code: 'FILE_SAI' };
+  const n = dv.getUint16(e + 10, true), ent = {};
+  let p = dv.getUint32(e + 16, true);
+  for (let k = 0; k < n && p + 46 <= u8.length && dv.getUint32(p, true) === 0x02014b50; k++) {
+    const nl = dv.getUint16(p + 28, true), xl = dv.getUint16(p + 30, true), cl = dv.getUint16(p + 32, true);
+    const name = td.decode(u8.subarray(p + 46, p + 46 + nl)).replace(/^\/+/, '');
+    ent[name.toLowerCase()] = { meth: dv.getUint16(p + 10, true), cs: dv.getUint32(p + 20, true), off: dv.getUint32(p + 42, true) };
+    p += 46 + nl + xl + cl;
+  }
+  return async (name) => {
+    const x = ent[String(name).replace(/^\/+/, '').toLowerCase()]; if (!x) return null;
+    const st = x.off + 30 + dv.getUint16(x.off + 26, true) + dv.getUint16(x.off + 28, true);
+    const raw = u8.subarray(st, st + x.cs);
+    if (x.meth === 0) return td.decode(raw);
+    if (x.meth === 8) return td.decode(await inflateRaw(raw));
+    throw { code: 'FILE_SAI' };
+  };
+}
+const xmlDec = (s) => String(s).replace(/&(lt|gt|amp|quot|apos|#\d+|#x[0-9a-fA-F]+);/g, (m, e) => (e === 'lt' ? '<' : e === 'gt' ? '>' : e === 'amp' ? '&' : e === 'quot' ? '"' : e === 'apos' ? "'"
+  : String.fromCodePoint(e[1] === 'x' ? parseInt(e.slice(2), 16) : +e.slice(1)))).replace(/_x([0-9A-Fa-f]{4})_/g, (m, h) => String.fromCharCode(parseInt(h, 16)));
+function xAttr(s, n) { const m = new RegExp('(?:^|\\s)' + n.replace(':', '\\:') + '="([^"]*)"').exec(s); return m ? xmlDec(m[1]) : null; }
+function siText(x) {
+  return xmlDec((x.replace(/<rPh\b[\s\S]*?<\/rPh>/g, '').match(/<t\b(?:[^>]*[^/>])?>[\s\S]*?<\/t>/g) || []).map((t) => t.replace(/^<t\b[^>]*>|<\/t>$/g, '')).join(''));
+}
+function colIdx(ref) { const L = /^[A-Z]+/.exec(ref || ''); if (!L) return -1; let c = 0; for (const ch of L[0]) c = c * 26 + ch.charCodeAt(0) - 64; return c - 1; }
+function sheetRows(xml, sst) {
+  const rows = [], i0 = xml.indexOf('<sheetData'), body = i0 >= 0 ? xml.slice(i0) : xml;
+  const rowRe = /<row\b([^>]*?)(?:\/>|>([\s\S]*?)<\/row>)/g, cRe = /<c\b([^>]*?)(?:\/>|>([\s\S]*?)<\/c>)/g;
+  let m, ri = 0;
+  while ((m = rowRe.exec(body))) {
+    const ra = xAttr(m[1], 'r'), rn = ra ? +ra - 1 : ri; ri = rn + 1;
+    const row = []; let ci = 0, c;
+    cRe.lastIndex = 0;
+    while (m[2] && (c = cRe.exec(m[2]))) {
+      const a = c[1], ix = colIdx(xAttr(a, 'r')), col = ix >= 0 ? ix : ci; ci = col + 1;
+      const tt = xAttr(a, 't'), inner = c[2] || '';
+      let v;
+      if (tt === 'inlineStr') v = siText(inner);
+      else {
+        const vm = /<v>([\s\S]*?)<\/v>/.exec(inner), raw = vm ? xmlDec(vm[1]) : '';
+        if (tt === 's') v = raw === '' ? '' : (sst[+raw] || '');
+        else if (tt === 'str' || tt === 'e' || tt === 'b') v = raw;
+        else v = raw !== '' && isFinite(+raw) ? +raw : raw;
+      }
+      row[col] = v;
+    }
+    rows[rn] = row;
+  }
+  for (let i = 0; i < rows.length; i++) if (!rows[i]) rows[i] = [];
+  return rows;
+}
+// Trả các trang: [{name, rows: () => Promise<mảng dòng>}]
+async function readXlsx(buf) {
+  const get = unzipFile(buf);
+  const wb = await get('xl/workbook.xml');
+  if (!wb) throw { code: 'FILE_SAI' };
+  const rels = (await get('xl/_rels/workbook.xml.rels')) || '', rel = {};
+  (rels.match(/<Relationship\b[^>]*>/g) || []).forEach((r) => { rel[xAttr(r, 'Id')] = { t: xAttr(r, 'Target') || '', ty: xAttr(r, 'Type') || '' }; });
+  const full = (t) => (t.charAt(0) === '/' ? t.slice(1) : 'xl/' + t.replace(/^\.\//, ''));
+  let sstP = 'xl/sharedStrings.xml';
+  Object.values(rel).forEach((r) => { if (/\/sharedStrings$/.test(r.ty)) sstP = full(r.t); });
+  const sx = await get(sstP);
+  const sst = sx ? (sx.match(/<si\b[^>]*\/>|<si\b[^>]*>[\s\S]*?<\/si>/g) || []).map(siText) : [];
+  const sh = (wb.match(/<sheet\b[^>]*>/g) || []).map((x, i) => ({ name: xAttr(x, 'name') || 'Sheet' + (i + 1), rid: xAttr(x, 'r:id'), an: xAttr(x, 'state') }));
+  return sh.filter((x) => x.an !== 'hidden' && x.an !== 'veryHidden').map((x) => ({
+    name: x.name,
+    rows: async () => { const r = rel[x.rid]; const xml = r ? await get(full(r.t)) : null; return xml ? sheetRows(xml, sst) : []; }
+  }));
+}
+function parseCsv(text) {
+  text = text.replace(/^﻿/, '');
+  const first = text.slice(0, text.indexOf('\n') > 0 ? text.indexOf('\n') : text.length);
+  const d = [',', ';', '\t'].sort((a, b) => first.split(b).length - first.split(a).length)[0];
+  const rows = []; let row = [], cur = '', q = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (q) { if (ch === '"') { if (text[i + 1] === '"') { cur += '"'; i++; } else q = false; } else cur += ch; continue; }
+    if (ch === '"') q = true;
+    else if (ch === d) { row.push(cur); cur = ''; }
+    else if (ch === '\n' || ch === '\r') { if (ch === '\r' && text[i + 1] === '\n') i++; row.push(cur); rows.push(row); row = []; cur = ''; }
+    else cur += ch;
+  }
+  if (cur !== '' || row.length) { row.push(cur); rows.push(row); }
+  return rows;
+}
+async function readCsv(file) {
+  const buf = await file.arrayBuffer();
+  let txt = new TextDecoder('utf-8').decode(buf);
+  if (/\uFFFD/.test(txt)) { try { txt = new TextDecoder('gb18030').decode(buf); } catch (e) { /* giữ utf-8 */ } }
+  const rows = parseCsv(txt);
+  return [{ name: 'CSV', rows: async () => rows }];
+}
+
+// ---------- Cột của file ERP ----------
+const hNorm = (s) => norm(s).replace(/[\s._\-()（）:：#/\\*]/g, '');
+const KHO_COT = {
+  ma: ['品号', '料号', '物料编号', '物料编码', '物料代码', '存货编码', '商品编码', 'ma', 'mahang', 'mavattu', 'malinhkien', 'malk', 'masp', 'mahh', 'code', 'itemcode', 'itemno', 'partno'],
+  ten: ['品名', '物料名称', '名称', '存货名称', '商品名称', 'ten', 'tenhang', 'tenvattu', 'tenlinhkien', 'tenhh', 'tensp', 'name', 'itemname', 'description'],
+  qc: ['规格', '规格型号', '型号', 'quycach', 'spec', 'specification', 'model'],
+  dv: ['单位', '计量单位', 'dvt', 'donvi', 'donvitinh', 'unit', 'uom'],
+  kho: ['仓库名称', '仓库', 'kho', 'tenkho', 'warehouse'],
+  o: ['库位编号', '库位', '储位', 'vitri', 'ovitri', 'location', 'bin'],
+  sl: ['数量', '库存数量', '库存', '现存量', '结存数量', '结存', 'soluong', 'ton', 'tonkho', 'sl', 'qty', 'quantity'],
+  nh: ['群组编号', '品号类别', '类别', 'nhom', 'group']
+};
+const KHO_COT_N = {}; Object.keys(KHO_COT).forEach((k) => { KHO_COT_N[k] = KHO_COT[k].map(hNorm); });
+function timCot(rows) {
+  for (let r = 0; r < Math.min(rows.length, 20); r++) {
+    const h = (rows[r] || []).map((v) => hNorm(v)), cot = {};
+    Object.keys(KHO_COT_N).forEach((k) => {
+      for (const a of KHO_COT_N[k]) { const i = h.indexOf(a); if (i >= 0 && !Object.values(cot).includes(i)) { cot[k] = i; break; } }
+    });
+    if (cot.ma !== undefined && cot.ten !== undefined) return { r, cot, ten: (rows[r] || []).map((v) => String(v === undefined ? '' : v).trim()) };
+  }
+  return null;
+}
+const clTxt = (v, n) => String(v === undefined || v === null ? '' : v).replace(/\s+/g, ' ').trim().slice(0, n);
+function soTxt(v) {
+  if (typeof v === 'number') return v;
+  let s = String(v === undefined || v === null ? '' : v).replace(/\s/g, '');
+  if (!s) return 0;
+  s = /^-?\d+,\d{1,2}$/.test(s) ? s.replace(',', '.') : s.replace(/,/g, '');
+  const n = +s; return isFinite(n) ? n : 0;
+}
+const rnd3 = (n) => Math.round(n * 1000) / 1000;
+// Gộp các dòng của file theo mã (cùng mã ở nhiều ô kho → cộng tồn, giữ từng ô)
+function gopFile(rows, h) {
+  const c = h.cot, by = {}, ds = [];
+  let soDong = 0, boQua = 0;
+  for (let i = h.r + 1; i < rows.length; i++) {
+    const row = rows[i] || [];
+    if (!row.some((v) => String(v === undefined ? '' : v).trim() !== '')) continue;
+    const ma = clTxt(row[c.ma], 40).replace(/\s/g, '');
+    if (!ma || /[\s"'<>]/.test(ma)) { boQua++; continue; }
+    soDong++;
+    const sl = c.sl !== undefined ? soTxt(row[c.sl]) : 0;
+    let x = by[ma];
+    if (!x) {
+      x = by[ma] = { ma, ten: clTxt(row[c.ten], 160) || ma, qc: c.qc !== undefined ? clTxt(row[c.qc], 200) : '', dv: c.dv !== undefined ? clTxt(row[c.dv], 12) : '',
+        nh: c.nh !== undefined ? clTxt(row[c.nh], 20) : '', ton: 0, vt: [] };
+      ds.push(x);
+    }
+    x.ton = rnd3(x.ton + sl);
+    const kho = c.kho !== undefined ? clTxt(row[c.kho], 40) : '', o = c.o !== undefined ? clTxt(row[c.o], 30) : '';
+    if (kho || o) {
+      const v = x.vt.find((y) => y[0] === kho && y[1] === o);
+      if (v) v[2] = rnd3(v[2] + sl); else if (x.vt.length < 60) x.vt.push([kho, o, rnd3(sl)]);
+    }
+  }
+  return { ds, soDong, boQua };
+}
+async function docFileKho(file) {
+  const nm = String(file.name || '');
+  if (/\.xls$/i.test(nm)) throw { code: 'FILE_XLS' };
+  let sheets;
+  if (/\.csv$|\.txt$/i.test(nm) || /csv|text\/plain/.test(file.type || '')) sheets = await readCsv(file);
+  else {
+    const buf = await file.arrayBuffer();
+    try { sheets = await readXlsx(buf); } catch (e) { if (e && e.code) throw e; throw { code: 'FILE_SAI' }; }
+  }
+  for (const sh of sheets) {
+    const rows = await sh.rows(), h = timCot(rows);
+    if (!h) continue;
+    const g = gopFile(rows, h);
+    const cot = Object.keys(h.cot).map((k) => h.ten[h.cot[k]]).filter(Boolean);
+    return Object.assign(g, { file: nm, sheet: sh.name, cot, coSL: h.cot.sl !== undefined });
+  }
+  throw { code: 'KHONG_COT' };
+}
+
+// ---------- Danh sách kho lưu trên máy ----------
+S.kho = { ver: '', ds: [], nhap: null };
+function khoSet(o) {
+  S.kho = { ver: o.ver || '', ds: o.ds || [], nhap: o.nhap || null };
+  store.set('bd_kho', S.kho);
+}
+(function () { const o = store.get('bd_kho', null); if (o && Array.isArray(o.ds)) S.kho = { ver: o.ver || '', ds: o.ds, nhap: o.nhap || null }; })();
+let KHO_IX = null, KHO_IX_DS = null, KHO_BY = {}, KHO_TEN = {};
+// Tên kho ngắn để phân biệt cùng một ô ở hai kho: bỏ phần đầu giống nhau ("越-备品备件仓" / "越-备品备件仓2" → K1 / K2)
+function khoTenNgan(ds) {
+  const ten = [];
+  ds.forEach((x) => (x.vt || []).forEach((v) => { if (v[0] && ten.indexOf(v[0]) < 0) ten.push(v[0]); }));
+  const out = {};
+  if (ten.length < 2) return out;
+  let pre = ten[0];
+  ten.forEach((n) => { while (pre && n.indexOf(pre) !== 0) pre = pre.slice(0, -1); });
+  ten.forEach((n, i) => { const r = n.slice(pre.length).trim(); out[n] = 'K' + (r && r.length <= 4 ? r : (r ? i + 1 : 1)); });
+  return out;
+}
+function khoIx() {
+  if (KHO_IX && KHO_IX_DS === S.kho.ds) return KHO_IX;
+  KHO_BY = {}; KHO_TEN = khoTenNgan(S.kho.ds);
+  KHO_IX = S.kho.ds.map((x) => {
+    KHO_BY[x.ma] = x;
+    const h = norm(x.ma + ' ' + x.ten + ' ' + (x.qc || ''));
+    return { x, h, c: h.replace(/\s/g, ''), t: norm(x.ten), m: norm(x.ma) };
+  });
+  KHO_IX_DS = S.kho.ds;
+  return KHO_IX;
+}
+// Mã đã gộp → mục đang dùng
+function khoGet(ma) {
+  if (!ma) return null;
+  khoIx();
+  let x = KHO_BY[ma], g = 0;
+  while (x && x.gop && KHO_BY[x.gop] && g++ < 5) x = KHO_BY[x.gop];
+  return x || null;
+}
+const tonOf = (x) => (x && x.ton !== undefined && x.ton !== '' ? +x.ton || 0 : null);
+// Tìm theo mã / tên / quy cách (không dấu, không phân biệt hoa thường); mã trùng khớp lên đầu
+function khoFind(q, filt) {
+  const n = norm(q), toks = n.split(' ').filter(Boolean), nc = n.replace(/\s/g, '');
+  const out = [];
+  for (const r of khoIx()) {
+    const x = r.x;
+    if (x.an || x.gop || (filt && !filt(x))) continue;
+    let sc = 9;
+    if (nc) {
+      if (!(toks.every((k) => r.h.indexOf(k) >= 0) || r.c.indexOf(nc) >= 0)) continue;
+      sc = r.m === nc ? 0 : r.m.startsWith(nc) ? 1 : r.t.startsWith(n) ? 2 : r.t.indexOf(n) >= 0 ? 3 : 4;
+    }
+    out.push([sc, x]);
+  }
+  out.sort((a, b) => a[0] - b[0] || ((tonOf(b[1]) || 0) > 0) - ((tonOf(a[1]) || 0) > 0) || (a[1].ma < b[1].ma ? -1 : a[1].ma > b[1].ma ? 1 : 0));
+  return out.map((o) => o[1]);
+}
+// Đồng bộ sau khi tải dữ liệu: bản kho trên máy chủ khác bản đang lưu thì tải lại
+function khoSync() {
+  const m = S.base && S.base.kho;
+  if (!m) return;
+  if (m.nhap) S.kho.nhap = m.nhap;
+  if (!m.ver) { if (S.kho.ds.length) khoSet({ ver: '', ds: [], nhap: null }); return; }
+  if (m.ver !== S.kho.ver) khoLoad();
+}
+function khoLoad() {
+  if (S.khoLoading) return S.khoLoading;
+  S.khoLoading = (async () => {
+    try { const d = await api('catalog', {}, { timeout: 90 }); khoSet(d); return true; }
+    catch (e) { return false; }
+    finally { S.khoLoading = null; softRender(); }
+  })();
+  return S.khoLoading;
+}
+// Phần thay đổi máy chủ trả về sau khi lưu (linh kiện mới tự thêm…)
+function khoApply(k) {
+  if (!k || !k.ver) return;
+  const ds = S.kho.ds.slice(), ix = {};
+  ds.forEach((x, i) => { ix[x.ma] = i; });
+  (k.ds || []).forEach((x) => { if (x.ma in ix) ds[ix[x.ma]] = x; else ds.push(x); });
+  const du = S.kho.ver === (k.truoc || '');
+  khoSet({ ver: du ? k.ver : '', ds, nhap: S.kho.nhap });
+  if (S.base) { S.base.kho = Object.assign({}, S.base.kho || {}, { ver: k.ver, n: k.n !== undefined ? k.n : (S.base.kho || {}).n }); }
+  if (!du) khoLoad();
+}
+
+// ---------- Hiển thị ----------
+// Tên ERP thường ghép Trung + Việt ("平皮带Băng tải phẳng"): tách để hiện tiếng Việt trước, tiếng Trung dòng nhỏ
+const ZH_RE = /[⺀-鿿豈-﫿︰-﹏＀-￯]+/g;
+function lkTach(ten) {
+  const s = String(ten || '').trim();
+  const zh = (s.match(ZH_RE) || []).join(' ').replace(/\s+/g, ' ').trim();
+  const vi = s.replace(ZH_RE, ' ').replace(/\s+/g, ' ').replace(/^[\s·,;:/\-–()]+|[\s·,;:/\-–(]+$/g, '').trim();
+  if (!zh || !vi || !(/[À-ỹ]/.test(vi) || (vi.match(/[A-Za-zÀ-ỹ]{2,}/g) || []).length >= 2)) return { vi: s, zh: '' };
+  return { vi, zh };
+}
+function lkTenH(ten) { const p = lkTach(ten); return esc(p.vi) + (p.zh ? '<span class="zi" lang="zh-CN">' + esc(p.zh) + '</span>' : ''); }
+const DV_VI = { '个': 'cái', '只': 'chiếc', '件': 'cái', '米': 'mét', '卷': 'cuộn', '套': 'bộ', '台': 'cái', '瓶': 'chai', '片': 'miếng', '根': 'cây', '双': 'đôi',
+  '千克': 'kg', '公斤': 'kg', '克': 'g', '吨': 'tấn', '箱': 'thùng', '张': 'tờ', '把': 'cái', '升': 'lít', '毫升': 'ml', '包': 'gói', '条': 'sợi', '块': 'tấm', '盒': 'hộp',
+  '桶': 'thùng', '袋': 'túi', '支': 'cây', '对': 'cặp', '组': 'bộ', '副': 'bộ', '粒': 'viên', '颗': 'viên', '付': 'bộ', '平方米': 'm²', '台套': 'bộ' };
+const dvTxt = (dv) => (DV_VI[dv] ? DV_VI[dv] + ' ' + dv : dv || '');
+function tonHtml(x) {
+  const n = tonOf(x);
+  if (n === null) return `<span class="pill p-ok">${t('khoApp')}</span>`;
+  if (n <= 0) return `<span class="pill p-qua">${t('hetHang')}</span>`;
+  return `<span class="pill p-xong"><b class="mono">${esc(soG(n))}</b>${x.dv ? `<span class="zi">${esc(dvTxt(x.dv))}</span>` : ''}</span>`;
+}
+// Một dòng chữ: "Tồn kho 4 cái 个 · AB21, AC21" / "Hết hàng"
+function tonLine(x) {
+  if (!x) return '';
+  const n = tonOf(x);
+  if (n === null) return `<span class="ktag app">${t('khoApp')}</span>`;
+  if (n <= 0) return `<span class="ktag het">${tv('hetHang')} · ${tz('hetHang')}</span>`;
+  const bins = khoBinTxt(x, false);
+  return `<span class="ktag ok">${tv('tonKho')} <b class="mono">${esc(soG(n))}</b> ${esc(dvTxt(x.dv))}</span>${bins.length ? `<span class="kbin">${IC.pin}${esc(bins.slice(0, 3).join(', '))}${bins.length > 3 ? ' +' + (bins.length - 3) : ''}</span>` : ''}`;
+}
+// Máy đang dùng mỗi mã kho: {ma kho: [{m, k}]}
+function khoDungMap() {
+  const out = {};
+  if (!S.V) return out;
+  S.V.may.forEach((m) => lkOf(m).forEach((k) => {
+    const x = khoGet(k.maKho); if (!x) return;
+    (out[x.ma] = out[x.ma] || []).push({ m, k });
+  }));
+  return out;
+}
+function khoNhapInfo() {
+  const nh = S.kho.nhap || (S.base && S.base.kho && S.base.kho.nhap);
+  if (!nh || !nh.luc) return null;
+  return { nh, ngay: diffD(TODAY(), nh.luc.slice(0, 10)) };
+}
+
+// ---------- Màn Kho linh kiện ----------
+function khoNhapBtn() {
+  return `<label class="btn y filebtn wide khobtn">${IC.dl}<span class="stk">${tv('khoNhapBtn')}<span class="zi">${tz('khoNhapBtn')}</span></span><input type="file" id="khoFile" accept=".xlsx,.csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,text/csv"></label>`;
+}
+VIEWS.kho = {
+  html() {
+    let o = listSeg('kho');
+    if (srvOld('kho')) return o + srvWarn('kho');
+    const k = S.kho, inf = khoNhapInfo(), f = S.f;
+    const vis = k.ds.filter((x) => !x.an && !x.gop), con = vis.filter((x) => (tonOf(x) || 0) > 0).length;
+    o += `<div class="card pad khohead"><div class="kh1"><span class="kic">${IC.box}</span><div class="kh1t"><b>${t('khoN', { n: fmtNum(vis.length, 0) })}</b>
+      ${vis.length ? `<div class="sub">${t('khoConN', { n: fmtNum(con, 0) })}</div>` : ''}</div></div>`;
+    if (inf) {
+      o += `<div class="khoinf">${esc(tv('khoLuc'))} · <span lang="zh-CN" class="zh">${esc(tz('khoLuc'))}</span> <b class="mono">${esc(fmtD(inf.nh.luc.slice(0, 10)) + ' ' + inf.nh.luc.slice(11, 16))}</b><div class="mono kf">${esc(inf.nh.file || '')}${inf.nh.nguoi ? ' · ' + esc(inf.nh.nguoi) : ''}</div></div>`;
+      if (inf.ngay >= 7 && can('may')) o += `<div class="note" style="margin:10px 0 0">${t('khoCu', { n: inf.ngay })}</div>`;
+    } else if (can('may')) o += `<div class="note" style="margin:10px 0 0">${t('khoChuaNhap')}</div>`;
+    if (can('may')) o += `<div style="margin-top:12px">${khoNhapBtn()}</div>${inf ? '' : `<div class="help">${t('khoNhapHelp')}</div>`}`;
+    o += '</div>';
+    if (!k.ds.length) return o + `<div class="card empty" style="margin-top:14px">${S.khoLoading ? t('khoChoTai') : t(can('may') ? 'khoTrong' : 'khoTrongKT')}</div>`;
+    const chip = (v, k2) => `<button class="chip${f.khoF === v ? ' on' : ''}" data-act="khoF" data-v="${v}">${t(k2)}</button>`;
+    o += `<div class="searchbox" style="margin-top:14px">${IC.search}<input class="inp" id="khoQ" type="search" value="${esc(f.khoQ)}" placeholder="${esc(tp('khoSearch'))}" autocomplete="off"></div>
+      <div class="hscroll" style="margin:12px 0 0">${chip('', 'all')}${chip('con', 'kfCon')}${chip('het', 'kfHet')}${chip('may', 'kfMay')}${chip('app', 'kfApp')}</div>
+      <div id="khoBody">${khoBody()}</div>`;
+    return o;
+  },
+  after() {
+    const q = $('#khoQ');
+    if (q) q.addEventListener('input', (e) => { S.f.khoQ = e.target.value; S.f.khoLim = 60; const b = $('#khoBody'); if (b) b.innerHTML = khoBody(); });
+    const fi = $('#khoFile');
+    if (fi) fi.addEventListener('change', khoChonFile);
+  }
+};
+function khoBody() {
+  const f = S.f, dung = khoDungMap();
+  const filt = { con: (x) => (tonOf(x) || 0) > 0, het: (x) => tonOf(x) === 0, app: (x) => x.ng === 'APP', may: (x) => !!dung[x.ma] }[f.khoF] || null;
+  const list = khoFind(f.khoQ, filt), lim = f.khoLim || 60;
+  let o = sec('khoKQ', fmtNum(list.length, 0));
+  if (!list.length) return o + `<div class="card empty">${t('khoKhongThay')}</div>`;
+  o += `<div class="list">${list.slice(0, lim).map((x) => khoRow(x, dung[x.ma])).join('')}</div>`;
+  if (list.length > lim) o += `<button class="btn ghost wide" style="margin-top:10px" data-act="khoMore">${t('khoMore', { n: fmtNum(list.length - lim, 0) })}</button>`;
+  return o;
+}
+// "AB21 ×1 · AC21 ×3"; hàng ở nhiều kho thì thêm tên kho ngắn "K2·AB21"
+function khoBinTxt(x, soLuong) {
+  const vt = x.vt || [], nhieu = new Set(vt.map((v) => v[0])).size > 1;
+  khoIx();
+  return vt.map((v) => (nhieu && KHO_TEN[v[0]] ? KHO_TEN[v[0]] + '·' : '') + (v[1] || '—') + (soLuong && vt.length > 1 ? ' ×' + soG(v[2]) : ''));
+}
+function khoRow(x, dung) {
+  const bins = khoBinTxt(x, true);
+  return `<button class="row khorow" data-act="khoItem" data-ma="${esc(x.ma)}"><div class="main"><div class="nm">${lkTenH(x.ten)}</div>
+    <div class="sub"><span class="code">${esc(x.ma)}</span>${x.qc ? ` <span class="qc">${esc(x.qc)}</span>` : ''}</div>
+    ${bins.length || dung ? `<div class="sub kmeta">${bins.length ? `<span class="kbin">${IC.pin}${esc(bins.slice(0, 4).join(' · '))}${bins.length > 4 ? ' +' + (bins.length - 4) : ''}</span>` : ''}${dung ? `<span class="kmay">⚙ ${dung.length}</span>` : ''}</div>` : ''}</div>
+    <div class="end">${tonHtml(x)}</div></button>`;
+}
+function khoLanThay(ma) {
+  const out = [];
+  if (!S.V) return out;
+  S.V.ls.forEach((x) => {
+    if (x.trangThai === 'HUY' || !x.chiTiet || !x.chiTiet.lk) return;
+    const m = S.V.byMa[x.ma];
+    x.chiTiet.lk.forEach((k) => {
+      const mk = k.maKho || ((lkOf(m).find((y) => y.id === k.id) || {}).maKho);
+      const g = khoGet(mk);
+      if (g && g.ma === ma) out.push({ x, k });
+    });
+  });
+  return out.sort((a, b) => (b.x.ngay > a.x.ngay ? 1 : b.x.ngay < a.x.ngay ? -1 : 0));
+}
+function openKhoItem(ma) {
+  const x = khoGet(ma); if (!x) { toast(t('notFound'), true); return; }
+  const dung = khoDungMap()[x.ma] || [], lan = khoLanThay(x.ma), app = x.ng === 'APP';
+  const sua = app && can('may') && !srvOld('kho');
+  const vt = x.vt || [];
+  openSheet(`<div class="grab"></div>
+    <h3>${lkTenH(x.ten)}</h3>
+    <div class="who"><span class="code">${esc(x.ma)}</span> ${tonHtml(x)}${x.an ? ` <span class="tag tag-cu">${t('khoDaAn')}</span>` : ''}</div>
+    <dl class="kv">
+      ${x.qc ? `<dt>${t('quyCach')}</dt><dd>${esc(x.qc)}</dd>` : ''}
+      ${x.dv ? `<dt>${t('dv')}</dt><dd>${esc(dvTxt(x.dv))}</dd>` : ''}
+      ${x.nh ? `<dt>${t('nhomKho')}</dt><dd class="mono">${esc(x.nh)}</dd>` : ''}
+      <dt>${t('nguon')}</dt><dd>${t(app ? 'nguonAPP' : 'nguonERP')}${!app && !x.cf ? `<div class="bad" style="font-weight:500">${t('khoNgoaiFile')}</div>` : ''}</dd>
+      ${x.gc ? `<dt>${t('ghiChuLK')}</dt><dd style="font-weight:500">${esc(x.gc)}</dd>` : ''}
+      ${x.cn ? `<dt>${t('khoCn')}</dt><dd class="mono" style="font-weight:500">${esc(fmtD(x.cn.slice(0, 10)) + ' ' + x.cn.slice(11, 16))}</dd>` : ''}
+    </dl>
+    ${vt.length ? secL('khoViTri', vt.length) + `<div class="list">${vt.map((v) => `<div class="row"><div class="main"><div class="nm mono">${esc(v[1] || '—')}</div><div class="sub">${KHO_TEN[v[0]] ? `<b>${esc(KHO_TEN[v[0]])}</b> · ` : ''}${esc(v[0])}</div></div><div class="end"><b class="mono">${esc(soG(v[2]))}</b> <span class="muted">${esc(dvTxt(x.dv))}</span></div></div>`).join('')}</div>` : ''}
+    ${secL('khoDungMay', dung.length)}
+    ${dung.length ? `<div class="list">${dung.map(({ m, k }) => `<button class="row" data-act="may" data-ma="${esc(m.ma)}"><div class="main"><div class="nm">${esc(m.ten)}</div>
+      <div class="sub"><span class="code">${esc(m.ma)}</span>${k.sl !== '' && k.sl !== undefined && k.sl !== null ? ` · ${t('trenMay')}: <b class="mono">${esc(soG(k.sl))}</b> ${esc(k.dv || '')}` : ''}</div></div>${IC.chev}</button>`).join('')}</div>` : `<div class="card empty">${t('khoChuaDung')}</div>`}
+    ${lan.length ? secL('khoDaThay', lan.length) + `<div class="list">${lan.slice(0, 30).map(({ x: h, k }) => `<button class="hrow" data-act="hdetail" data-id="${esc(h.id)}">
+      <div class="dd">${fmtDM(h.ngay)}<small>${h.ngay.slice(0, 4)}</small></div>
+      <div class="main"><div class="nm">${esc((S.V.byMa[h.ma] || {}).ten || h.tenMay)}</div><div class="sub"><span class="mono">×${esc(soG(k.sl))}</span> ${esc(k.dv || '')} · ${t(k.loai === 'BOSUNG' ? 'boSung' : 'thay')} · ${esc(h.nguoi)}</div></div>${hTag(h)}</button>`).join('')}</div>` : ''}
+    ${sua ? `${secL('khoSuaApp', '')}<div class="card pad">
+      <label class="fld"><span>${t('lkTen')}</span><input class="inp" id="kxTen" value="${esc(x.ten)}" maxlength="160"></label>
+      <div class="dsgrid"><label class="fld"><span>${t('quyCach')}</span><input class="inp" id="kxQc" value="${esc(x.qc || '')}" maxlength="200"></label>
+      <label class="fld"><span>${t('dv')}</span><input class="inp" id="kxDv" value="${esc(x.dv || '')}" maxlength="12"></label></div>
+      <div class="err" id="kxErr" hidden></div>
+      <div class="btns"><button class="btn ghost" data-act="khoAn" data-ma="${esc(x.ma)}" data-v="${x.an ? 0 : 1}">${t(x.an ? 'khoHienLai' : 'khoAn')}</button><button class="btn" data-act="khoSua" data-ma="${esc(x.ma)}">${t('save')}</button></div></div>` : ''}
+    <div class="btns" style="margin-top:16px"><button class="btn ghost" data-act="closeSheet">${t('close')}</button></div>`);
+}
+async function khoLuuApp(el, p) {
+  const fe = $('#kxErr');
+  el.disabled = true;
+  try {
+    const d = await api('saveKho', p);
+    mergeResult(d);
+    closeSheet(); toast(t('saved')); render();
+  } catch (e) { el.disabled = false; if (fe) { fe.innerHTML = e.code === 'MANG' ? t('needNet') : errMsg(e); fe.hidden = false; } }
+}
+
+// ---------- Nhập file kho: đọc → xem trước → lưu ----------
+async function khoChonFile(e) {
+  const f = e.target.files && e.target.files[0]; e.target.value = '';
+  if (!f) return;
+  toast(t('khoDoc'));
+  try {
+    const r = await docFileKho(f);
+    if (!r.ds.length) throw { code: 'KHO_TRONG' };
+    go('khoNhap', { r, d: khoDiff(r.ds) });
+    const tt = $('.toast'); if (tt) tt.remove();
+  } catch (x) { toast(errMsg(x), true); }
+}
+const khoKhoa = (ten, qc) => norm(ten).replace(/\s/g, '') + '|' + norm(qc).replace(/\s/g, '');
+// So với kho đang có: giống cách máy chủ tính
+function khoDiff(ds) {
+  khoIx();
+  const d = { moi: [], doiTon: [], het: [], veLai: [], doiTen: [], gop: [], giu: 0 }, theo = {}, erpKhoa = {};
+  ds.forEach((o) => {
+    theo[o.ma] = 1;
+    const k = khoKhoa(o.ten, o.qc); if (!erpKhoa[k]) erpKhoa[k] = o.ma;
+    const x = KHO_BY[o.ma];
+    if (!x) { d.moi.push({ o }); return; }
+    const cuTon = tonOf(x) || 0, doiTon = cuTon !== o.ton || JSON.stringify(x.vt || []) !== JSON.stringify(o.vt);
+    const doiTen = x.ten !== o.ten || (x.qc || '') !== o.qc || (x.dv || '') !== o.dv || (x.nh || '') !== o.nh;
+    if (!x.cf) d.veLai.push({ o, cu: cuTon }); else if (doiTon) d.doiTon.push({ o, cu: cuTon });
+    if (doiTen) d.doiTen.push({ o, x });
+    if (x.cf && !doiTon && !doiTen) d.giu++;
+  });
+  S.kho.ds.forEach((x) => {
+    if (x.ng === 'ERP' && x.cf && !theo[x.ma]) d.het.push({ o: x, cu: tonOf(x) || 0 });
+    if (x.ng === 'APP' && !x.gop && erpKhoa[khoKhoa(x.ten, x.qc)]) d.gop.push({ o: x, vao: erpKhoa[khoKhoa(x.ten, x.qc)] });
+  });
+  d.cuCf = S.kho.ds.filter((x) => x.ng === 'ERP' && x.cf).length;
+  return d;
+}
+VIEWS.khoNhap = {
+  html(p) {
+    const r = p.r, d = p.d;
+    if (!r) return `<div class="card empty">${t('notFound')}</div>`;
+    let o = srvWarn('kho') + `<div class="card pad"><dl class="kv">
+      <dt>${t('khoFile')}</dt><dd class="mono" style="font-size:13px">${esc(r.file)}</dd>
+      <dt>${t('khoSheet')}</dt><dd>${esc(r.sheet)}</dd>
+      <dt>${t('khoKQ')}</dt><dd>${t('khoDong', { n: fmtNum(r.soDong, 0), m: fmtNum(r.ds.length, 0) })}${r.boQua ? `<div class="muted" style="font-weight:500">${t('khoBoQua', { n: r.boQua })}</div>` : ''}</dd>
+      <dt>${t('khoCotDoc')}</dt><dd style="font-weight:500">${esc(r.cot.join(' · '))}</dd></dl></div>`;
+    if (d.cuCf >= 20 && r.ds.length < d.cuCf * 0.5) o += `<div class="note" style="margin-top:12px">${t('khoItWarn', { n: r.ds.length, c: d.cuCf })}</div>`;
+    const tile = (k, n, cls) => `<div class="tile ktile ${cls}${n ? '' : ' zero'}"><b>${fmtNum(n, 0)}</b><span>${t(k)}</span></div>`;
+    o += `<div class="tiles ktiles" style="margin-top:14px">${tile('kMoi', d.moi.length, 't-sap')}${tile('kDoiTon', d.doiTon.length, 't-nay')}${tile('kHet', d.het.length, 't-qua')}${tile('kVeLai', d.veLai.length, 't-xong')}${tile('kGiu', d.giu, '')}${d.gop.length ? tile('kGop', d.gop.length, '') : ''}</div>`;
+    const tonTxt = (n, dv) => `<b class="mono">${esc(soG(n))}</b> <span class="muted">${esc(dvTxt(dv))}</span>`;
+    const grp = (k, arr, row, help) => (arr.length ? `<details class="kdet"><summary>${t(k)} <span class="cnt mono">${fmtNum(arr.length, 0)}</span></summary>${help ? `<div class="help" style="margin:0 0 8px">${t(help)}</div>` : ''}
+      <div class="list">${arr.slice(0, 200).map(row).join('')}</div>${arr.length > 200 ? `<div class="help">${t('khoChiHien', { n: 200 })}</div>` : ''}</details>` : '');
+    const row = (x, end) => `<div class="row"><div class="main"><div class="nm">${lkTenH(x.ten)}</div><div class="sub"><span class="code">${esc(x.ma)}</span>${x.qc ? ` <span class="qc">${esc(x.qc)}</span>` : ''}</div></div><div class="end kchg">${end}</div></div>`;
+    o += '<div style="margin-top:14px">';
+    o += grp('kMoi', d.moi, ({ o: x }) => row(x, tonTxt(x.ton, x.dv)));
+    o += grp('kDoiTon', d.doiTon, ({ o: x, cu }) => row(x, `<span class="mono muted">${esc(soG(cu))}</span> → ${tonTxt(x.ton, x.dv)}`));
+    o += grp('kHet', d.het, ({ o: x, cu }) => row(x, `<span class="mono muted">${esc(soG(cu))}</span> → <b class="mono bad">0</b>`), 'kHetHelp');
+    o += grp('kVeLai', d.veLai, ({ o: x }) => row(x, `<span class="mono muted">0</span> → ${tonTxt(x.ton, x.dv)}`));
+    o += grp('kDoiTen', d.doiTen, ({ o: x }) => row(x, ''));
+    o += grp('kGop', d.gop, ({ o: x, vao }) => row(x, `→ <span class="code">${esc(vao)}</span>`));
+    o += '</div>';
+    o += `<div class="err" id="knErr" hidden></div><div class="btns" style="margin-top:16px"><button class="btn ghost" data-act="back">${t('cancel')}</button>
+      <button class="btn g" id="knSave" data-act="khoLuu">${IC.check} ${t('khoLuu')}</button></div>`;
+    return o;
+  }
+};
+async function khoLuu(el) {
+  const p = topV().p, r = p.r, fe = $('#knErr');
+  el.disabled = true; fe.hidden = true;
+  const lbl = el.innerHTML; el.innerHTML = t('khoDangLuu');
+  try {
+    const d = await api('importKho', { file: r.file, soDong: r.soDong, ds: r.ds }, { timeout: 240 });
+    khoSet({ ver: d.ver, ds: d.ds, nhap: d.nhap });
+    if (S.base) S.base.kho = { ver: d.ver, n: d.ds.filter((x) => !x.an && !x.gop).length, nhap: d.nhap };
+    mergeResult({ dsMay: d.dsMay || [] });
+    S.f.khoQ = ''; S.f.khoF = ''; S.f.khoLim = 60;
+    back();
+    toast(t('khoDaLuu', { n: fmtNum(d.tk.soMa, 0), a: d.tk.moi, b: d.tk.het }));
+  } catch (e) {
+    el.disabled = false; el.innerHTML = lbl;
+    fe.innerHTML = e.code === 'MANG' ? t('needNet') : errMsg(e); fe.hidden = false;
+  }
+}
+
+// ---------- Trang chủ: nhắc Quản lý nhập file kho mỗi tuần ----------
+function khoHomeCard() {
+  if (!can('may') || !S.base || !S.base.kho || srvOld('kho')) return '';
+  const inf = khoNhapInfo();
+  if (inf && inf.ngay < 7) return '';
+  return `<button class="ecard khohome" data-act="tab" data-v="kho"><span class="eic">${IC.box}</span>
+    <span class="main"><span class="nm">${t('khoHome')}</span><span class="sub">${inf ? t('khoCu', { n: inf.ngay }) : t('khoChuaNhap')}</span></span>
+    ${IC.chev}</button>`;
+}
+
+// ---------- Chọn linh kiện trong kho (màn sửa linh kiện, bảng xác nhận) ----------
+function khoSugHtml(q, act, i, lim) {
+  if (!S.kho.ds.length || norm(q).length < 2) return '';
+  const list = khoFind(q).slice(0, lim || 5);
+  if (!list.length) return '';
+  return `<div class="ksug"><div class="kst">${t('khoGoiY')}</div>${list.map((x) => `<button type="button" class="ksi" data-act="${act}" data-ma="${esc(x.ma)}"${i !== undefined ? ` data-i="${i}"` : ''}>
+    <span class="kn">${lkTenH(x.ten)}<small><span class="mono">${esc(x.ma)}</span>${x.qc ? ' · ' + esc(x.qc) : ''}</small></span>${tonHtml(x)}</button>`).join('')}</div>`;
+}
+function khoTimHtml(q) {
+  if (!S.kho.ds.length || !norm(q)) return '';
+  const list = khoFind(q).slice(0, 12);
+  if (!list.length) return `<div class="ksug"><div class="kst">${t('khoKhongThay')}</div></div>`;
+  return `<div class="ksug">${list.map((x) => `<button type="button" class="ksi" data-act="dsKhoAdd" data-ma="${esc(x.ma)}">
+    <span class="kn">${lkTenH(x.ten)}<small><span class="mono">${esc(x.ma)}</span>${x.qc ? ' · ' + esc(x.qc) : ''}</small></span>${tonHtml(x)}<span class="kplus">${IC.plus}</span></button>`).join('')}</div>`;
+}
+// Linh kiện của máy lấy từ một mục kho
+const lkTuKho = (x) => ({ ten: x.ten, quyCach: x.qc || '', dv: dvTxt(x.dv).slice(0, 12), maKho: x.ma });
+
+Object.assign(ACT, {
+  khoF: (el) => { S.f.khoF = el.dataset.v; S.f.khoLim = 60; render(); },
+  khoMore: () => { S.f.khoLim = (S.f.khoLim || 60) + 200; const b = $('#khoBody'); if (b) b.innerHTML = khoBody(); },
+  khoItem: (el) => openKhoItem(el.dataset.ma),
+  khoLuu: (el) => khoLuu(el),
+  khoSua: (el) => khoLuuApp(el, { ma: el.dataset.ma, ten: $('#kxTen').value, qc: $('#kxQc').value, dv: $('#kxDv').value }),
+  khoAn: (el) => khoLuuApp(el, { ma: el.dataset.ma, an: el.dataset.v === '1' })
 });
 
 // Link từ tem QR: ...?m=M001
